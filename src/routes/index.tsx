@@ -1,24 +1,60 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { HeartPulse, Users, FileText, ShieldCheck } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "FamilyHealth Vault — Medical records for your family" },
+      { name: "description", content: "Store and find your family's medical records in one secure place." },
+      { property: "og:title", content: "FamilyHealth Vault" },
+      { property: "og:description", content: "Store and find your family's medical records in one secure place." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
 function Index() {
+  const features = [
+    { icon: Users, title: "Family profiles", text: "Keep height, weight, blood group and relation for everyone." },
+    { icon: FileText, title: "All records in one place", text: "Upload PDFs, documents or snap a photo with your phone." },
+    { icon: ShieldCheck, title: "Private by default", text: "Only you can see the records you upload." },
+  ];
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
+    <div className="min-h-screen bg-hero">
+      <div className="mx-auto max-w-[1200px] px-4 py-8">
+        <header className="flex items-center gap-2">
+          <HeartPulse className="h-7 w-7 text-primary" />
+          <span className="font-heading text-xl font-bold">FamilyHealth Vault</span>
+        </header>
+        <section className="my-12 space-y-6 md:my-20">
+          <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">
+            For you and your loved ones
+          </span>
+          <h1 className="max-w-2xl text-3xl font-bold leading-tight md:text-4xl">
+            Every prescription, report and scan — organised for your whole family.
+          </h1>
+          <p className="max-w-xl text-base text-muted-foreground md:text-lg">
+            Stop digging through drawers and chats. Keep medical records safe and find them in seconds.
+          </p>
+          <div className="flex justify-center pt-4">
+            <Button asChild size="lg">
+              <Link to="/auth">Get started</Link>
+            </Button>
+          </div>
+        </section>
+        <section className="grid gap-6 md:grid-cols-3">
+          {features.map((f) => (
+            <div key={f.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
+              <f.icon className="h-6 w-6 text-primary" />
+              <h2 className="text-lg font-semibold">{f.title}</h2>
+              <p className="text-base text-muted-foreground">{f.text}</p>
+            </div>
+          ))}
+        </section>
+      </div>
     </div>
   );
 }
