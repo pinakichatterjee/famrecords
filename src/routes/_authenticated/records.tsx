@@ -48,17 +48,17 @@ function RecordsPage() {
 
   const upload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file || !memberId) return toast.error("Choose a family member and a file");
+    if (!file || !memberId) { toast.error("Choose a family member and a file"); return; }
     setUploading(true);
     const ext = file.name.split(".").pop() || "bin";
     const path = `${user.id}/${crypto.randomUUID()}.${ext}`;
     const { error: upErr } = await supabase.storage.from("medical-documents").upload(path, file, { contentType: file.type });
-    if (upErr) { setUploading(false); return toast.error(upErr.message); }
+    if (upErr) { setUploading(false); { toast.error(upErr.message); return; } }
     const { error } = await supabase.from("medical_records").insert({
       created_by: user.id, family_member_id: memberId, name: name.trim(), document: path,
     });
     setUploading(false);
-    if (error) { await supabase.storage.from("medical-documents").remove([path]); return toast.error(error.message); }
+    if (error) { await supabase.storage.from("medical-documents").remove([path]); { toast.error(error.message); return; } }
     toast.success("Record uploaded");
     setOpen(false); setFile(null); setName(""); setMemberId("");
     qc.invalidateQueries({ queryKey: ["records"] });
@@ -67,14 +67,14 @@ function RecordsPage() {
   const view = async (path: string) => {
     const win = window.open("", "_blank");
     const { data, error } = await supabase.storage.from("medical-documents").createSignedUrl(path, 300);
-    if (error || !data) { win?.close(); return toast.error(error?.message ?? "Could not open file"); }
+    if (error || !data) { win?.close(); { toast.error(error?.message ?? "Could not open file"); return; } }
     if (win) win.location.href = data.signedUrl; else window.location.href = data.signedUrl;
   };
 
   const remove = async (id: string, path: string) => {
     if (!confirm("Delete this record?")) return;
     const { error } = await supabase.from("medical_records").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     await supabase.storage.from("medical-documents").remove([path]);
     toast.success("Record deleted");
     qc.invalidateQueries({ queryKey: ["records"] });

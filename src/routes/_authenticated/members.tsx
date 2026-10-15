@@ -59,7 +59,7 @@ function MembersPage() {
       ? await supabase.from("family_members").update(payload).eq("id", editing.id)
       : await supabase.from("family_members").insert({ ...payload, user_id: user.id });
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success(editing ? "Member updated" : "Member added");
     setOpen(false);
     qc.invalidateQueries({ queryKey: ["members"] });
@@ -68,7 +68,7 @@ function MembersPage() {
   const remove = async () => {
     if (!toDelete) return;
     const { error } = await supabase.from("family_members").delete().eq("id", toDelete.id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Member deleted");
     setToDelete(null);
     qc.invalidateQueries({ queryKey: ["members"] });

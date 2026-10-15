@@ -24,7 +24,7 @@ function SettingsPage() {
       { emailRedirectTo: window.location.origin + "/settings" },
     );
     setSaving(false);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     toast.success("Check your inbox to confirm the new email address.");
     setEmail("");
   };

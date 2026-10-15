@@ -12,7 +12,7 @@ function Dashboard() {
   const { user } = Route.useRouteContext();
   const members = useQuery(membersQuery);
   const records = useQuery(recordsQuery);
-  const name = (user.user_metadata?.name as string) || user.email;
+  const name = (user.user_metadata?.["name"] as string) || user.email;
   const cards = [
     { to: "/members" as const, icon: Users, title: "Members", text: "Add and manage family members", count: members.data?.length },
     { to: "/records" as const, icon: FileText, title: "Medical Records", text: "Upload and search documents", count: records.data?.length },
