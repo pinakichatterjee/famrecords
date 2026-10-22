@@ -80,8 +80,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "FamilyHealth Vault" },
-      { name: "description", content: "Secure medical record storage for your family." },
+      { title: "FamilyHealth Vault — Family medical records organiser" },
+      { name: "description", content: "Securely store, organise and find medical records for your whole family." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

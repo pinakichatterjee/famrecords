@@ -12,7 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/records")({
-  head: () => ({ meta: [{ title: "Medical Records — FamilyHealth Vault" }] }),
+  head: () => ({ meta: [{ title: "Medical Records — FamilyHealth Vault" }, { name: "description", content: "Upload, filter and view your family's medical records." }] }),
   component: RecordsPage,
 });
 
@@ -125,7 +125,7 @@ function RecordsPage() {
                   {isImage(r.document) ? <ImageIcon className="h-5 w-5 text-primary" /> : <FileText className="h-5 w-5 text-primary" />}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="truncate text-lg font-semibold">{r.name}</h3>
+                  <h2 className="truncate text-lg font-semibold">{r.name}</h2>
                   <p className="text-sm text-muted-foreground">
                     {r.family_members?.member_name} · {new Date(r.created_at).toLocaleDateString()}
                   </p>

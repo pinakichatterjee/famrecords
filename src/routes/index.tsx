@@ -7,7 +7,7 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "FamilyHealth Vault — Medical records for your family" },
       { name: "description", content: "Store and find your family's medical records in one secure place." },
-      { property: "og:title", content: "FamilyHealth Vault" },
+      { property: "og:title", content: "FamilyHealth Vault — Organise your family's medical records" },
       { property: "og:description", content: "Store and find your family's medical records in one secure place." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
