@@ -6,10 +6,10 @@ import logo from "@/assets/logo-lockup.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FamRecords — Family medical records organiser" },
-      { name: "description", content: "Store and find your family's medical records in one secure place." },
-      { property: "og:title", content: "FamRecords — Organise your family's medical records" },
-      { property: "og:description", content: "Store and find your family's medical records in one secure place." },
+      { title: "FamRecords — Free family medical records app" },
+      { name: "description", content: "Keep every family member's reports, prescriptions and scans in one private place. Upload from your phone, search in seconds, and get plain-language AI summaries." },
+      { property: "og:title", content: "FamRecords — Free family medical records app" },
+      { property: "og:description", content: "Keep every family member's reports, prescriptions and scans in one private place. Upload from your phone, search in seconds, and get plain-language AI summaries." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],

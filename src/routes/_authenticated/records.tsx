@@ -2,11 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
-import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon } from "lucide-react";
+import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { membersQuery, recordsQuery } from "@/lib/data";
 import { RECORD_TYPES, filterRecords } from "@/lib/record-filters";
+import { RecordAiDialog } from "@/components/RecordAiDialog";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -41,6 +42,7 @@ function RecordsPage() {
   const [recordType, setRecordType] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
+  const [aiRecord, setAiRecord] = useState<(typeof records)[number] | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const camRef = useRef<HTMLInputElement>(null);
 
@@ -188,6 +190,7 @@ function RecordsPage() {
               </div>
               <div className="flex gap-2">
                 <Button variant="secondary" size="sm" className="flex-1" onClick={() => view(r.document)}><ExternalLink className="h-4 w-4" /> View</Button>
+                <Button variant="outline" size="sm" className="flex-1" onClick={() => setAiRecord(r)}><Sparkles className="h-4 w-4" /> Ask AI</Button>
                 <Button variant="ghost" size="icon" aria-label="Edit" onClick={() => openEdit(r)}><Pencil className="h-4 w-4" /></Button>
                 <Button variant="ghost" size="icon" aria-label="Delete" onClick={() => remove(r.id, r.document)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
               </div>
@@ -195,6 +198,8 @@ function RecordsPage() {
           ))}
         </div>
       )}
+
+      <RecordAiDialog record={aiRecord} onClose={() => setAiRecord(null)} />
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto">

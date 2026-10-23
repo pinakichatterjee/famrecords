@@ -10,10 +10,10 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — FamRecords" },
-      { name: "description", content: "Sign in or create your FamRecords account." },
-      { property: "og:title", content: "Sign in — FamRecords" },
-      { property: "og:description", content: "Sign in or create your FamRecords account." },
+      { title: "Sign in or create a free account — FamRecords" },
+      { name: "description", content: "Create your free FamRecords account or sign in to see your family's medical records, reports and prescriptions." },
+      { property: "og:title", content: "Sign in or create a free account — FamRecords" },
+      { property: "og:description", content: "Create your free FamRecords account or sign in to see your family's medical records, reports and prescriptions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
