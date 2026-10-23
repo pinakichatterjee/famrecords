@@ -1,7 +1,7 @@
 # Roadmap
 
 ## Waiting
-- [ ] Set up customer payments — waiting for the seller country, eligibility result, and provider confirmation.
+- [ ] Set up customer payments — Lovable's built-in payments are NOT available for an India-based seller; owner must create their own account with Stripe India or Razorpay, then keys can be connected to the app.
 - [ ] Submit FamRecords to Google Play — owner must create the Play Console account themselves (Google account, $25 fee, ID verification), then upload the prepared assets; submission subject to Google approval.
 
 ## Done
