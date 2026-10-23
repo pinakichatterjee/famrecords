@@ -9,3 +9,9 @@
 - [x] Rename the app everywhere to "FamRecords: Rehab & Wellness" (browser tab, search results, shared links, page headers)
 - [x] Add a logo (icon-with-name design) at the top of the home, sign-in and app pages
 - [x] New browser-tab icon (favicon) from the logo
+
+## In progress
+- [ ] Razorpay payments — needs owner's Razorpay keys and price/plan details
+- [ ] AI summary of a medical record (diagnoses, medications, follow-up)
+- [ ] Ask a question about a record, AI explains in plain language
+- [ ] Unique titles/descriptions for public pages (/, /auth, /privacy)
