@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -96,6 +96,11 @@ function AuthPage() {
           <button type="button" className="font-medium text-primary hover:underline" onClick={() => setMode(mode === "signin" ? "signup" : "signin")}>
             {mode === "signin" ? "Create an account" : "Sign in"}
           </button>
+        </p>
+        <p className="text-center text-sm text-muted-foreground">
+          <Link to="/privacy" className="font-medium text-primary hover:underline">
+            Privacy Policy
+          </Link>
         </p>
       </div>
     </div>
