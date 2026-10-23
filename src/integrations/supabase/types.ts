@@ -63,6 +63,9 @@ export type Database = {
           family_member_id: string
           id: string
           name: string
+          provider: string | null
+          record_type: string | null
+          visit_date: string | null
         }
         Insert: {
           created_at?: string
@@ -71,6 +74,9 @@ export type Database = {
           family_member_id: string
           id?: string
           name: string
+          provider?: string | null
+          record_type?: string | null
+          visit_date?: string | null
         }
         Update: {
           created_at?: string
@@ -79,6 +85,9 @@ export type Database = {
           family_member_id?: string
           id?: string
           name?: string
+          provider?: string | null
+          record_type?: string | null
+          visit_date?: string | null
         }
         Relationships: [
           {
