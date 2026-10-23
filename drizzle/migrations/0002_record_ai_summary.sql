@@ -1,0 +1,1 @@
+ALTER TABLE public.medical_records ADD COLUMN IF NOT EXISTS ai_summary text, ADD COLUMN IF NOT EXISTS ai_summary_at timestamptz;

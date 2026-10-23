@@ -57,6 +57,8 @@ export type Database = {
       }
       medical_records: {
         Row: {
+          ai_summary: string | null
+          ai_summary_at: string | null
           created_at: string
           created_by: string
           document: string
@@ -68,6 +70,8 @@ export type Database = {
           visit_date: string | null
         }
         Insert: {
+          ai_summary?: string | null
+          ai_summary_at?: string | null
           created_at?: string
           created_by: string
           document: string
@@ -79,6 +83,8 @@ export type Database = {
           visit_date?: string | null
         }
         Update: {
+          ai_summary?: string | null
+          ai_summary_at?: string | null
           created_at?: string
           created_by?: string
           document?: string
