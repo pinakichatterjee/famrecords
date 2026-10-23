@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { HeartPulse, Users, FileText, ShieldCheck } from "lucide-react";
+import { Users, FileText, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-lockup.png";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -26,8 +27,7 @@ function Index() {
     <div className="min-h-screen bg-hero">
       <div className="mx-auto max-w-[1200px] px-4 py-8">
         <header className="flex items-center gap-2">
-          <HeartPulse className="h-7 w-7 text-primary" />
-          <span className="font-heading text-xl font-bold">FamRecords</span>
+          <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
         </header>
         <section className="my-12 space-y-6 md:my-20">
           <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">

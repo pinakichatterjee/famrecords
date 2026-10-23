@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { HeartPulse } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-lockup.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -64,8 +64,7 @@ function AuthPage() {
     <div className="flex min-h-screen items-center justify-center bg-hero px-4 py-8">
       <div className="w-full max-w-md space-y-6 rounded-2xl bg-card p-8 shadow-soft">
         <div className="flex items-center gap-2">
-          <HeartPulse className="h-7 w-7 text-primary" />
-          <span className="font-heading text-xl font-bold">FamRecords</span>
+          <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
         </div>
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">{mode === "signin" ? "Welcome back" : "Create your account"}</h1>
