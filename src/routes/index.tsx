@@ -6,9 +6,9 @@ import logo from "@/assets/logo-lockup.png";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FamRecords: Rehab & Wellness — Medical records for your family" },
+      { title: "FamRecords — Family medical records organiser" },
       { name: "description", content: "Store and find your family's medical records in one secure place." },
-      { property: "og:title", content: "FamRecords: Rehab & Wellness — Organise your family's medical records" },
+      { property: "og:title", content: "FamRecords — Organise your family's medical records" },
       { property: "og:description", content: "Store and find your family's medical records in one secure place." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
