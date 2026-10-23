@@ -1,8 +1,10 @@
 # Roadmap
 
+## In progress
+- [ ] Prepare FamRecords for Google Play ("prepare the app"): privacy policy page, app manifest + install icons, 512x512 app icon, 1024x500 feature graphic, phone screenshots for the listing. Owner must still create the Play Console account themselves (Google account, $25 fee, ID verification); submission subject to Google approval.
+
 ## Waiting
 - [ ] Set up customer payments — waiting for the seller country, eligibility result, and provider confirmation.
-- [ ] Prepare FamRecords for Google Play — owner must create the Play Console account themselves (Google account, $25 fee, ID verification). Site still has no app manifest or install icons, so it cannot be packaged into an Android app yet; submission subject to Google approval.
 
 ## Done
 - [x] Rename the app everywhere to "FamRecords: Rehab & Wellness" (browser tab, search results, shared links, page headers)
