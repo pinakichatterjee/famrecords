@@ -1,0 +1,1 @@
+ALTER TABLE public.medical_records ADD COLUMN visit_date date, ADD COLUMN provider text, ADD COLUMN record_type text;
