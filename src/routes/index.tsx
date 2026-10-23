@@ -54,6 +54,12 @@ function Index() {
             </div>
           ))}
         </section>
+        <footer className="my-12 flex items-center justify-between border-t border-border pt-6 text-sm text-muted-foreground">
+          <span>FamRecords: Rehab & Wellness</span>
+          <Link to="/privacy" className="font-medium text-primary hover:underline">
+            Privacy Policy
+          </Link>
+        </footer>
       </div>
     </div>
   );
