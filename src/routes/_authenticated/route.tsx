@@ -1,8 +1,9 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { HeartPulse, LayoutDashboard, Users, FileText, Settings, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, FileText, Settings, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import logo from "@/assets/logo-lockup.png";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -35,8 +36,7 @@ function Layout() {
       <header className="border-b bg-card">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3">
           <Link to="/dashboard" className="flex items-center gap-2">
-            <HeartPulse className="h-6 w-6 text-primary" />
-            <span className="font-heading text-lg font-bold">FamRecords</span>
+            <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-8 w-auto" />
           </Link>
           <nav className="hidden gap-1 md:flex">
             {nav.map((n) => (
