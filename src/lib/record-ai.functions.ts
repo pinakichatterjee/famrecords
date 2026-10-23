@@ -53,7 +53,7 @@ export const analyzeRecord = createServerFn({ method: "POST" })
       ? ({ type: "file", filename: `${rec.name}.pdf`, data: b64, mediaType: "application/pdf" } as const)
       : ({ type: "image", image: new URL(`data:${imageTypes[ext]};base64,${b64}`) } as const);
 
-    const apiKey = process.env.LOVABLE_API_KEY;
+    const apiKey = process.env['LOVABLE_API_KEY'];
     if (!apiKey) return { error: "AI is not configured." };
     const runIdFetch = createLovableAiGatewayRunIdFetch();
     const provider = createOpenAI({
