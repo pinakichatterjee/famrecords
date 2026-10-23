@@ -16,3 +16,4 @@
 - [ ] Ask a question about a record, AI explains in plain language
 - [ ] Unique titles/descriptions for public pages (/, /auth, /privacy)
 - [ ] Connect Google Search Console (verify site, submit sitemap)
+- [ ] Add /privacy to sitemap
