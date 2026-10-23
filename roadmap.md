@@ -2,7 +2,7 @@
 
 ## Waiting
 - [ ] Set up customer payments — waiting for the seller country, eligibility result, and provider confirmation.
-- [ ] Prepare FamRecords for Google Play — waiting for Google Play developer account status and Android packaging choice; store submission requires owner access and Google approval.
+- [ ] Prepare FamRecords for Google Play — owner has no developer account yet; waiting for account creation and Android packaging choice, with submission subject to Google approval.
 
 ## Done
 - [x] Rename the app everywhere to "FamRecords: Rehab & Wellness" (browser tab, search results, shared links, page headers)
