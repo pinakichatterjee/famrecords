@@ -17,7 +17,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/records")({
-  head: () => ({ meta: [{ title: "Medical Records — FamilyHealth Vault" }, { name: "description", content: "Upload, filter and view your family's medical records." }] }),
+  head: () => ({ meta: [{ title: "Medical Records — FamRecords" }, { name: "description", content: "Upload, filter and view your family's medical records." }] }),
   component: RecordsPage,
 });
 

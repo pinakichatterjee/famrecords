@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export const Route = createFileRoute("/_authenticated/settings")({
-  head: () => ({ meta: [{ title: "Settings — FamilyHealth Vault" }, { name: "description", content: "Manage your FamilyHealth Vault account email." }] }),
+  head: () => ({ meta: [{ title: "Settings — FamRecords" }, { name: "description", content: "Manage your FamRecords account email." }] }),
   component: SettingsPage,
 });
 

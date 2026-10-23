@@ -5,9 +5,9 @@ import { Button } from "@/components/ui/button";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FamilyHealth Vault — Medical records for your family" },
+      { title: "FamRecords: Rehab & Wellness — Medical records for your family" },
       { name: "description", content: "Store and find your family's medical records in one secure place." },
-      { property: "og:title", content: "FamilyHealth Vault — Organise your family's medical records" },
+      { property: "og:title", content: "FamRecords: Rehab & Wellness — Organise your family's medical records" },
       { property: "og:description", content: "Store and find your family's medical records in one secure place." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -27,7 +27,7 @@ function Index() {
       <div className="mx-auto max-w-[1200px] px-4 py-8">
         <header className="flex items-center gap-2">
           <HeartPulse className="h-7 w-7 text-primary" />
-          <span className="font-heading text-xl font-bold">FamilyHealth Vault</span>
+          <span className="font-heading text-xl font-bold">FamRecords</span>
         </header>
         <section className="my-12 space-y-6 md:my-20">
           <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">

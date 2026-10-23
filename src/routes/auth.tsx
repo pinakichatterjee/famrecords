@@ -10,10 +10,10 @@ import { Label } from "@/components/ui/label";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — FamilyHealth Vault" },
-      { name: "description", content: "Sign in or create your FamilyHealth Vault account." },
-      { property: "og:title", content: "Sign in — FamilyHealth Vault" },
-      { property: "og:description", content: "Sign in or create your FamilyHealth Vault account." },
+      { title: "Sign in — FamRecords" },
+      { name: "description", content: "Sign in or create your FamRecords account." },
+      { property: "og:title", content: "Sign in — FamRecords" },
+      { property: "og:description", content: "Sign in or create your FamRecords account." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
     ],
@@ -65,7 +65,7 @@ function AuthPage() {
       <div className="w-full max-w-md space-y-6 rounded-2xl bg-card p-8 shadow-soft">
         <div className="flex items-center gap-2">
           <HeartPulse className="h-7 w-7 text-primary" />
-          <span className="font-heading text-xl font-bold">FamilyHealth Vault</span>
+          <span className="font-heading text-xl font-bold">FamRecords</span>
         </div>
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">{mode === "signin" ? "Welcome back" : "Create your account"}</h1>
