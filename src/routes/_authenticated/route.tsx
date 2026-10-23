@@ -36,7 +36,7 @@ function Layout() {
         <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-4 px-4 py-3">
           <Link to="/dashboard" className="flex items-center gap-2">
             <HeartPulse className="h-6 w-6 text-primary" />
-            <span className="font-heading text-lg font-bold">FamilyHealth Vault</span>
+            <span className="font-heading text-lg font-bold">FamRecords</span>
           </Link>
           <nav className="hidden gap-1 md:flex">
             {nav.map((n) => (

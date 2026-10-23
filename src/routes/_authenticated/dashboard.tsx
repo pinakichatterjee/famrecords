@@ -4,7 +4,7 @@ import { Users, FileText, Settings, ArrowRight } from "lucide-react";
 import { membersQuery, recordsQuery } from "@/lib/data";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — FamilyHealth Vault" }, { name: "description", content: "Your FamilyHealth Vault overview of members and medical records." }] }),
+  head: () => ({ meta: [{ title: "Dashboard — FamRecords" }, { name: "description", content: "Your FamRecords overview of members and medical records." }] }),
   component: Dashboard,
 });
 
