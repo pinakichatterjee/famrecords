@@ -17,3 +17,4 @@
 - [ ] Unique titles/descriptions for public pages (/, /auth, /privacy)
 - [ ] Connect Google Search Console (verify site, submit sitemap)
 - [ ] Add /privacy to sitemap
+- [ ] Word (DOC/DOCX) text extraction for AI
