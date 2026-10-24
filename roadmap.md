@@ -12,9 +12,9 @@
 
 ## In progress
 - [ ] Razorpay payments — needs owner's Razorpay keys and price/plan details
-- [ ] AI summary of a medical record (diagnoses, medications, follow-up)
-- [ ] Ask a question about a record, AI explains in plain language
-- [ ] Unique titles/descriptions for public pages (/, /auth, /privacy)
-- [ ] Connect Google Search Console (verify site, submit sitemap)
-- [ ] Add /privacy to sitemap
-- [ ] Word (DOC/DOCX) text extraction for AI
+- [x] AI summary of a medical record (diagnoses, medications, follow-up)
+- [x] Ask a question about a record, AI explains in plain language
+- [x] Unique titles/descriptions for public pages (/, /auth, /privacy)
+- [ ] Google Search Console — connected, code added; waiting for owner to publish, then verify + submit sitemap
+- [x] Add /privacy to sitemap
+- [x] Word (DOC/DOCX) text extraction for AI
