@@ -3,6 +3,7 @@ import { createOpenAI } from "@ai-sdk/openai";
 import { streamText } from "ai";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 import { createLovableAiGatewayRunIdFetch } from "./ai/run-id";
+import { docToText, docxToText } from "./word-text";
 
 const MODEL = "openai/gpt-6-astra";
 
@@ -41,15 +42,25 @@ export const analyzeRecord = createServerFn({ method: "POST" })
 
     const ext = rec.document.split(".").pop()?.toLowerCase() ?? "";
     const imageTypes: Record<string, string> = { png: "image/png", jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp", gif: "image/gif" };
-    if (ext !== "pdf" && !imageTypes[ext]) {
-      return { error: "AI reading works for PDFs and photos (JPG, PNG, WEBP). Word files aren't supported yet." };
+    const isWord = ext === "doc" || ext === "docx";
+    if (ext !== "pdf" && !imageTypes[ext] && !isWord) {
+      return { error: "AI reading works for PDFs, Word files and photos (JPG, PNG, WEBP)." };
     }
 
     const { data: blob, error: dlErr } = await supabase.storage.from("medical-documents").download(rec.document);
     if (dlErr || !blob) return { error: "Could not open the document." };
-    const b64 = toBase64(new Uint8Array(await blob.arrayBuffer()));
+    const bytes = new Uint8Array(await blob.arrayBuffer());
+    let wordText = "";
+    if (isWord) {
+      try { wordText = ext === "docx" ? docxToText(bytes) : docToText(bytes); } catch { wordText = ""; }
+      if (wordText.length < 20) return { error: "Couldn't read text from this Word file. Try saving it as PDF and uploading again." };
+      wordText = wordText.slice(0, 60000);
+    }
+    const b64 = isWord ? "" : toBase64(bytes);
 
-    const filePart = ext === "pdf"
+    const filePart = isWord
+      ? ({ type: "text", text: `--- Document text ---\n${wordText}` } as const)
+      : ext === "pdf"
       ? ({ type: "file", filename: `${rec.name}.pdf`, data: b64, mediaType: "application/pdf" } as const)
       : ({ type: "image", image: new URL(`data:${imageTypes[ext]};base64,${b64}`) } as const);
 
