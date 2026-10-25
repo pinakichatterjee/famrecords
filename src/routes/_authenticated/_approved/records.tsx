@@ -17,7 +17,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
-export const Route = createFileRoute("/_authenticated/records")({
+export const Route = createFileRoute("/_authenticated/_approved/records")({
   head: () => ({ meta: [{ title: "Medical Records — FamRecords" }, { name: "description", content: "Upload, filter and view your family's medical records." }] }),
   component: RecordsPage,
 });

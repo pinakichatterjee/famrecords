@@ -13,10 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as PrivacyRouteImport } from './routes/privacy'
-import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
-import { Route as AuthenticatedMembersRouteImport } from './routes/_authenticated/members'
-import { Route as AuthenticatedRecordsRouteImport } from './routes/_authenticated/records'
+import { Route as AuthenticatedApprovedRouteImport } from './routes/_authenticated/_approved'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedApprovedDashboardRouteImport } from './routes/_authenticated/_approved/dashboard'
+import { Route as AuthenticatedApprovedMembersRouteImport } from './routes/_authenticated/_approved/members'
+import { Route as AuthenticatedApprovedRecordsRouteImport } from './routes/_authenticated/_approved/records'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,19 +39,13 @@ const PrivacyRoute = PrivacyRouteImport.update({
   path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const AuthenticatedApprovedRoute = AuthenticatedApprovedRouteImport.update({
+  id: '/_approved',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
-const AuthenticatedMembersRoute = AuthenticatedMembersRouteImport.update({
-  id: '/members',
-  path: '/members',
-  getParentRoute: () => AuthenticatedRouteRoute,
-} as any)
-const AuthenticatedRecordsRoute = AuthenticatedRecordsRouteImport.update({
-  id: '/records',
-  path: '/records',
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
@@ -57,24 +53,44 @@ const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
   path: '/settings',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedApprovedDashboardRoute =
+  AuthenticatedApprovedDashboardRouteImport.update({
+    id: '/dashboard',
+    path: '/dashboard',
+    getParentRoute: () => AuthenticatedApprovedRoute,
+  } as any)
+const AuthenticatedApprovedMembersRoute =
+  AuthenticatedApprovedMembersRouteImport.update({
+    id: '/members',
+    path: '/members',
+    getParentRoute: () => AuthenticatedApprovedRoute,
+  } as any)
+const AuthenticatedApprovedRecordsRoute =
+  AuthenticatedApprovedRecordsRouteImport.update({
+    id: '/records',
+    path: '/records',
+    getParentRoute: () => AuthenticatedApprovedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/members': typeof AuthenticatedMembersRoute
-  '/records': typeof AuthenticatedRecordsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/dashboard': typeof AuthenticatedApprovedDashboardRoute
+  '/members': typeof AuthenticatedApprovedMembersRoute
+  '/records': typeof AuthenticatedApprovedRecordsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
-  '/dashboard': typeof AuthenticatedDashboardRoute
-  '/members': typeof AuthenticatedMembersRoute
-  '/records': typeof AuthenticatedRecordsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/settings': typeof AuthenticatedSettingsRoute
+  '/dashboard': typeof AuthenticatedApprovedDashboardRoute
+  '/members': typeof AuthenticatedApprovedMembersRoute
+  '/records': typeof AuthenticatedApprovedRecordsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -82,10 +98,12 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/privacy': typeof PrivacyRoute
-  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
-  '/_authenticated/members': typeof AuthenticatedMembersRoute
-  '/_authenticated/records': typeof AuthenticatedRecordsRoute
+  '/_authenticated/_approved': typeof AuthenticatedApprovedRouteWithChildren
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRoute
+  '/_authenticated/_approved/dashboard': typeof AuthenticatedApprovedDashboardRoute
+  '/_authenticated/_approved/members': typeof AuthenticatedApprovedMembersRoute
+  '/_authenticated/_approved/records': typeof AuthenticatedApprovedRecordsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -93,29 +111,33 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/privacy'
+    | '/admin'
+    | '/settings'
     | '/dashboard'
     | '/members'
     | '/records'
-    | '/settings'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/privacy'
+    | '/admin'
+    | '/settings'
     | '/dashboard'
     | '/members'
     | '/records'
-    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
     | '/privacy'
-    | '/_authenticated/dashboard'
-    | '/_authenticated/members'
-    | '/_authenticated/records'
+    | '/_authenticated/_approved'
+    | '/_authenticated/admin'
     | '/_authenticated/settings'
+    | '/_authenticated/_approved/dashboard'
+    | '/_authenticated/_approved/members'
+    | '/_authenticated/_approved/records'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -155,25 +177,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/dashboard': {
-      id: '/_authenticated/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+    '/_authenticated/_approved': {
+      id: '/_authenticated/_approved'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedApprovedRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
-    '/_authenticated/members': {
-      id: '/_authenticated/members'
-      path: '/members'
-      fullPath: '/members'
-      preLoaderRoute: typeof AuthenticatedMembersRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/records': {
-      id: '/_authenticated/records'
-      path: '/records'
-      fullPath: '/records'
-      preLoaderRoute: typeof AuthenticatedRecordsRouteImport
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/settings': {
@@ -183,20 +198,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSettingsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/_approved/dashboard': {
+      id: '/_authenticated/_approved/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedApprovedDashboardRouteImport
+      parentRoute: typeof AuthenticatedApprovedRoute
+    }
+    '/_authenticated/_approved/members': {
+      id: '/_authenticated/_approved/members'
+      path: '/members'
+      fullPath: '/members'
+      preLoaderRoute: typeof AuthenticatedApprovedMembersRouteImport
+      parentRoute: typeof AuthenticatedApprovedRoute
+    }
+    '/_authenticated/_approved/records': {
+      id: '/_authenticated/_approved/records'
+      path: '/records'
+      fullPath: '/records'
+      preLoaderRoute: typeof AuthenticatedApprovedRecordsRouteImport
+      parentRoute: typeof AuthenticatedApprovedRoute
+    }
   }
 }
 
+interface AuthenticatedApprovedRouteChildren {
+  AuthenticatedApprovedDashboardRoute: typeof AuthenticatedApprovedDashboardRoute
+  AuthenticatedApprovedMembersRoute: typeof AuthenticatedApprovedMembersRoute
+  AuthenticatedApprovedRecordsRoute: typeof AuthenticatedApprovedRecordsRoute
+}
+
+const AuthenticatedApprovedRouteChildren: AuthenticatedApprovedRouteChildren = {
+  AuthenticatedApprovedDashboardRoute: AuthenticatedApprovedDashboardRoute,
+  AuthenticatedApprovedMembersRoute: AuthenticatedApprovedMembersRoute,
+  AuthenticatedApprovedRecordsRoute: AuthenticatedApprovedRecordsRoute,
+}
+
+const AuthenticatedApprovedRouteWithChildren =
+  AuthenticatedApprovedRoute._addFileChildren(
+    AuthenticatedApprovedRouteChildren,
+  )
+
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
-  AuthenticatedMembersRoute: typeof AuthenticatedMembersRoute
-  AuthenticatedRecordsRoute: typeof AuthenticatedRecordsRoute
+  AuthenticatedApprovedRoute: typeof AuthenticatedApprovedRouteWithChildren
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
-  AuthenticatedMembersRoute: AuthenticatedMembersRoute,
-  AuthenticatedRecordsRoute: AuthenticatedRecordsRoute,
+  AuthenticatedApprovedRoute: AuthenticatedApprovedRouteWithChildren,
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
 }
 

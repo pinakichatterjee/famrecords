@@ -17,7 +17,7 @@ import {
   AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export const Route = createFileRoute("/_authenticated/members")({
+export const Route = createFileRoute("/_authenticated/_approved/members")({
   head: () => ({ meta: [{ title: "Family Members — FamRecords" }, { name: "description", content: "Add and manage the family members whose health records you keep." }] }),
   component: MembersPage,
 });

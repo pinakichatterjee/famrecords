@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Users, FileText, Settings, ArrowRight } from "lucide-react";
 import { membersQuery, recordsQuery } from "@/lib/data";
 
-export const Route = createFileRoute("/_authenticated/dashboard")({
+export const Route = createFileRoute("/_authenticated/_approved/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — FamRecords" }, { name: "description", content: "Your FamRecords overview of members and medical records." }] }),
   component: Dashboard,
 });
