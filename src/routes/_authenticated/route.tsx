@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, redirect, useNavigate } from "@tanstack/react-router";
-import { useQueryClient } from "@tanstack/react-query";
-import { LayoutDashboard, Users, FileText, Settings, LogOut } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { LayoutDashboard, Users, FileText, Settings, LogOut, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-lockup.png";
@@ -25,6 +25,26 @@ const nav = [
 function Layout() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+
+  const { data: isAdmin } = useQuery({
+    queryKey: ["my-admin-role"],
+    queryFn: async () => {
+      const { data: u } = await supabase.auth.getUser();
+      if (!u.user) return false;
+      const { data } = await supabase
+        .from("user_roles")
+        .select("role")
+        .eq("user_id", u.user.id)
+        .eq("role", "admin")
+        .maybeSingle();
+      return !!data;
+    },
+  });
+
+  const items = isAdmin
+    ? [...nav, { to: "/admin", label: "Admin", icon: ShieldCheck }]
+    : [...nav];
+
   const signOut = async () => {
     await queryClient.cancelQueries();
     queryClient.clear();
@@ -39,7 +59,7 @@ function Layout() {
             <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-8 w-auto" />
           </Link>
           <nav className="hidden gap-1 md:flex">
-            {nav.map((n) => (
+            {items.map((n) => (
               <Link
                 key={n.to}
                 to={n.to}
@@ -58,8 +78,12 @@ function Layout() {
       <main className="mx-auto max-w-[1200px] px-4 py-8">
         <Outlet />
       </main>
-      <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t bg-card md:hidden">
-        {nav.map((n) => (
+      <nav
+        className={`fixed inset-x-0 bottom-0 z-40 grid border-t bg-card md:hidden ${
+          items.length === 5 ? "grid-cols-5" : "grid-cols-4"
+        }`}
+      >
+        {items.map((n) => (
           <Link
             key={n.to}
             to={n.to}
