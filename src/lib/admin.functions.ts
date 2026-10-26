@@ -18,6 +18,7 @@ async function requireAdmin(context: AdminContext) {
 
 export const listUsers = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => input)
   .handler(async ({ context }) => {
     await requireAdmin(context);
     const [{ data: profiles, error }, { data: roles }] = await Promise.all([
