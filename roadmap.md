@@ -12,6 +12,8 @@
 
 ## In progress
 - [ ] Razorpay payments — needs owner's Razorpay keys and price/plan details
+- [ ] Admin panel: approve new users, grant/revoke admin; users see only their own panel (built, verifying)
+- [ ] AdSense ads — needs owner's approved AdSense account + publisher ID (ca-pub-…); ads only on public pages, never inside signed-in record pages
 - [x] AI summary of a medical record (diagnoses, medications, follow-up)
 - [x] Ask a question about a record, AI explains in plain language
 - [x] Unique titles/descriptions for public pages (/, /auth, /privacy)
