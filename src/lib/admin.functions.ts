@@ -1,10 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
+import type { Database } from "@/integrations/supabase/types";
 
 type AdminContext = {
-  supabase: {
-    rpc: (fn: string, args: Record<string, unknown>) => Promise<{ data: unknown }>;
-  };
+  supabase: SupabaseClient<Database>;
   userId: string;
 };
 
@@ -18,6 +18,7 @@ async function requireAdmin(context: AdminContext) {
 
 export const listUsers = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
+  .inputValidator((input: unknown) => input)
   .handler(async ({ context }) => {
     await requireAdmin(context);
     const [{ data: profiles, error }, { data: roles }] = await Promise.all([
