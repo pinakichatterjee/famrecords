@@ -11,8 +11,8 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
-- [ ] Stripe for FamRecords — owner asked to enable Stripe; India seller, so built-in seamless Stripe is unavailable: needs owner's own verified Stripe India account, then connect its key
-- [ ] First sign-up campaign (families in India) — channel recommendation, draft creative, conversion tracking; no launch or spend change without owner approval
+- [ ] Stripe for FamRecords — owner chose to connect their own Stripe India key, but the secure key form was closed before a key was entered; nothing saved. Retry when the owner asks.
+- [ ] First sign-up campaign (families in India) — channel agreed: Facebook & Instagram ads. Meta account link card was declined, so no ad account yet; creative + tracking prep continues in chat. No launch or spend without owner approval.
 - [ ] Razorpay payments — needs owner's Razorpay keys and price/plan details
 - [ ] Admin panel: approve new users, grant/revoke admin; users see only their own panel (built, verifying)
 - [ ] AdSense ads — needs owner's approved AdSense account + publisher ID (ca-pub-…); ads only on public pages, never inside signed-in record pages
