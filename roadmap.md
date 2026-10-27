@@ -11,6 +11,10 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
+- [ ] USD 29 subscription — billing interval and paid benefits need confirmation; payment credentials not connected
+- [ ] Add signed-in password change and email password recovery
+- [ ] Prepare inactive consent-aware sign-up measurement; activation requires explicit approval and Meta eligibility checks
+- [ ] Diagnose admin access and expose actionable errors
 - [ ] Stripe for FamRecords — owner chose to connect their own Stripe India key, but the secure key form was closed before a key was entered; nothing saved. Retry when the owner asks.
 - [ ] First sign-up campaign (families in India) — channel agreed: Facebook & Instagram ads. Meta account link card was declined, so no ad account yet; creative + tracking prep continues in chat. No launch or spend without owner approval.
 - [ ] Razorpay payments — needs owner's Razorpay keys and price/plan details

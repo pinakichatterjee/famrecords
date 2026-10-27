@@ -11,6 +11,9 @@ export const Route = createFileRoute("/_authenticated/admin")({
     meta: [
       { title: "Admin — FamRecords" },
       { name: "description", content: "Approve new FamRecords users and manage admins." },
+      { property: 'og:title', content: 'Admin — FamRecords' },
+      { property: 'og:description', content: 'Approve new FamRecords users and manage admins.' },
+      { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' },
     ],
   }),
   component: AdminPage,
@@ -28,12 +31,13 @@ function AdminPage() {
     queryFn: async () => {
       const { data: u } = await supabase.auth.getUser();
       if (!u.user) return false;
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", u.user.id)
         .eq("role", "admin")
         .maybeSingle();
+      if (error) throw error;
       return !!data;
     },
   });
@@ -44,7 +48,7 @@ function AdminPage() {
     enabled: isAdmin === true,
   });
 
-  const refresh = () => queryClient.invalidateQueries({ queryKey: ["admin-users"] });
+  const refresh = () => queryClient.invalidateQueries();
 
   const toggleApproved = async (userId: string, approved: boolean) => {
     try {
@@ -91,6 +95,10 @@ function AdminPage() {
           Approve new sign-ups and manage who can use FamRecords.
         </p>
       </div>
+      {usersQuery.isPending && <p role="status">Loading users…</p>}
+      {usersQuery.isError && <div role="alert" className="space-y-3 text-destructive"><p>{usersQuery.error.message}</p><Button variant="outline" onClick={() => usersQuery.refetch()}>Try again</Button></div>}
+      <section className="space-y-2 border-t pt-4"><h2 className="text-xl font-semibold">Subscriptions</h2><p className="text-muted-foreground">US$29 plan pending billing period, benefits and payment setup. No paid subscriptions have been enabled.</p></section>
+      <section className="space-y-2 border-t pt-4"><h2 className="text-xl font-semibold">Visitors</h2><p className="text-muted-foreground">Visitor totals are not connected to this panel yet.</p></section>
       <div className="overflow-x-auto rounded-xl border bg-card shadow-soft">
         <table className="w-full text-left text-base">
           <thead>
