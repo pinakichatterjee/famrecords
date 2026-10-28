@@ -18,7 +18,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/_approved/records")({
-  head: () => ({ meta: [{ title: "Medical Records — FamRecords" }, { name: "description", content: "Upload, filter and view your family's medical records." }] }),
+  head: () => ({ meta: [{ title: "Medical Records — FamRecords" }, { name: "description", content: "Upload, filter and view your family's medical records." }, { property: "og:title", content: "Medical Records — FamRecords" }, { property: "og:description", content: "Upload, filter and view your family's medical records." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: RecordsPage,
 });
 

@@ -1,5 +1,3 @@
-export const subscriptionOffer = { amount: 29, currency: 'USD', interval: null } as const;
-
 export function assertAdminChange(actorId: string, targetId: string, enabled: boolean) {
   if (actorId === targetId && !enabled) throw new Error("You can't remove your own admin access");
 }

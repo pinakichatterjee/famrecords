@@ -97,7 +97,6 @@ function AdminPage() {
       </div>
       {usersQuery.isPending && <p role="status">Loading users…</p>}
       {usersQuery.isError && <div role="alert" className="space-y-3 text-destructive"><p>{usersQuery.error.message}</p><Button variant="outline" onClick={() => usersQuery.refetch()}>Try again</Button></div>}
-      <section className="space-y-2 border-t pt-4"><h2 className="text-xl font-semibold">Subscriptions</h2><p className="text-muted-foreground">US$29 plan pending billing period, benefits and payment setup. No paid subscriptions have been enabled.</p></section>
       <section className="space-y-2 border-t pt-4"><h2 className="text-xl font-semibold">Visitors</h2><p className="text-muted-foreground">Visitor totals are not connected to this panel yet.</p></section>
       <div className="overflow-x-auto rounded-xl border bg-card shadow-soft">
         <table className="w-full text-left text-base">

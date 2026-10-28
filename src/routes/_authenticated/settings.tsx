@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordChangeForm } from '@/components/PasswordChangeForm';
-import { subscriptionOffer } from '@/lib/account-rules';
 
 export const Route = createFileRoute("/_authenticated/settings")({
-  head: () => ({ meta: [{ title: "Settings — FamRecords" }, { name: "description", content: "Manage your FamRecords email, password and subscription." }, { property: 'og:title', content: 'Settings — FamRecords' }, { property: 'og:description', content: 'Manage your FamRecords email, password and subscription.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' }] }),
+  head: () => ({ meta: [{ title: "Settings — FamRecords" }, { name: "description", content: "Manage your FamRecords account email and password." }, { property: 'og:title', content: 'Settings — FamRecords' }, { property: 'og:description', content: 'Manage your FamRecords account email and password.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' }] }),
   component: SettingsPage,
 });
 
@@ -51,11 +50,6 @@ function SettingsPage() {
         </div>
       </form>
       <PasswordChangeForm />
-      <section className="space-y-3 border-t pt-6">
-        <h2 className="text-xl font-semibold">Subscription</h2>
-        <p className="text-2xl font-bold">US${subscriptionOffer.amount}</p>
-        <p className="text-muted-foreground">Not available yet. Billing period and plan benefits are awaiting confirmation. No payment will be collected.</p>
-      </section>
     </div>
   );
 }

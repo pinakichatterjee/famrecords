@@ -1,11 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { assertAdminChange, subscriptionOffer, validatePassword } from '@/lib/account-rules';
+import { assertAdminChange, validatePassword } from '@/lib/account-rules';
 import { mayReportSignup, signupTracking } from '@/lib/signup-tracking';
 
 describe('Account requirements', () => {
-  it('keeps the requested USD 29 price without inventing an interval', () => {
-    expect(subscriptionOffer).toEqual({ amount: 29, currency: 'USD', interval: null });
-  });
   it('prevents admins removing their own access', () => {
     expect(() => assertAdminChange('owner', 'owner', false)).toThrow();
     expect(() => assertAdminChange('owner', 'other', false)).not.toThrow();
