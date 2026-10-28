@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery, useQueryClient } from "@tanstack/react-query";
 import { useServerFn } from '@tanstack/react-start';
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles, Download, Plus, ClipboardList } from "lucide-react";
 import { toast } from "sonner";
@@ -47,6 +47,7 @@ function RecordsPage() {
   const deleteEvent = useServerFn(deleteHealthEvent);
   const [language, setLanguage] = useState<HealthLanguage>('en');
   const c = healthCopy[language];
+  useEffect(() => { if (language === 'bn') import('@/lib/visit-pack-pdf').then(m => m.loadHealthFont()).catch(() => toast.error('Could not load Bengali font.')); }, [language]);
   const [start, setStart] = useState(''); const [end, setEnd] = useState('');
   const [eventDialog, setEventDialog] = useState<{ event: HealthEvent | null } | null>(null);
   const [packOpen, setPackOpen] = useState(false);
@@ -240,12 +241,12 @@ function RecordsPage() {
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-h-[90vh] overflow-y-auto">
-          <DialogHeader><DialogTitle>{editId ? "Edit medical record" : "Upload medical record"}</DialogTitle></DialogHeader>
+          <DialogHeader><DialogTitle>{editId ? (language === 'bn' ? 'নথি সম্পাদনা' : 'Edit medical record') : c.upload}</DialogTitle></DialogHeader>
           <form onSubmit={submit} className="space-y-4">
             <div className="space-y-2">
-              <Label>Family member</Label>
+              <Label>{c.member}</Label>
               <Select value={memberId} onValueChange={setMemberId}>
-                <SelectTrigger><SelectValue placeholder="Select member" /></SelectTrigger>
+                <SelectTrigger aria-label={c.member}><SelectValue placeholder={c.selectMember} /></SelectTrigger>
                 <SelectContent>{members.map((m) => <SelectItem key={m.id} value={m.id}>{m.member_name}</SelectItem>)}</SelectContent>
               </Select>
             </div>
@@ -263,23 +264,23 @@ function RecordsPage() {
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="rn">Record name</Label>
+              <Label htmlFor="rn">{language === 'bn' ? 'নথির নাম' : 'Record name'}</Label>
               <Input id="rn" required value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Blood test – March" />
             </div>
             <div className="space-y-2">
-              <Label>Record type</Label>
+              <Label>{c.type}</Label>
               <Select value={recordType} onValueChange={setRecordType}>
-                <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
-                <SelectContent>{RECORD_TYPES.map((t) => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                <SelectTrigger aria-label={c.type}><SelectValue placeholder={c.type} /></SelectTrigger>
+                <SelectContent>{RECORD_TYPES.map((t) => <SelectItem key={t} value={t}>{categoryLabel(t, language)}</SelectItem>)}</SelectContent>
               </Select>
             </div>
             <div className="space-y-2">
-              <Label>Visit date</Label>
+              <Label>{c.documentDate}</Label>
               <Popover>
                 <PopoverTrigger asChild>
                   <Button type="button" variant="outline" className={cn("w-full justify-start text-left font-normal", !visitDate && "text-muted-foreground")}>
                     <CalendarIcon className="h-4 w-4" />
-                    {visitDate ? format(visitDate, "PPP") : <span>Pick a date</span>}
+                    {visitDate ? healthDate(format(visitDate, 'yyyy-MM-dd'), language) : <span>{c.date}</span>}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
@@ -288,11 +289,11 @@ function RecordsPage() {
               </Popover>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="pv">Healthcare provider</Label>
+              <Label htmlFor="pv">{c.provider}</Label>
               <Input id="pv" value={provider} onChange={(e) => setProvider(e.target.value)} placeholder="e.g. Dr. Sen, Apollo Hospital" list="providers" />
               <datalist id="providers">{providers.map((p) => <option key={p} value={p} />)}</datalist>
             </div>
-            <DialogFooter><Button type="submit" disabled={saving}>{saving ? "Saving…" : editId ? "Save" : "Upload"}</Button></DialogFooter>
+            <DialogFooter><Button type="submit" disabled={saving}>{saving ? c.saving : editId ? c.save : language === 'bn' ? 'আপলোড' : 'Upload'}</Button></DialogFooter>
           </form>
         </DialogContent>
       </Dialog>
