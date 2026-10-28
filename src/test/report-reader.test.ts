@@ -1,12 +1,13 @@
 import { describe, expect, it } from 'vitest';
+import type { Extraction } from '@/lib/report-reader';
 import { rateLimitFailure, validateExtraction, validateFile, validateCorrection } from '@/lib/report-reader';
 
-const ok = () => ({
+const ok = (): Extraction => ({
   documentType: { value: 'Complete Blood Count', certainty: 'printed', sourceQuote: 'COMPLETE BLOOD COUNT' },
   reportDate: { value: null, certainty: 'unknown', sourceQuote: null },
   tests: [{ name: 'Haemoglobin', value: '13.2', unit: 'g/dL', referenceRange: '13.0-17.0', certainty: 'printed', sourceQuote: 'Haemoglobin 13.2 g/dL', location: 'page 1' }],
-  limitations: [],
-});
+  limitations: [] as string[],
+}) as Extraction;
 
 describe('report reader', () => {
   it('accepts valid output with explicit unknowns', () => { expect(validateExtraction(ok()).tests).toHaveLength(1); });
@@ -40,4 +41,4 @@ describe('report reader', () => {
     const e = ok(); e.reportDate = { value: '1/2/26', certainty: 'printed', sourceQuote: 'x' };
     expect(() => validateCorrection(e)).toThrow();
   });
-});
+}) as Extraction;
