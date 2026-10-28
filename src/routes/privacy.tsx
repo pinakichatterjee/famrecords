@@ -55,6 +55,13 @@ const sections = [
     ],
   },
   {
+    title: "Optional AI visit summaries and plans",
+    body: [
+      "Only after you agree, the names, dates and reviewed values of records you select, plus notes you type, are sent through Lovable AI to write a plain-language summary. Summaries are saved privately, visible only to you, and deleted when you delete them, the family member or any source record.",
+      "We count how many AI readings and summaries you use each month to apply your plan's limits. If you pay for Premium Family, payments are handled by Razorpay; we store only your plan status, not card or bank details.",
+    ],
+  },
+  {
     title: "What we never do",
     body: [
       "We do not sell, rent or share your personal information or medical records with advertisers or data brokers.",
