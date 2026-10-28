@@ -157,3 +157,10 @@
 @utility bg-hero {
   background-image: var(--gradient-hero);
 }
+
+.health-experience[lang="bn"], .visit-pack-preview {
+  font-family: "FamHealth", var(--font-body);
+}
+.health-experience[lang="bn"] h1, .health-experience[lang="bn"] h2, .health-experience[lang="bn"] h3, .visit-pack-preview h3 {
+  font-family: "FamHealth", var(--font-heading);
+}

@@ -55,6 +55,63 @@ export type Database = {
           },
         ]
       }
+      health_events: {
+        Row: {
+          created_at: string
+          event_date: string
+          event_time: string | null
+          event_type: string
+          family_member_id: string
+          id: string
+          notes: string | null
+          provider: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          event_date: string
+          event_time?: string | null
+          event_type: string
+          family_member_id: string
+          id?: string
+          notes?: string | null
+          provider?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          event_date?: string
+          event_time?: string | null
+          event_type?: string
+          family_member_id?: string
+          id?: string
+          notes?: string | null
+          provider?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_events_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "health_events_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_records: {
         Row: {
           ai_summary: string | null
