@@ -15,3 +15,4 @@
 - Build doctor-visit packs from explicit source metadata and manual notes only; approval fingerprints must invalidate after edits and AI summaries must never enter a pack.
 - Generate visit-pack PDFs in the browser using shaped high-resolution page images and the licensed Bengali font; this preserves Bengali conjunct rendering without exposing clinical drafts to a server, but PDF text is not searchable.
 - Keep AI explanations ephemeral and strictly structured with source quotes, processing consent and owner checks; never render legacy unrestricted cached summaries or add generated claims to visit packs.
+- Keep AI report extractions in report_extractions: server writes AI output with the admin client only after a caller-scoped ownership check; users may only save reviewed corrections (trigger-enforced). Why: AI output stays untampered and every value is human-reviewed; extractions never enter visit packs.

@@ -27,5 +27,5 @@
 - [x] Add /privacy to sitemap
 - [x] Word (DOC/DOCX) text extraction for AI
 
-- [ ] AI Report Reader (extract values, review/correct) — in progress
+- [x] AI Report Reader (extract values, review/correct)
 - [ ] AI Doctor-Visit Summaries (Bengali/English, selected records + notes, review before export; separate from AI-free visit packs) — needs plan
