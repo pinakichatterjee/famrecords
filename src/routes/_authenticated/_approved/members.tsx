@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 export const Route = createFileRoute("/_authenticated/_approved/members")({
-  head: () => ({ meta: [{ title: "Family Members — FamRecords" }, { name: "description", content: "Add and manage the family members whose health records you keep." }] }),
+  head: () => ({ meta: [{ title: "Family Members — FamRecords" }, { name: "description", content: "Add and manage the family members whose health records you keep." }, { property: "og:title", content: "Family Members — FamRecords" }, { property: "og:description", content: "Add and manage the family members whose health records you keep." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   component: MembersPage,
 });
 
