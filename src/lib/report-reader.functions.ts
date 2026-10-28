@@ -5,6 +5,7 @@ import { z } from 'zod';
 import { requireSupabaseAuth } from '@/integrations/supabase/auth-middleware';
 import { createLovableAiGatewayRunIdFetch } from './ai/run-id';
 import { hasDocumentSignature } from './health-rules';
+import { aiAllowanceProblem, effectivePlan, monthStart } from './plans';
 import { extractionSchema, rateLimitFailure, REPORT_TYPES, validateCorrection, validateExtraction, validateFile, type Extraction, type FailureCode } from './report-reader';
 
 const MODEL = 'openai/gpt-6-astra';
@@ -56,6 +57,9 @@ export const extractReport = createServerFn({ method: 'POST' }).middleware([requ
     const { data: attempts } = await supabaseAdmin.from('report_extraction_attempts').select('created_at').eq('user_id', userId).gte('created_at', since);
     const limited = rateLimitFailure((attempts ?? []).map(a => new Date(a.created_at)), new Date(), existing?.attempt_count ?? 0);
     if (limited) return fail(limited, false);
+    const { data: sub } = await supabase.from('subscriptions').select('plan, status, current_period_end').eq('user_id', userId).maybeSingle();
+    const { count: used } = await supabaseAdmin.from('ai_usage').select('id', { count: 'exact', head: true }).eq('user_id', userId).eq('kind', 'report_reader').gte('created_at', monthStart());
+    if (aiAllowanceProblem(effectivePlan(sub), 'report_reader', used ?? 0)) return fail('plan_limit', false);
 
     const { data: blob } = await supabase.storage.from('medical-documents').download(rec.document);
     if (!blob) return fail('unreadable', false);
@@ -67,6 +71,7 @@ export const extractReport = createServerFn({ method: 'POST' }).middleware([requ
     const apiKey = process.env['LOVABLE_API_KEY'];
     if (!apiKey) return fail('ai_unavailable', false);
     await supabaseAdmin.from('report_extraction_attempts').insert({ user_id: userId });
+    await supabaseAdmin.from('ai_usage').insert({ user_id: userId, kind: 'report_reader' });
     await supabaseAdmin.from('report_extractions').upsert({
       medical_record_id: rec.id, user_id: userId, status: 'processing', failure_code: null,
       attempt_count: (existing?.attempt_count ?? 0) + 1,

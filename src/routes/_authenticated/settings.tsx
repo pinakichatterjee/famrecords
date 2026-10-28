@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordChangeForm } from '@/components/PasswordChangeForm';
+import { PlanCard } from '@/components/PlanCard';
 
 export const Route = createFileRoute("/_authenticated/settings")({
   head: () => ({ meta: [{ title: "Settings — FamRecords" }, { name: "description", content: "Manage your FamRecords account email and password." }, { property: 'og:title', content: 'Settings — FamRecords' }, { property: 'og:description', content: 'Manage your FamRecords account email and password.' }, { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' }] }),
@@ -36,6 +37,7 @@ function SettingsPage() {
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-base text-muted-foreground">Manage your account details.</p>
       </div>
+      <PlanCard />
       <form onSubmit={save} className="space-y-6 rounded-xl border bg-card p-6">
         <div className="space-y-1">
           <h2 className="text-xl font-semibold">Change email</h2>

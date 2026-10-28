@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { listUsers, setUserAdmin, setUserApproved } from "@/lib/admin.functions";
+import { adminListPlans, adminSetPremium } from "@/lib/plans.functions";
 import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/_authenticated/admin")({
@@ -25,6 +26,8 @@ function AdminPage() {
   const fetchUsers = useServerFn(listUsers);
   const approveFn = useServerFn(setUserApproved);
   const adminFn = useServerFn(setUserAdmin);
+  const plansFn = useServerFn(adminListPlans);
+  const premiumFn = useServerFn(adminSetPremium);
 
   const { data: isAdmin, isLoading: checkingRole } = useQuery({
     queryKey: ["my-admin-role"],
@@ -47,6 +50,13 @@ function AdminPage() {
     queryFn: () => fetchUsers({ data: {} }),
     enabled: isAdmin === true,
   });
+
+  const plansQuery = useQuery({ queryKey: ["admin-plans"], queryFn: () => plansFn(), enabled: isAdmin === true });
+  const planOf = (id: string) => plansQuery.data?.find((p) => p.userId === id);
+  const togglePremium = async (userId: string, premium: boolean) => {
+    try { await premiumFn({ data: { userId, premium } }); toast.success(premium ? "Premium Family granted." : "Moved to Free."); refresh(); }
+    catch (err) { toast.error((err as Error).message); }
+  };
 
   const refresh = () => queryClient.invalidateQueries();
 
@@ -107,6 +117,7 @@ function AdminPage() {
               <th className="px-4 py-3 font-medium">Joined</th>
               <th className="px-4 py-3 font-medium">Status</th>
               <th className="px-4 py-3 font-medium">Role</th>
+              <th className="px-4 py-3 font-medium">Plan</th>
               <th className="px-4 py-3 font-medium">Actions</th>
             </tr>
           </thead>
@@ -128,6 +139,7 @@ function AdminPage() {
                   )}
                 </td>
                 <td className="px-4 py-3">{u.is_admin ? "Admin" : "User"}</td>
+                <td className="px-4 py-3">{planOf(u.id)?.plan === "premium" ? "Premium" : "Free"}</td>
                 <td className="space-x-2 px-4 py-3">
                   <Button
                     size="sm"
@@ -145,12 +157,15 @@ function AdminPage() {
                   >
                     {u.is_admin ? "Remove admin" : "Make admin"}
                   </Button>
+                  <Button size="sm" variant="outline" disabled={planOf(u.id)?.provider === "razorpay"} onClick={() => togglePremium(u.id, planOf(u.id)?.plan !== "premium")}>
+                    {planOf(u.id)?.plan === "premium" ? "Set Free" : "Give Premium"}
+                  </Button>
                 </td>
               </tr>
             ))}
             {usersQuery.isSuccess && users.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-6 text-center text-muted-foreground">
+                <td colSpan={7} className="px-4 py-6 text-center text-muted-foreground">
                   No users yet.
                 </td>
               </tr>

@@ -6,7 +6,7 @@ export const HOURLY_LIMIT = 10;
 export const DAILY_LIMIT = 30;
 export const MAX_ATTEMPTS_PER_RECORD = 3;
 
-export type FailureCode = 'unsupported_file' | 'too_large' | 'unreadable' | 'malformed_output' | 'rate_limited' | 'attempts_exhausted' | 'credits' | 'ai_unavailable' | 'ai_blocked';
+export type FailureCode = 'unsupported_file' | 'too_large' | 'unreadable' | 'malformed_output' | 'rate_limited' | 'attempts_exhausted' | 'credits' | 'ai_unavailable' | 'ai_blocked' | 'plan_limit';
 export const FAILURE_MESSAGES: Record<FailureCode, string> = {
   unsupported_file: 'Report reading works for PDFs and JPG, PNG or WEBP photos.',
   too_large: 'Reports must be 10 MB or smaller to read.',
@@ -17,6 +17,7 @@ export const FAILURE_MESSAGES: Record<FailureCode, string> = {
   credits: 'AI credits have run out. The app owner must add credits.',
   ai_unavailable: 'The AI service is unavailable right now. Please retry later.',
   ai_blocked: 'AI access is blocked for this account.',
+  plan_limit: "You've used this month's AI report readings for your plan. Premium Family includes more.",
 };
 
 const certainty = z.enum(['printed', 'uncertain', 'unknown']);

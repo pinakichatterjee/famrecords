@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { Plus, Pencil, Trash2 } from "lucide-react";
+import { planLimitMessage } from "@/lib/plans";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import type { Tables } from "@/integrations/supabase/types";
@@ -59,7 +60,7 @@ function MembersPage() {
       ? await supabase.from("family_members").update(payload).eq("id", editing.id)
       : await supabase.from("family_members").insert({ ...payload, user_id: user.id });
     setSaving(false);
-    if (error) { toast.error(error.message); return; }
+    if (error) { toast.error(planLimitMessage(error) ?? error.message); return; }
     toast.success(editing ? "Member updated" : "Member added");
     setOpen(false);
     qc.invalidateQueries({ queryKey: ["members"] });

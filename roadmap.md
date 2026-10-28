@@ -28,13 +28,14 @@
 - [x] Word (DOC/DOCX) text extraction for AI
 
 - [x] AI Report Reader (extract values, review/correct)
-- [ ] AI Doctor-Visit Summaries (Bengali/English, selected records + notes, review before export; separate from AI-free visit packs) — needs plan
+- [x] AI Doctor-Visit Summaries — 17 new tests; live Bengali summary, review lock and second-account denial checked
 
 ## Owner's build order (2026-10-28)
-1. [ ] Audit backend security (incl. second-account isolation test) — in progress
+1. [x] Second-account isolation test passed (full security scan still to run)
 2. [x] Launch AI report reader
-3. [ ] Doctor-visit summaries
-4. [ ] Server-enforced Free vs Premium Family limits (₹149/mo, ₹999/yr; 2 vs 6 members) + billing — needs payment provider keys
+3. [x] Doctor-visit summaries
+4. [x] Server-enforced Free vs Premium limits + admin Premium grant
+4b. [ ] Live Razorpay billing — code ready; waiting for owner's Razorpay keys + plan IDs + webhook secret
 5. [ ] Bengali/English everywhere + reminders
 6. [ ] Pilot paid family plans (payments blocked for India seller; needs Razorpay keys)
 7. [ ] Clinic plan — only with evidence of demand

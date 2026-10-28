@@ -57,6 +57,13 @@
       "when": 1793187591631,
       "tag": "0007_report_extractions",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1793188900112,
+      "tag": "0008_plans_and_visit_summaries",
+      "breakpoints": true
     }
   ]
 }
