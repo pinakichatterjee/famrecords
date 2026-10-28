@@ -34,7 +34,7 @@
 1. [ ] Audit backend security (incl. second-account isolation test) — in progress
 2. [x] Launch AI report reader
 3. [ ] Doctor-visit summaries
-4. [ ] Server-enforced subscription limits
+4. [ ] Server-enforced Free vs Premium Family limits (₹149/mo, ₹999/yr; 2 vs 6 members) + billing — needs payment provider keys
 5. [ ] Bengali/English everywhere + reminders
 6. [ ] Pilot paid family plans (payments blocked for India seller; needs Razorpay keys)
 7. [ ] Clinic plan — only with evidence of demand
