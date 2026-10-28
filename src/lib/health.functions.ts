@@ -1,6 +1,7 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 import { requireSupabaseAuth } from '@/integrations/supabase/auth-middleware';
+import { planLimitMessage } from './plans';
 import { eventSchema, recordDetailsSchema, ownsRelationship, validateDocument, hasDocumentSignature } from './health-rules';
 
 const idSchema = z.object({ id: z.string().uuid() });
@@ -60,6 +61,7 @@ export const saveMedicalRecord = createServerFn({ method: 'POST' }).middleware([
       throw new Error(validation ?? 'File contents do not match the document type.');
     }
     const { data: row, error } = await context.supabase.from('medical_records').insert({ ...values, document, created_by: context.userId }).select('id').single();
+    if (error?.message?.includes('PLAN_LIMIT:')) { await context.supabase.storage.from('medical-documents').remove([document]); throw new Error(planLimitMessage(error)!); }
     if (error || !row) throw new Error('Could not save the uploaded record.');
     return { id: row.id };
   });
