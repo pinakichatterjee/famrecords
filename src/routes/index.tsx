@@ -11,6 +11,8 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "FamRecords — Free family medical records app" },
       { property: "og:description", content: "Keep every family member's reports, prescriptions and scans in one private place. Upload from your phone, search in seconds, and get plain-language AI summaries." },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://www.famrecords.org/icon-512.png" },
+      { name: "twitter:image", content: "https://www.famrecords.org/icon-512.png" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
