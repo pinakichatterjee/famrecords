@@ -141,7 +141,7 @@ function RecordsPage() {
 
   const remove = async (id: string) => {
     if (!confirm("Delete this record?")) return;
-    try { await deleteRecord({ data: { id } }); toast.success('Record deleted'); await qc.invalidateQueries({ queryKey: ['records'] }); }
+    try { const result = await deleteRecord({ data: { id } }); if (result.warning) toast.warning(result.warning); else toast.success('Record deleted'); await qc.invalidateQueries({ queryKey: ['records'] }); }
     catch (error) { toast.error(error instanceof Error ? error.message : 'Could not delete record.'); }
   };
   const removeEvent = async (id: string) => {

@@ -11,7 +11,7 @@
 
 ## In progress
 - [x] Review architecture, live schema and storage; prepare smallest safe Smart Health Timeline + Doctor Visit Pack plan
-- [ ] Implement Smart Health Timeline + Doctor Visit Pack — waiting for approval of the uploaded document's required review-first plan
+- [x] Implement Smart Health Timeline + Doctor Visit Pack — 24 tests passed; signed-in synthetic event/upload/read-back, approved English/Bengali PDF downloads and mobile timeline verified; synthetic data cleaned up. PDF text is image-based, not searchable. Cross-account reads and foreign-member event insert denied. Existing records/accounts retained; advertising inactive.
 - [x] Remove subscription offer; payments, pricing and clinic work deferred. Settings/Admin checked signed-in; 14 regression tests passed
 - [ ] Add signed-in password change and email password recovery
 - [ ] Prepare inactive consent-aware sign-up measurement; activation requires explicit approval and Meta eligibility checks

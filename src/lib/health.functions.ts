@@ -78,9 +78,8 @@ export const deleteMedicalRecord = createServerFn({ method: 'POST' }).middleware
   .inputValidator((input) => idSchema.parse(input)).handler(async ({ data, context }) => {
     const { data: record } = await context.supabase.from('medical_records').select('document').eq('id', data.id).eq('created_by', context.userId).maybeSingle();
     if (!record || record.document.split('/')[0] !== context.userId) throw new Error('Record not available.');
+    const { data: deleted, error } = await context.supabase.from('medical_records').delete().eq('id', data.id).eq('created_by', context.userId).select('id').maybeSingle();
+    if (error || !deleted) throw new Error('Could not delete the record; its document has been kept.');
     const { error: storageError } = await context.supabase.storage.from('medical-documents').remove([record.document]);
-    if (storageError) throw new Error('Could not remove the document; the record has been kept.');
-    const { error } = await context.supabase.from('medical_records').delete().eq('id', data.id).eq('created_by', context.userId);
-    if (error) throw new Error('The file was removed but the record could not be deleted. Retry deletion.');
-    return { ok: true };
+    return { ok: true, warning: storageError ? 'Record deleted, but its private file could not be removed.' : null };
   });
