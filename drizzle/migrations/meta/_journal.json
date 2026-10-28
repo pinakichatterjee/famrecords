@@ -43,6 +43,13 @@
       "when": 1793169116132,
       "tag": "0005_health_timeline_events",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1793169880692,
+      "tag": "0006_ai_provider_access_blocks",
+      "breakpoints": true
     }
   ]
 }

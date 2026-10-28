@@ -41,6 +41,13 @@ const sections = [
     ],
   },
   {
+    title: "Optional AI explanations",
+    body: [
+      "Only after you agree, the selected document is sent through Lovable AI to an AI provider for an informational explanation. Do not submit a document unless you are authorised to share it.",
+      "New explanations and questions are not saved by FamRecords or automatically included in doctor-visit packs. Original documents remain unchanged. AI may misread details; source quotes should be checked against the original. This is not diagnosis or treatment advice.",
+    ],
+  },
+  {
     title: "What we never do",
     body: [
       "We do not sell, rent or share your personal information or medical records with advertisers or data brokers.",
@@ -99,7 +106,7 @@ function PrivacyPage() {
           <p className="text-base text-muted-foreground md:text-lg">
             FamRecords helps you store your family's medical records in one private place. This
             policy explains what information we collect, how it is stored, and the choices you
-            have. Last updated: 23 October 2026.
+            have. Last updated: 28 October 2026.
           </p>
           <div className="space-y-6">
             {sections.map((s) => (

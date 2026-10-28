@@ -1,100 +1,78 @@
-import { useEffect, useState } from "react";
-import { useServerFn } from "@tanstack/react-start";
-import { useQueryClient } from "@tanstack/react-query";
-import { Sparkles, Send, Loader2 } from "lucide-react";
-import { analyzeRecord } from "@/lib/record-ai.functions";
-import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useEffect, useRef, useState } from 'react';
+import { useServerFn } from '@tanstack/react-start';
+import { Sparkles, Send, Loader2, ExternalLink } from 'lucide-react';
+import { analyzeRecord } from '@/lib/record-ai.functions';
+import { getRecordDocument } from '@/lib/health.functions';
+import type { Explanation } from '@/lib/record-explanation';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 
 type Rec = { id: string; name: string; ai_summary: string | null };
-
-function Formatted({ text }: { text: string }) {
-  return (
-    <div className="space-y-1 text-base leading-relaxed">
-      {text.split("\n").map((line, i) => {
-        if (line.startsWith("## ")) return <h3 key={i} className="pt-3 text-lg font-semibold text-primary">{line.slice(3)}</h3>;
-        const clean = line.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^_(.*)_$/, "$1");
-        if (/^\s*[-*] /.test(line)) return <p key={i} className="pl-4">• {clean.replace(/^\s*[-*] /, "")}</p>;
-        if (!line.trim()) return <div key={i} className="h-2" />;
-        return <p key={i} className={line.startsWith("_") ? "pt-2 text-sm text-muted-foreground" : ""}>{clean}</p>;
-      })}
-    </div>
-  );
+function Details({ result, name }: { result: Explanation; name: string }) {
+  return <div className="space-y-5" aria-live="polite">
+    {result.details.map((d, i) => <section key={i} className="space-y-2 border-b pb-4">
+      <p className="text-base leading-relaxed">{d.explanation}</p>
+      <blockquote className="border-l-2 border-primary pl-3 text-sm text-muted-foreground"><p className="whitespace-pre-wrap break-words">“{d.quote}”</p><p className="mt-1">Source: {name} · {d.location}</p></blockquote>
+    </section>)}
+    {result.limitations.length > 0 && <section className="space-y-2"><h3 className="font-semibold">Uncertainty / সীমাবদ্ধতা</h3>{result.limitations.map((s,i) => <p key={i} className="text-sm text-muted-foreground">{s}</p>)}</section>}
+  </div>;
 }
-
 export function RecordAiDialog({ record, onClose }: { record: Rec | null; onClose: () => void }) {
   const run = useServerFn(analyzeRecord);
-  const qc = useQueryClient();
-  const [summary, setSummary] = useState<string | null>(null);
-  const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState<string | null>(null);
-  const [busy, setBusy] = useState<"summary" | "ask" | null>(null);
+  const openDocument = useServerFn(getRecordDocument);
+  const [result, setResult] = useState<Explanation | null>(null);
+  const [question, setQuestion] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [language, setLanguage] = useState<'en' | 'bn'>('en');
+  const [busy, setBusy] = useState(false);
   const [err, setErr] = useState<string | null>(null);
-
+  const generation = useRef(0);
   useEffect(() => {
-    setSummary(record?.ai_summary ?? null); setAnswer(null); setQuestion(""); setErr(null); setBusy(null);
+    generation.current += 1;
+    setResult(null); setQuestion(''); setConsent(false); setErr(null); setBusy(false);
   }, [record?.id]);
-
-  const summarize = async () => {
+  const explain = async (ask = false) => {
+    if (!record || !consent || busy) return;
+    const current = generation.current;
+    setBusy(true); setErr(null); setResult(null);
+    try {
+      const response = await run({ data: { recordId: record.id, consent, language, ...(ask ? { question } : {}) } });
+      if (current !== generation.current) return;
+      if ('error' in response) setErr(response.error ?? 'No explanation was produced.');
+      else setResult(response.explanation);
+    } catch (error) { if (current === generation.current) setErr(error instanceof Error ? error.message : 'No explanation was produced.'); }
+    finally { if (current === generation.current) setBusy(false); }
+  };
+  const viewSource = async () => {
     if (!record) return;
-    setBusy("summary"); setErr(null);
-    try {
-      const r = await run({ data: { recordId: record.id } });
-      if ("error" in r && r.error) setErr(r.error);
-      else if ("text" in r && r.text) { setSummary(r.text); qc.invalidateQueries({ queryKey: ["records"] }); }
-    } catch { setErr("Something went wrong. Please try again."); }
-    setBusy(null);
+    const win = window.open('', '_blank');
+    if (win) win.opener = null;
+    try { const r = await openDocument({ data: { id: record.id } }); if (win) win.location.href = r.url; }
+    catch { win?.close(); setErr('Could not open the original record.'); }
   };
-
-  const ask = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!record || !question.trim()) return;
-    setBusy("ask"); setErr(null); setAnswer(null);
-    try {
-      const r = await run({ data: { recordId: record.id, question } });
-      if ("error" in r && r.error) setErr(r.error);
-      else if ("text" in r && r.text) setAnswer(r.text);
-    } catch { setErr("Something went wrong. Please try again."); }
-    setBusy(null);
-  };
-
-  return (
-    <Dialog open={!!record} onOpenChange={(o) => !o && onClose()}>
-      <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2"><Sparkles className="h-5 w-5 text-primary" /> AI help: {record?.name}</DialogTitle>
-          <DialogDescription>Get a plain-language summary, or ask a question about this record.</DialogDescription>
-        </DialogHeader>
-
-        <section className="space-y-3 rounded-xl bg-secondary p-4">
-          <div className="flex items-center justify-between gap-2">
-            <h2 className="text-lg font-semibold">Summary</h2>
-            <Button size="sm" onClick={summarize} disabled={!!busy}>
-              {busy === "summary" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
-              {summary ? "Refresh" : "Summarise"}
-            </Button>
-          </div>
-          {busy === "summary" ? <p className="text-muted-foreground">Reading the record…</p>
-            : summary ? <Formatted text={summary} />
-            : <p className="text-muted-foreground">Diagnoses, medications and follow-up instructions, in simple words.</p>}
-        </section>
-
-        <form onSubmit={ask} className="space-y-3">
-          <h2 className="text-lg font-semibold">Ask a question</h2>
-          <Textarea value={question} onChange={(e) => setQuestion(e.target.value)} maxLength={1000}
-            placeholder="e.g. What does high HbA1c mean? When should the next check-up be?" />
-          <div className="flex justify-center">
-            <Button type="submit" disabled={!!busy || !question.trim()}>
-              {busy === "ask" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />} Ask
-            </Button>
-          </div>
-          {busy === "ask" && <p className="text-muted-foreground">Thinking…</p>}
-          {answer && <div className="rounded-xl border bg-card p-4"><Formatted text={answer} /></div>}
-        </form>
-
-        {err && <p className="rounded-lg bg-destructive/10 p-3 text-sm text-destructive">{err}</p>}
-      </DialogContent>
-    </Dialog>
-  );
+  return <Dialog open={!!record} onOpenChange={o => { if (!o) onClose(); }}>
+    <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-2xl">
+      <DialogHeader><DialogTitle className="flex items-center gap-2 break-words"><Sparkles className="h-5 w-5 shrink-0 text-primary"/> Record explanation: {record?.name}</DialogTitle>
+        <DialogDescription>Informational only — no diagnoses or treatment recommendations. AI can misread documents; compare every quoted detail with the original.</DialogDescription></DialogHeader>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <Select value={language} onValueChange={v => { setLanguage(v === 'bn' ? 'bn' : 'en'); setResult(null); }} disabled={busy}><SelectTrigger aria-label="Explanation language" className="w-32"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="bn">বাংলা</SelectItem></SelectContent></Select>
+        <Button variant="outline" size="sm" onClick={viewSource}><ExternalLink className="h-4 w-4"/>Original record</Button>
+      </div>
+      <div className="flex items-start gap-3 border-y py-4"><Checkbox id="ai-consent" checked={consent} disabled={busy} onCheckedChange={v => setConsent(v === true)}/><Label htmlFor="ai-consent" className="text-sm leading-relaxed">I agree to send this selected document to the AI provider through Lovable AI for this explanation. I am authorised to share it. Explanations are not saved or added to doctor-visit packs.</Label></div>
+      <div className="flex justify-center"><Button onClick={() => explain()} disabled={!consent || busy}><Sparkles className="h-4 w-4"/>{language === 'bn' ? 'নথি ব্যাখ্যা করুন' : 'Explain record'}</Button></div>
+      <form onSubmit={e => { e.preventDefault(); explain(true); }} className="space-y-3">
+        <Label htmlFor="record-question">Question about the source / নথি সম্পর্কে প্রশ্ন</Label>
+        <Textarea id="record-question" value={question} disabled={busy} onChange={e => setQuestion(e.target.value)} maxLength={1000} placeholder="What does this recorded measurement mean?"/>
+        <div className="flex justify-center"><Button type="submit" variant="outline" disabled={!consent || busy || !question.trim()}><Send className="h-4 w-4"/>Ask about record</Button></div>
+      </form>
+      {busy && <p role="status" className="flex items-center gap-2 text-muted-foreground"><Loader2 className="h-4 w-4 animate-spin"/>Reading selected document…</p>}
+      {result && <Details result={result} name={record?.name ?? ''}/>}
+      {err && <p role="alert" className="text-sm text-destructive">{err}</p>}
+      <p className="text-sm text-muted-foreground">Not medical advice. Missing details are not inferred. Confirm unclear source information with your clinician.</p>
+    </DialogContent>
+  </Dialog>;
 }
