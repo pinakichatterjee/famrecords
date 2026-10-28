@@ -21,7 +21,8 @@ function Dashboard() {
   return (
     <div className="space-y-8">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold">Hello, {name}</h1>
+        <h1 className="text-3xl font-bold">Your family medical records dashboard</h1>
+        <p className="text-muted-foreground">Hello, {name}</p>
         <p className="text-base text-muted-foreground md:text-lg">What would you like to do today?</p>
       </div>
       <div className="grid gap-6 md:grid-cols-3">

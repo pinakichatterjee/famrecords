@@ -83,6 +83,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "FamRecords — Family medical records organiser" },
       { name: "description", content: "Securely store, organise and find medical records for your whole family." },
       { property: "og:type", content: "website" },
+      { property: "og:title", content: "FamRecords — Organise your family's medical records" },
+      { property: "og:description", content: "One private place to store and find every family member's reports, prescriptions and scans." },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "theme-color", content: "#10847E" },
       { name: "google-site-verification", content: "xK9miPxR40TkSht668YwAeJyGXAxDz6t62pQa6Zre20" },
