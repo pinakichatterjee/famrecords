@@ -1,4 +1,4 @@
-export const RECORD_TYPES = ["Lab report", "Prescription", "Scan / Imaging", "Discharge summary", "Vaccination", "Bill / Invoice", "Other"];
+export const RECORD_TYPES = ["Lab report", "Prescription", "Scan / Imaging", "Discharge summary", "Vaccination", "Bill / Invoice", "Consultation", "Hospitalisation", "Other"];
 
 export type FilterableRecord = {
   name: string;
@@ -9,7 +9,7 @@ export type FilterableRecord = {
   created_at: string;
 };
 
-export type RecordFilters = { member: string; type: string; provider: string; search: string };
+export type RecordFilters = { member: string; type: string; provider: string; search: string; start?: string; end?: string };
 
 export function filterRecords<T extends FilterableRecord>(records: T[], f: RecordFilters): T[] {
   const q = f.search.trim().toLowerCase();
@@ -18,7 +18,8 @@ export function filterRecords<T extends FilterableRecord>(records: T[], f: Recor
       (f.member === "all" || r.family_member_id === f.member) &&
       (f.type === "all" || r.record_type === f.type) &&
       (f.provider === "all" || r.provider === f.provider) &&
-      (!q || r.name.toLowerCase().includes(q) || (r.provider ?? "").toLowerCase().includes(q)))
+       (!q || r.name.toLowerCase().includes(q) || (r.provider ?? "").toLowerCase().includes(q)) &&
+       (!f.start || sortKey(r) >= f.start) && (!f.end || sortKey(r) <= f.end))
     .sort((a, b) => sortKey(b).localeCompare(sortKey(a)));
 }
 
