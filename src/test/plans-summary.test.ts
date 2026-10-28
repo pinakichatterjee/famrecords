@@ -60,7 +60,7 @@ describe('visit summary', () => {
   it('any edit changes the review fingerprint', () => {
     const c = { sources: [{ id: 'r1', name: 'CBC March', date: '2026-03-12', provider: null, type: null }], facts, notes: { medications: '', allergies: '', other: '' }, ai: ok };
     const before = contentFingerprint(c);
-    expect(contentFingerprint({ ...c, facts: [{ ...facts[0], value: '13.3' }] })).not.toBe(before);
+    expect(contentFingerprint({ ...c, facts: [{ ...facts[0]!, value: "13.3" }] })).not.toBe(before);
   });
   it('export keeps source name/date beside each fact and separates AI text', () => {
     const c = { sources: [{ id: 'r1', name: 'CBC March', date: '2026-03-12', provider: null, type: null }], facts, notes: { medications: '', allergies: '', other: '' }, ai: ok };
