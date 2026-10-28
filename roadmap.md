@@ -29,3 +29,12 @@
 
 - [x] AI Report Reader (extract values, review/correct)
 - [ ] AI Doctor-Visit Summaries (Bengali/English, selected records + notes, review before export; separate from AI-free visit packs) — needs plan
+
+## Owner's build order (2026-10-28)
+1. [ ] Audit backend security (incl. second-account isolation test) — in progress
+2. [x] Launch AI report reader
+3. [ ] Doctor-visit summaries
+4. [ ] Server-enforced subscription limits
+5. [ ] Bengali/English everywhere + reminders
+6. [ ] Pilot paid family plans (payments blocked for India seller; needs Razorpay keys)
+7. [ ] Clinic plan — only with evidence of demand
