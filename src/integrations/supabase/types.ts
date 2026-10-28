@@ -14,6 +14,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_provider_access_blocks: {
+        Row: {
+          created_at: string
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          reason: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          reason?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       family_members: {
         Row: {
           blood_group: string | null
