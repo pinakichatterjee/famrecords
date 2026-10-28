@@ -14,6 +14,7 @@ import { timelineGroups, type HealthEvent } from '@/lib/health-timeline';
 import { healthCopy, healthDate, categoryLabel, type HealthLanguage } from '@/lib/health-copy';
 import { HealthEventDialog } from '@/components/HealthEventDialog';
 import { DoctorVisitPackDialog } from '@/components/DoctorVisitPackDialog';
+import { VisitSummaryDialog } from '@/components/VisitSummaryDialog';
 import { RecordAiDialog } from "@/components/RecordAiDialog";
 import { ReportReaderDialog } from "@/components/ReportReaderDialog";
 import { cn } from "@/lib/utils";
@@ -52,6 +53,7 @@ function RecordsPage() {
   const [start, setStart] = useState(''); const [end, setEnd] = useState('');
   const [eventDialog, setEventDialog] = useState<{ event: HealthEvent | null } | null>(null);
   const [packOpen, setPackOpen] = useState(false);
+  const [summaryOpen, setSummaryOpen] = useState(false);
   const [preview, setPreview] = useState<{ url: string; extension: string; name: string; id: string } | null>(null);
   const [filter, setFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -164,6 +166,7 @@ function RecordsPage() {
         <div className="flex flex-wrap justify-center gap-2">
           <Select value={language} onValueChange={v => setLanguage(v === 'bn' ? 'bn' : 'en')}><SelectTrigger className="w-28" aria-label="Language"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="bn">বাংলা</SelectItem></SelectContent></Select>
           <Button variant="outline" onClick={() => setPackOpen(true)} disabled={!records.length}><ClipboardList className="h-4 w-4"/>{c.pack}</Button>
+          <Button variant="outline" onClick={() => setSummaryOpen(true)} disabled={!records.length}><Sparkles className="h-4 w-4"/>{language === 'bn' ? 'AI ভিজিট সারাংশ' : 'AI visit summary'}</Button>
           <Button variant="outline" onClick={() => setEventDialog({ event: null })} disabled={!members.length}><Plus className="h-4 w-4"/>{c.event}</Button>
           <Button onClick={openNew} disabled={!members.length}><Upload className="h-4 w-4"/>{c.upload}</Button>
         </div>
@@ -240,6 +243,7 @@ function RecordsPage() {
       <RecordAiDialog record={aiRecord} onClose={() => setAiRecord(null)} />
       <ReportReaderDialog record={readerRecord} onClose={() => setReaderRecord(null)} />
       {eventDialog && <HealthEventDialog key={eventDialog.event?.id ?? 'new'} event={eventDialog.event} memberId={filter} members={members} language={language} onClose={() => setEventDialog(null)}/>}
+      {summaryOpen && <VisitSummaryDialog members={members} records={records} memberId={filter} language={language} onClose={() => setSummaryOpen(false)}/>}
       {packOpen && <DoctorVisitPackDialog members={members} records={records} memberId={filter} language={language} onClose={() => setPackOpen(false)}/>}
       <Dialog open={!!preview} onOpenChange={open => !open && setPreview(null)}><DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-4xl"><DialogHeader><DialogTitle>{preview?.name}</DialogTitle></DialogHeader>{preview && (/^(png|jpg|jpeg|gif|webp)$/.test(preview.extension) ? <img src={preview.url} alt={preview.name} className="max-h-[65vh] w-full object-contain"/> : preview.extension === 'pdf' ? <iframe title={preview.name} src={preview.url} className="h-[65vh] w-full border"/> : <p className="text-muted-foreground">Word document · {c.download}</p>)}<div className="flex justify-center"><Button onClick={() => { const r = records.find(r => r.id === preview?.id); if (r) view(r, true); }}><Download className="h-4 w-4"/>{c.download}</Button></div></DialogContent></Dialog>
 
