@@ -39,3 +39,4 @@
 5. [ ] Bengali/English everywhere + reminders
 6. [ ] Pilot paid family plans (payments blocked for India seller; needs Razorpay keys)
 7. [ ] Clinic plan — only with evidence of demand
+- [ ] Homepage: describe timeline, visit packs, EN/BN, AI report reader, AI visit summary, Free vs Premium (no medical claims)
