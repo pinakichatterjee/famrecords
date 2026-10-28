@@ -39,8 +39,8 @@ export const startCheckout = createServerFn({ method: 'POST' }).middleware([requ
     if (!planId) throw new Error('Online payments are not switched on yet.');
     const created = await razorpay('/subscriptions', { plan_id: planId, total_count: data.period === 'monthly' ? 120 : 10, customer_notify: 1, notes: { user_id: context.userId } });
     const { supabaseAdmin } = await import('@/integrations/supabase/client.server');
-    await supabaseAdmin.from('subscriptions').upsert({ user_id: context.userId, plan: 'free', status: 'pending', billing_period: data.period, provider: 'razorpay', provider_subscription_id: String(created.id), updated_at: new Date().toISOString() });
-    return { url: String(created.short_url) };
+    await supabaseAdmin.from('subscriptions').upsert({ user_id: context.userId, plan: 'free', status: 'pending', billing_period: data.period, provider: 'razorpay', provider_subscription_id: String(created['id']), updated_at: new Date().toISOString() });
+    return { url: String(created['short_url']) };
   });
 
 export const cancelSubscription = createServerFn({ method: 'POST' }).middleware([requireSupabaseAuth])

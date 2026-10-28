@@ -36,11 +36,11 @@ export function monthStart(now = new Date()) {
 
 export function planLimitMessage(error: unknown): string | null {
   const m = error instanceof Error ? error.message : typeof error === 'object' && error && 'message' in error ? String((error as { message: unknown }).message) : '';
-  return m.includes('PLAN_LIMIT:') ? m.split('PLAN_LIMIT:')[1].trim() + ' Upgrade to Premium Family in Settings to add more.' : null;
+  return m.includes('PLAN_LIMIT:') ? (m.split('PLAN_LIMIT:')[1] ?? '').trim() + ' Upgrade to Premium Family in Settings to add more.' : null;
 }
 
 /** Maps a verified Razorpay subscription event to a subscriptions row update. */
-export function razorpayUpdate(event: string, entity: { status: string; current_end?: number | null }): { plan: Plan; status: string; current_period_end: string | null; cancel_at_period_end: boolean } | null {
+export function razorpayUpdate(event: string, entity: { status: string; current_end?: number | null | undefined }): { plan: Plan; status: string; current_period_end: string | null; cancel_at_period_end: boolean } | null {
   const end = entity.current_end ? new Date(entity.current_end * 1000).toISOString() : null;
   switch (event) {
     case 'subscription.activated': case 'subscription.charged': case 'subscription.resumed':
