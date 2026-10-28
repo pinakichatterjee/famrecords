@@ -10,7 +10,7 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
-- [ ] Replace legacy AI summaries with consent-based, source-cited informational explanations; verify synthetic-record flow and safety tests.
+- [x] Replace legacy AI summaries with consent-based, source-cited informational explanations — 30 tests passed; live synthetic Word explanation and diagnosis/treatment-advice boundary verified, test data cleaned up. Quotes checked against extracted Word text; PDF/photo citations still require user comparison with original. No saved AI outputs or advertising changes.
 - [x] Review architecture, live schema and storage; prepare smallest safe Smart Health Timeline + Doctor Visit Pack plan
 - [x] Implement Smart Health Timeline + Doctor Visit Pack — 24 tests passed; signed-in synthetic event/upload/read-back, approved English/Bengali PDF downloads and mobile timeline verified; synthetic data cleaned up. PDF text is image-based, not searchable. Cross-account reads and foreign-member event insert denied. Existing records/accounts retained; advertising inactive.
 - [x] Remove subscription offer; payments, pricing and clinic work deferred. Settings/Admin checked signed-in; 14 regression tests passed
