@@ -40,7 +40,7 @@ export function RecordAiDialog({ record, onClose }: { record: Rec | null; onClos
     const current = generation.current;
     setBusy(true); setErr(null); setResult(null);
     try {
-      const response = await run({ data: { recordId: record.id, consent, language, question: ask ? question : undefined } });
+      const response = await run({ data: { recordId: record.id, consent, language, ...(ask ? { question } : {}) } });
       if (current !== generation.current) return;
       if ('error' in response) setErr(response.error ?? 'No explanation was produced.');
       else setResult(response.explanation);
