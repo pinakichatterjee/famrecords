@@ -50,6 +50,13 @@
       "when": 1793169880692,
       "tag": "0006_ai_provider_access_blocks",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1793187591631,
+      "tag": "0007_report_extractions",
+      "breakpoints": true
     }
   ]
 }
