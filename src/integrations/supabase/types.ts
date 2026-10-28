@@ -32,6 +32,35 @@ export type Database = {
         }
         Relationships: []
       }
+      ai_usage: {
+        Row: {
+          created_at: string
+          id: string
+          kind: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          kind: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          kind?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ai_usage_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       family_members: {
         Row: {
           blood_group: string | null
@@ -294,6 +323,50 @@ export type Database = {
           },
         ]
       }
+      subscriptions: {
+        Row: {
+          billing_period: string | null
+          cancel_at_period_end: boolean
+          current_period_end: string | null
+          plan: string
+          provider: string | null
+          provider_subscription_id: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          billing_period?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          plan?: string
+          provider?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          billing_period?: string | null
+          cancel_at_period_end?: boolean
+          current_period_end?: string | null
+          plan?: string
+          provider?: string | null
+          provider_subscription_id?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "subscriptions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string
@@ -312,11 +385,67 @@ export type Database = {
         }
         Relationships: []
       }
+      visit_summaries: {
+        Row: {
+          content: Json
+          created_at: string
+          family_member_id: string
+          id: string
+          language: string
+          notes: Json
+          reviewed_at: string | null
+          source_record_ids: string[]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          family_member_id: string
+          id?: string
+          language: string
+          notes?: Json
+          reviewed_at?: string | null
+          source_record_ids: string[]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          family_member_id?: string
+          id?: string
+          language?: string
+          notes?: Json
+          reviewed_at?: string | null
+          source_record_ids?: string[]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visit_summaries_family_member_id_fkey"
+            columns: ["family_member_id"]
+            isOneToOne: false
+            referencedRelation: "family_members"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "visit_summaries_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      ai_usage_this_month: { Args: { _kind: string }; Returns: number }
+      current_plan: { Args: { _user_id: string }; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
