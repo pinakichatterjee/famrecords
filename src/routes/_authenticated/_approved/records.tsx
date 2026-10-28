@@ -3,7 +3,7 @@ import { queryOptions, useSuspenseQuery, useQueryClient } from "@tanstack/react-
 import { useServerFn } from '@tanstack/react-start';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
-import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles, Download, Plus, ClipboardList } from "lucide-react";
+import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles, Download, Plus, ClipboardList, ScanText } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { membersQuery, recordsQuery } from "@/lib/data";
@@ -15,6 +15,7 @@ import { healthCopy, healthDate, categoryLabel, type HealthLanguage } from '@/li
 import { HealthEventDialog } from '@/components/HealthEventDialog';
 import { DoctorVisitPackDialog } from '@/components/DoctorVisitPackDialog';
 import { RecordAiDialog } from "@/components/RecordAiDialog";
+import { ReportReaderDialog } from "@/components/ReportReaderDialog";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -66,6 +67,7 @@ function RecordsPage() {
   const [file, setFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [aiRecord, setAiRecord] = useState<(typeof records)[number] | null>(null);
+  const [readerRecord, setReaderRecord] = useState<{ id: string; name: string } | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const camRef = useRef<HTMLInputElement>(null);
 
@@ -226,6 +228,7 @@ function RecordsPage() {
                <div className="mt-auto flex flex-wrap items-center gap-2">
                 <Button variant="secondary" size="sm" onClick={() => view(r)}><ExternalLink className="h-4 w-4" />{c.view}</Button>
                 <Button variant="outline" size="sm" onClick={() => setAiRecord(r)}><Sparkles className="h-4 w-4" />{c.ai}</Button>
+                {/\.(pdf|png|jpe?g|webp)$/i.test(r.document) && <Button variant="outline" size="sm" onClick={() => setReaderRecord(r)}><ScanText className="h-4 w-4" />{language === "bn" ? "রিপোর্ট পড়ুন" : "Read report"}</Button>}
                 <Button variant="ghost" size="icon" aria-label={`${c.download} ${r.name}`} title={c.download} onClick={() => view(r, true)}><Download className="h-4 w-4"/></Button>
                 <Button variant="ghost" size="icon" aria-label={`${c.edit} ${r.name}`} title={c.edit} onClick={() => openEdit(r)}><Pencil className="h-4 w-4" /></Button>
                 <Button variant="ghost" size="icon" aria-label={`${c.remove} ${r.name}`} title={c.remove} onClick={() => remove(r.id)}><Trash2 className="h-4 w-4 text-destructive" /></Button>
@@ -235,6 +238,7 @@ function RecordsPage() {
         </div></section>)}
 
       <RecordAiDialog record={aiRecord} onClose={() => setAiRecord(null)} />
+      <ReportReaderDialog record={readerRecord} onClose={() => setReaderRecord(null)} />
       {eventDialog && <HealthEventDialog key={eventDialog.event?.id ?? 'new'} event={eventDialog.event} memberId={filter} members={members} language={language} onClose={() => setEventDialog(null)}/>}
       {packOpen && <DoctorVisitPackDialog members={members} records={records} memberId={filter} language={language} onClose={() => setPackOpen(false)}/>}
       <Dialog open={!!preview} onOpenChange={open => !open && setPreview(null)}><DialogContent className="max-h-[92vh] overflow-y-auto sm:max-w-4xl"><DialogHeader><DialogTitle>{preview?.name}</DialogTitle></DialogHeader>{preview && (/^(png|jpg|jpeg|gif|webp)$/.test(preview.extension) ? <img src={preview.url} alt={preview.name} className="max-h-[65vh] w-full object-contain"/> : preview.extension === 'pdf' ? <iframe title={preview.name} src={preview.url} className="h-[65vh] w-full border"/> : <p className="text-muted-foreground">Word document · {c.download}</p>)}<div className="flex justify-center"><Button onClick={() => { const r = records.find(r => r.id === preview?.id); if (r) view(r, true); }}><Download className="h-4 w-4"/>{c.download}</Button></div></DialogContent></Dialog>

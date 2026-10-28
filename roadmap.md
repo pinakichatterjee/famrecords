@@ -26,3 +26,6 @@
 - [ ] Google Search Console — connected, code added; waiting for owner to publish, then verify + submit sitemap
 - [x] Add /privacy to sitemap
 - [x] Word (DOC/DOCX) text extraction for AI
+
+- [x] AI Report Reader (extract values, review/correct)
+- [ ] AI Doctor-Visit Summaries (Bengali/English, selected records + notes, review before export; separate from AI-free visit packs) — needs plan

@@ -211,6 +211,89 @@ export type Database = {
         }
         Relationships: []
       }
+      report_extraction_attempts: {
+        Row: {
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_extraction_attempts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      report_extractions: {
+        Row: {
+          attempt_count: number
+          corrected: Json | null
+          created_at: string
+          extraction: Json | null
+          failure_code: string | null
+          id: string
+          medical_record_id: string
+          reviewed_at: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attempt_count?: number
+          corrected?: Json | null
+          created_at?: string
+          extraction?: Json | null
+          failure_code?: string | null
+          id?: string
+          medical_record_id: string
+          reviewed_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attempt_count?: number
+          corrected?: Json | null
+          created_at?: string
+          extraction?: Json | null
+          failure_code?: string | null
+          id?: string
+          medical_record_id?: string
+          reviewed_at?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_extractions_medical_record_id_fkey"
+            columns: ["medical_record_id"]
+            isOneToOne: true
+            referencedRelation: "medical_records"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_extractions_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       user_roles: {
         Row: {
           id: string

@@ -48,6 +48,13 @@ const sections = [
     ],
   },
   {
+    title: "Optional AI report reader",
+    body: [
+      "Only after you agree, a selected PDF or report photo is sent through Lovable AI so printed test names, values, units and ranges can be copied into a table. That table and your corrections are saved privately with the record, visible only to you, and deleted when the record is deleted.",
+      "Readings are limited per hour and day, are never added to doctor-visit packs, and must be checked against the original. They are not diagnosis or treatment advice.",
+    ],
+  },
+  {
     title: "What we never do",
     body: [
       "We do not sell, rent or share your personal information or medical records with advertisers or data brokers.",
