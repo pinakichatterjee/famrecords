@@ -40,5 +40,5 @@
 6. [ ] Pilot paid family plans (payments blocked for India seller; needs Razorpay keys)
 7. [ ] Clinic plan — only with evidence of demand
 - [x] Homepage: describe timeline, visit packs, EN/BN, AI report reader, AI visit summary, Free vs Premium (no medical claims)
-- [ ] Branded social sharing image for homepage (og:image)
-- [ ] Structured data (JSON-LD) on homepage; verify sitemap live
+- [x] Branded social sharing image for homepage (og:image)
+- [x] Structured data (JSON-LD) on homepage; sitemap verified live (200)
