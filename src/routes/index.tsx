@@ -6,6 +6,15 @@ import logo from "@/assets/logo-lockup.png";
 
 const DESC = "Organize medical documents, understand reports and prepare for doctor visits — with your family's privacy in mind.";
 
+const faqs = [
+  { q: "How do I organise my family's medical records in one place?", a: "Create a free account, add a profile for each family member, then upload reports, prescriptions and scans as PDFs, Word files or phone photos. Each record can have a visit date, healthcare provider and record type, and appears on that person's health timeline." },
+  { q: "Who can see my family's records?", a: "Only you. Your family's records are private to your account, and AI features run only when you agree, every time." },
+  { q: "Can I take records to a doctor's appointment?", a: "Yes. Choose one person's records, add allergies, medications and questions you've written, and download a doctor-visit pack as a PDF." },
+  { q: "Does FamRecords work in Bengali?", a: "Yes. The timeline and doctor-visit packs work in English or বাংলা, and you can choose either language for AI explanations." },
+  { q: "Does FamRecords diagnose conditions?", a: "No. FamRecords helps you organise and understand your own records. It does not diagnose conditions or recommend treatment — always discuss results with your doctor." },
+  { q: "Is FamRecords free?", a: "Yes, the Free plan is free forever for up to 2 family members. Premium Family supports up to 6 members and more AI features." },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -40,6 +49,14 @@ export const Route = createFileRoute("/")({
           "@type": "WebSite",
           name: "FamRecords",
           url: "https://www.famrecords.org/",
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
         }),
       },
     ],
@@ -108,6 +125,18 @@ function Index() {
         <section className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2 rounded-xl bg-card p-6 shadow-soft"><Users className="h-6 w-6 text-primary" /><h3 className="text-lg font-semibold">Family profiles</h3><p className="text-muted-foreground">Keep height, weight, blood group and relation for everyone.</p></div>
           <div className="space-y-2 rounded-xl bg-card p-6 shadow-soft"><FileText className="h-6 w-6 text-primary" /><h3 className="text-lg font-semibold">Upload from your phone</h3><p className="text-muted-foreground">Add PDFs, Word files or snap a photo with your camera.</p></div>
+        </section>
+
+        <section aria-labelledby="faq" className="my-16 space-y-6">
+          <h2 id="faq" className="text-2xl font-bold">Frequently asked questions</h2>
+          <div className="space-y-3">
+            {faqs.map((f) => (
+              <details key={f.q} className="rounded-xl bg-card p-5 shadow-soft">
+                <summary className="cursor-pointer text-lg font-semibold">{f.q}</summary>
+                <p className="mt-3 text-base text-muted-foreground">{f.a}</p>
+              </details>
+            ))}
+          </div>
         </section>
 
         <footer className="my-12 flex items-center justify-between border-t border-border pt-6 text-sm text-muted-foreground">
