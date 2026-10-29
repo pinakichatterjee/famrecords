@@ -42,4 +42,4 @@
 - [x] Homepage: describe timeline, visit packs, EN/BN, AI report reader, AI visit summary, Free vs Premium (no medical claims)
 - [x] Branded social sharing image for homepage (og:image)
 - [x] Structured data (JSON-LD) on homepage; sitemap verified live (200)
-- [ ] Homepage FAQ section + FAQPage structured data
+- [x] Homepage FAQ section + FAQPage structured data
