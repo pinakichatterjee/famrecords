@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
 
-const DESC = "Keep your family's medical records in one private place: a health timeline, doctor-visit packs, English and বাংলা, and optional AI that reads reports and prepares visit summaries. Free plan available.";
+const DESC = "Organize medical documents, understand reports and prepare for doctor visits — with your family's privacy in mind.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FamRecords — Family medical records, timeline & visit packs" },
+      { title: "FamRecords — Your family's health records, all in one place." },
       { name: "description", content: DESC },
-      { property: "og:title", content: "FamRecords — Family medical records, timeline & visit packs" },
+      { property: "og:title", content: "FamRecords — Your family's health records, all in one place." },
       { property: "og:description", content: DESC },
       { property: "og:type", content: "website" },
       { property: "og:image", content: "https://www.famrecords.org/icon-512.png" },
