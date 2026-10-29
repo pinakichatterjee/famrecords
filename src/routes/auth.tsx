@@ -17,7 +17,10 @@ export const Route = createFileRoute("/auth")({
       { property: "og:description", content: "Create your free FamRecords account or sign in to see your family's medical records, reports and prescriptions." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: "https://www.famrecords.org/auth" },
+      { name: "robots", content: "index, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://www.famrecords.org/auth" }],
   }),
   component: AuthPage,
 });

@@ -18,6 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:image", content: "https://www.famrecords.org/og-image.png" },
       { name: "twitter:image", content: "https://www.famrecords.org/og-image.png" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "robots", content: "index, follow, max-image-preview:large" },
     ],
     links: [{ rel: "canonical", href: "https://www.famrecords.org/" }],
     scripts: [

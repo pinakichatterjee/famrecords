@@ -19,7 +19,10 @@ export const Route = createFileRoute("/privacy")({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:url", content: "https://www.famrecords.org/privacy" },
+      { name: "robots", content: "index, follow" },
     ],
+    links: [{ rel: "canonical", href: "https://www.famrecords.org/privacy" }],
   }),
   component: PrivacyPage,
 });
