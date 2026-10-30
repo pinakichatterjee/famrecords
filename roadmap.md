@@ -46,3 +46,4 @@
 - [x] Branded social sharing image for homepage (og:image)
 - [x] Structured data (JSON-LD) on homepage; sitemap verified live (200)
 - [x] Homepage FAQ section + FAQPage structured data
+- [x] Keep the "Rehab & Wellness" tagline in the logo and update the positioning copy around it (hero wording, a section explaining the tagline, an FAQ entry, search/social descriptions)
