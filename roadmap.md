@@ -47,3 +47,4 @@
 - [x] Structured data (JSON-LD) on homepage; sitemap verified live (200)
 - [x] Homepage FAQ section + FAQPage structured data
 - [x] Keep the "Rehab & Wellness" tagline in the logo and update the positioning copy around it (hero wording, a section explaining the tagline, an FAQ entry, search/social descriptions)
+- [x] Homepage: four dedicated sections — Family Records, AI Intelligence (report explainer available, health assistant planned), Multilingual support (English and বাংলা available, Hindi planned), Healthcare Connectivity (consent-based provider sharing, planned) and Privacy and Security (verified protections only); every item labelled Available now or Planned; desktop + phone layouts and all buttons/links verified
