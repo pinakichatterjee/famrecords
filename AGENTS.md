@@ -11,6 +11,7 @@
 
 - Keep password validation and account-management safety rules in a shared browser-safe module so forms and server actions use tested rules.
 - Keep advertising preparation separate from delivery; inactive sign-up measurement must discard events without loading SDKs, storing identifiers or queuing historical events.
+- Optional Google Analytics is limited to consented homepage/privacy page views with allowlisted campaign labels; disable automatic/enhanced measurement in the Google stream to prevent private-route or form collection. Why: campaign reports must never include account or clinical activity.
 - Keep timeline events separate from uploaded medical records; authenticated server functions and owner/member relationship validation preserve existing document semantics.
 - Build doctor-visit packs from explicit source metadata and manual notes only; approval fingerprints must invalidate after edits and AI summaries must never enter a pack.
 - Generate visit-pack PDFs in the browser using shaped high-resolution page images and the licensed Bengali font; this preserves Bengali conjunct rendering without exposing clinical drafts to a server, but PDF text is not searchable.

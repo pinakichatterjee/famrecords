@@ -43,6 +43,14 @@ export const Route = createFileRoute("/privacy")({
 
 const sections = [
   {
+    title: "Optional public-page visitor analytics",
+    body: [
+      "If you choose Allow analytics, Google Analytics measures visits to our homepage and privacy page, using analytics cookies and device and visit information. Social links may include platform, campaign and post labels so we can compare where visits come from. Never put personal or medical information in those labels.",
+      "We do not send account details, medical records or visits to signed-in pages to Google Analytics. Advertising features and Google signals are disabled. Declining prevents this optional Google Analytics tracking; accepting later does not replay earlier visits. Lovable's existing site analytics remains separate.",
+      "You can decline or withdraw your choice through Analytics privacy settings on the homepage or privacy page. We store your choice, the notice version and the time you decided on your device. Withdrawal stops future optional measurement but does not remove data already received by Google. Our notice version is famrecords-public-analytics-v1.",
+    ],
+  },
+  {
     title: "What we collect",
     body: [
       "Account details: your name and email address, used to sign you in and secure your account.",
