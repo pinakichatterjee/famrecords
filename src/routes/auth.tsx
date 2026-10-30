@@ -82,6 +82,12 @@ function AuthPage() {
             {mode === 'forgot' ? 'Receive a password reset link by email.' : mode === "signin" ? "Sign in to your family's records." : "Start organising your family's recovery, care and everyday health."}
           </p>
         </div>
+        {mode === "signup" && (
+          <div className="rounded-lg bg-secondary p-4 text-sm text-secondary-foreground">
+            <p className="font-medium">What happens next</p>
+            <p className="mt-1">New accounts are approved by our team before first use. After you sign up, confirm your email, then sign in — you'll see a waiting screen until your account is approved.</p>
+          </div>
+        )}
         <form onSubmit={submit} className="space-y-4">
           {mode === "signup" && (
             <div className="space-y-2">
