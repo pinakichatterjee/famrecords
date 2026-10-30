@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, Stethoscope } from "lucide-react";
+import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, Stethoscope, HeartPulse, Activity, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
 
-const DESC = "Organize medical documents, understand reports and prepare for doctor visits — with your family's privacy in mind.";
+const DESC = "A family medical records app: organise reports, prescriptions and therapy notes, understand your own records in plain language and prepare doctor-visit packs in English or Bengali.";
 const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
-const SOCIAL_DESCRIPTION = "Keep your family's reports, prescriptions and scans together. Prepare doctor-visit packs in English or Bengali. Start free; your records stay private to your account.";
+const SOCIAL_DESCRIPTION = "Keep your family's reports, prescriptions, therapy notes and check-up results together. Prepare doctor-visit packs in English or Bengali. Start free; your records stay private to your account.";
 
 const faqs = [
   { q: "How do I organise my family's medical records in one place?", a: "Create a free account, add a profile for each family member, then upload reports, prescriptions and scans as PDFs, Word files or phone photos. Each record can have a visit date, healthcare provider and record type, and appears on that person's health timeline." },
@@ -15,6 +15,7 @@ const faqs = [
   { q: "Does FamRecords work in Bengali?", a: "Yes. The timeline and doctor-visit packs work in English or বাংলা, and you can choose either language for AI explanations." },
   { q: "Does FamRecords diagnose conditions?", a: "No. FamRecords helps you organise and understand your own records. It does not diagnose conditions or recommend treatment — always discuss results with your doctor." },
   { q: "Is FamRecords free?", a: "Yes, the Free plan is free forever for up to 2 family members. Premium Family supports up to 6 members and more AI features." },
+  { q: "Is FamRecords only for illness, or also for rehabilitation and wellness?", a: "Both. Families keep discharge summaries, physiotherapy and therapy notes, prescriptions and lab reports on one timeline, alongside vaccinations and routine check-up reports. FamRecords organises and explains the records you already have; it does not provide rehabilitation or medical treatment." },
 ];
 
 export const Route = createFileRoute("/")({
@@ -91,10 +92,17 @@ function StatusBadge({ status }: { status: Status }) {
   return <span className={`inline-block shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${cls}`}>{STATUS_LABEL[status]}</span>;
 }
 
+const rehabWellness = [
+  { icon: Activity, title: "Recovery and rehabilitation", text: "Keep discharge summaries, physiotherapy and therapy notes, and follow-up appointments on one person's timeline, so progress between visits is easy to see." },
+  { icon: HeartPulse, title: "Ongoing conditions", text: "Store prescriptions, lab reports and consultation notes with visit dates and providers, and take a tidy visit pack to each review appointment." },
+  { icon: Leaf, title: "Everyday wellness", text: "File vaccinations, check-up reports and routine results so nothing is forgotten before the next visit." },
+];
+
 const pillars: { icon: typeof Users; title: string; items: { status: Status; text: string }[] }[] = [
   { icon: FolderHeart, title: "Family Records", items: [
     { status: "available", text: "Store medical reports, prescriptions and scans as PDFs, Word files or phone photos." },
     { status: "available", text: "Profiles for each family member and a health timeline of visits and records." },
+    { status: "available", text: "Tag records by type — lab report, prescription, discharge summary or vaccination — and filter by person, provider or date." },
   ] },
   { icon: Sparkles, title: "AI Intelligence", items: [
     { status: "available", text: "Plain-language explanations of a record, citing the exact source text — only when you agree." },
@@ -131,12 +139,26 @@ function Index() {
           <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
         </header>
         <section className="my-12 space-y-6 md:my-20">
-          <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">Family Health Intelligence</span>
+          <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">Family medical records app</span>
           <h1 className="max-w-2xl text-3xl font-bold leading-tight md:text-4xl">Your family's health records. Organised, understood and connected.</h1>
-          <p className="max-w-xl text-base text-muted-foreground md:text-lg">Keep medical reports, prescriptions and family health history together. Get AI-powered explanations of medical information and prepare for better-informed healthcare conversations.</p>
+          <p className="max-w-xl text-base text-muted-foreground md:text-lg">Keep reports, prescriptions, therapy notes and check-up results together — whether someone is recovering, living with a long-term condition, or simply staying well. Get plain-language explanations of your own records and prepare for better-informed conversations with your doctor.</p>
           <div className="flex flex-col items-center gap-3 pt-4">
             <Button asChild size="lg"><Link to="/auth">Create a free account</Link></Button>
             <Link to="/auth" className="text-sm font-medium text-primary hover:underline">Already have an account? Sign in</Link>
+          </div>
+        </section>
+
+        <section aria-labelledby="rehab" className="my-16 space-y-6">
+          <h2 id="rehab" className="text-2xl font-bold">{`What "Rehab & Wellness" means here`}</h2>
+          <p className="max-w-2xl text-base text-muted-foreground">Our tagline names the part of family health we care most about: getting better after an illness or injury, and staying well in between. Both need the same thing — records that are easy to find and explain.</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {rehabWellness.map((r) => (
+              <div key={r.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
+                <r.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                <h3 className="text-lg font-semibold">{r.title}</h3>
+                <p className="text-base text-muted-foreground">{r.text}</p>
+              </div>
+            ))}
           </div>
         </section>
 
