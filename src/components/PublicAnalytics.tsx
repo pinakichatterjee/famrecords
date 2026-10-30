@@ -11,7 +11,7 @@ export function PublicAnalytics() {
   const [choice, setChoice] = useState<Choice | null>(null);
   const [ready, setReady] = useState(false);
   const [editing, setEditing] = useState(false);
-  const measurementId = import.meta.env.VITE_LOVABLE_CONNECTOR_GOOGLE_ANALYTICS_API_KEY;
+  const measurementId = import.meta.env['VITE_LOVABLE_CONNECTOR_GOOGLE_ANALYTICS_API_KEY'];
   const publicPage = pathname === '/' || pathname === '/privacy';
 
   useEffect(() => {
