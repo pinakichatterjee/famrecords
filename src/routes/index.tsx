@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check } from "lucide-react";
+import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, Stethoscope } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
@@ -84,6 +84,40 @@ const features = [
   { icon: ShieldCheck, title: "Private by default", text: "Only you can see your family's records. AI features run only when you agree, every time." },
 ];
 
+type Status = "available" | "development" | "planned";
+const STATUS_LABEL: Record<Status, string> = { available: "Available now", development: "In development", planned: "Planned" };
+function StatusBadge({ status }: { status: Status }) {
+  const cls = status === "available" ? "bg-primary text-primary-foreground" : status === "development" ? "bg-accent text-accent-foreground" : "bg-muted text-foreground";
+  return <span className={`inline-block shrink-0 rounded-full px-2 py-0.5 text-xs font-semibold ${cls}`}>{STATUS_LABEL[status]}</span>;
+}
+
+const pillars: { icon: typeof Users; title: string; items: { status: Status; text: string }[] }[] = [
+  { icon: FolderHeart, title: "Family Records", items: [
+    { status: "available", text: "Store medical reports, prescriptions and scans as PDFs, Word files or phone photos." },
+    { status: "available", text: "Profiles for each family member and a health timeline of visits and records." },
+  ] },
+  { icon: Sparkles, title: "AI Intelligence", items: [
+    { status: "available", text: "Plain-language explanations of a record, citing the exact source text — only when you agree." },
+    { status: "available", text: "AI report reader that copies test values into a table for you to check." },
+    { status: "planned", text: "A multilingual health assistant for questions across your family's records." },
+  ] },
+  { icon: Network, title: "Healthcare Connectivity", items: [
+    { status: "available", text: "Doctor-visit packs you can download as a PDF and take to appointments." },
+    { status: "planned", text: "Consent-based connections with authorised healthcare providers using FHIR standards." },
+  ] },
+  { icon: ShieldCheck, title: "Privacy and Security", items: [
+    { status: "available", text: "Records are private to your account; files are stored privately and opened through short-lived links." },
+    { status: "available", text: "New accounts are approved by our team, and AI features run only after you agree each time." },
+    { status: "available", text: "No advertising or analytics on your records pages." },
+  ] },
+];
+
+const languages: { name: string; lang: string; status: Status; note: string }[] = [
+  { name: "English", lang: "en", status: "available", note: "Full app, timeline, visit packs and AI explanations." },
+  { name: "বাংলা", lang: "bn", status: "available", note: "Timeline, doctor-visit packs and AI explanations." },
+  { name: "हिन्दी", lang: "hi", status: "planned", note: "Hindi support is planned and not available yet." },
+];
+
 function Index() {
   const free = PLAN_LIMITS.free; const prem = PLAN_LIMITS.premium;
   const plans = [
@@ -97,14 +131,38 @@ function Index() {
           <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
         </header>
         <section className="my-12 space-y-6 md:my-20">
-          <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">For families caring for loved ones</span>
-          <h1 className="max-w-2xl text-3xl font-bold leading-tight md:text-4xl">Every report, prescription and scan — organised for your whole family.</h1>
-          <p className="max-w-xl text-base text-muted-foreground md:text-lg">See each person's health history on one timeline, and walk into a doctor's appointment with the right papers ready. In English or বাংলা.</p>
-          <div className="flex justify-center pt-4"><Button asChild size="lg"><Link to="/auth">Create a free account</Link></Button></div>
+          <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">Family Health Intelligence</span>
+          <h1 className="max-w-2xl text-3xl font-bold leading-tight md:text-4xl">Your family's health records. Organised, understood and connected.</h1>
+          <p className="max-w-xl text-base text-muted-foreground md:text-lg">Keep medical reports, prescriptions and family health history together. Get AI-powered explanations of medical information and prepare for better-informed healthcare conversations.</p>
+          <div className="flex flex-col items-center gap-3 pt-4">
+            <Button asChild size="lg"><Link to="/auth">Create a free account</Link></Button>
+            <Link to="/auth" className="text-sm font-medium text-primary hover:underline">Already have an account? Sign in</Link>
+          </div>
+        </section>
+
+        <section aria-labelledby="pillars" className="mb-16 space-y-6">
+          <h2 id="pillars" className="text-2xl font-bold">One place for your family's health</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            {pillars.map((p) => (
+              <div key={p.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
+                <div className="flex items-center justify-between gap-3">
+                  <p.icon className="h-6 w-6 text-primary" aria-hidden="true" />
+                </div>
+                <h3 className="text-lg font-semibold">{p.title}</h3>
+                <ul className="space-y-2">
+                  {p.items.map((i) => (
+                    <li key={i.text} className="flex flex-wrap items-start gap-2 text-base text-muted-foreground">
+                      <StatusBadge status={i.status} /><span className="flex-1">{i.text}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
         </section>
 
         <section aria-labelledby="features" className="space-y-6">
-          <h2 id="features" className="text-2xl font-bold">What you can do</h2>
+          <h2 id="features" className="text-2xl font-bold">What you can do today</h2>
           <div className="grid gap-6 md:grid-cols-3">
             {features.map((f) => (
               <div key={f.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
@@ -117,6 +175,26 @@ function Index() {
           <p className="rounded-xl border bg-card p-4 text-sm text-muted-foreground">
             FamRecords helps you organise and understand your own records. It does not diagnose conditions or recommend treatment — always discuss results with your doctor.
           </p>
+        </section>
+
+        <section aria-labelledby="languages" className="my-16 space-y-6">
+          <h2 id="languages" className="text-2xl font-bold">Built for Indian families</h2>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {languages.map((l) => (
+              <div key={l.name} className="space-y-2 rounded-xl bg-card p-5 shadow-soft">
+                <p className="text-xl font-semibold" lang={l.lang}>{l.name}</p>
+                <StatusBadge status={l.status} />
+                <p className="text-sm text-muted-foreground">{l.note}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section aria-labelledby="providers" className="my-16 space-y-4 rounded-xl bg-card p-6 shadow-soft">
+          <div className="flex items-center gap-2"><Stethoscope className="h-6 w-6 text-primary" aria-hidden="true" /><StatusBadge status="planned" /></div>
+          <h2 id="providers" className="text-2xl font-bold">For healthcare providers</h2>
+          <p className="text-base text-muted-foreground">Our goal is to help families share health information securely with the clinics and doctors they choose — only with the family's consent, and using standards such as FHIR so records can move between systems.</p>
+          <p className="text-sm text-muted-foreground">Provider connections are not available yet. Today, families can share information by downloading a doctor-visit pack and taking it to the appointment.</p>
         </section>
 
         <section aria-labelledby="plans" className="my-16 space-y-6">
