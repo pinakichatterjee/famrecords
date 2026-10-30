@@ -79,7 +79,7 @@ function AuthPage() {
         <div className="space-y-1">
           <h1 className="text-2xl font-bold">{mode === 'forgot' ? 'Forgot password' : mode === "signin" ? "Welcome back" : "Create your account"}</h1>
           <p className="text-base text-muted-foreground">
-            {mode === 'forgot' ? 'Receive a password reset link by email.' : mode === "signin" ? "Sign in to your family's records." : "Start organising your family's health."}
+            {mode === 'forgot' ? 'Receive a password reset link by email.' : mode === "signin" ? "Sign in to your family's records." : "Start organising your family's recovery, care and everyday health."}
           </p>
         </div>
         <form onSubmit={submit} className="space-y-4">
