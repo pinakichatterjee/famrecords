@@ -98,33 +98,48 @@ const rehabWellness = [
   { icon: Leaf, title: "Everyday wellness", text: "File vaccinations, check-up reports and routine results so nothing is forgotten before the next visit." },
 ];
 
-const pillars: { icon: typeof Users; title: string; items: { status: Status; text: string }[] }[] = [
-  { icon: FolderHeart, title: "Family Records", items: [
-    { status: "available", text: "Store medical reports, prescriptions and scans as PDFs, Word files or phone photos." },
-    { status: "available", text: "Profiles for each family member and a health timeline of visits and records." },
-    { status: "available", text: "Tag records by type — lab report, prescription, discharge summary or vaccination — and filter by person, provider or date." },
-  ] },
-  { icon: Sparkles, title: "AI Intelligence", items: [
-    { status: "available", text: "Plain-language explanations of a record, citing the exact source text — only when you agree." },
-    { status: "available", text: "AI report reader that copies test values into a table for you to check." },
-    { status: "planned", text: "A multilingual health assistant for questions across your family's records." },
-  ] },
-  { icon: Network, title: "Healthcare Connectivity", items: [
-    { status: "available", text: "Doctor-visit packs you can download as a PDF and take to appointments." },
-    { status: "planned", text: "Consent-based connections with authorised healthcare providers using FHIR standards." },
-  ] },
-  { icon: ShieldCheck, title: "Privacy and Security", items: [
-    { status: "available", text: "Records are private to your account; files are stored privately and opened through short-lived links." },
-    { status: "available", text: "New accounts are approved by our team, and AI features run only after you agree each time." },
-    { status: "available", text: "No advertising or analytics on your records pages." },
-  ] },
+const aiFeatures: { icon: typeof Users; title: string; status: Status; text: string }[] = [
+  { icon: ScanText, title: "AI Medical Report Explainer", status: "available", text: "Choose one of your own records and get a plain-language explanation of what it says, with the exact source lines quoted so you can check them yourself. You agree before it runs, in English or বাংলা." },
+  { icon: Sparkles, title: "AI Health Assistant", status: "planned", text: "Ask questions across your family's records and get answers in your own language. This is planned and is not available yet." },
+  { icon: FileText, title: "Easy-to-understand medical information", status: "available", text: "Test names, values and reference ranges copied into a table you check, and visit summaries that explain medical terms in simple words. You review every value before you use it." },
 ];
 
 const languages: { name: string; lang: string; status: Status; note: string }[] = [
-  { name: "English", lang: "en", status: "available", note: "Full app, timeline, visit packs and AI explanations." },
-  { name: "বাংলা", lang: "bn", status: "available", note: "Timeline, doctor-visit packs and AI explanations." },
-  { name: "हिन्दी", lang: "hi", status: "planned", note: "Hindi support is planned and not available yet." },
+  { name: "English", lang: "en", status: "available", note: "Full app, timeline, doctor-visit packs and AI explanations." },
+  { name: "বাংলা", lang: "bn", status: "available", note: "Timeline, doctor-visit packs, visit summaries and AI explanations." },
+  { name: "हिन्दी", lang: "hi", status: "planned", note: "Hindi support is planned and is not available yet." },
 ];
+
+const connectivity: { status: Status; text: string }[] = [
+  { status: "available", text: "Doctor-visit packs you download as a PDF and take to the appointment yourself." },
+  { status: "planned", text: "Secure, consent-based sharing with the doctors and clinics you choose — nothing is shared automatically." },
+  { status: "planned", text: "Connections built on standards such as FHIR, so records can move between systems with the family's permission." },
+];
+
+const protections: { status: Status; text: string }[] = [
+  { status: "available", text: "Records are visible only to the account that uploaded them — we tested that a second account cannot read or change them." },
+  { status: "available", text: "Files are stored privately and opened through short-lived links, not public web addresses." },
+  { status: "available", text: "New accounts are approved by our team before first use, and AI runs only after you agree, each time." },
+  { status: "available", text: "No advertising or analytics on your records pages, and plan limits are enforced on our servers." },
+];
+
+function PillarSection({ id, icon: Icon, title, intro, items }: { id: string; icon: typeof Users; title: string; intro: string; items: { status: Status; text: string }[] }) {
+  return (
+    <section aria-labelledby={id} className="my-16 space-y-6">
+      <div className="flex items-center gap-2"><Icon className="h-6 w-6 text-primary" aria-hidden="true" /><h2 id={id} className="text-2xl font-bold">{title}</h2></div>
+      <p className="max-w-2xl text-base text-muted-foreground">{intro}</p>
+      <div className="rounded-xl bg-card p-6 shadow-soft">
+        <ul className="space-y-3">
+          {items.map((i) => (
+            <li key={i.text} className="flex flex-wrap items-start gap-2 text-base text-muted-foreground">
+              <StatusBadge status={i.status} /><span className="flex-1">{i.text}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
 
 function Index() {
   const free = PLAN_LIMITS.free; const prem = PLAN_LIMITS.premium;
@@ -162,26 +177,45 @@ function Index() {
           </div>
         </section>
 
-        <section aria-labelledby="pillars" className="mb-16 space-y-6">
-          <h2 id="pillars" className="text-2xl font-bold">One place for your family's health</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            {pillars.map((p) => (
-              <div key={p.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
-                <div className="flex items-center justify-between gap-3">
-                  <p.icon className="h-6 w-6 text-primary" aria-hidden="true" />
-                </div>
-                <h3 className="text-lg font-semibold">{p.title}</h3>
-                <ul className="space-y-2">
-                  {p.items.map((i) => (
-                    <li key={i.text} className="flex flex-wrap items-start gap-2 text-base text-muted-foreground">
-                      <StatusBadge status={i.status} /><span className="flex-1">{i.text}</span>
-                    </li>
-                  ))}
-                </ul>
+        <PillarSection id="records" icon={FolderHeart} title="Family Records" intro="Everything your family's care needs, in one account instead of shoeboxes and chat threads." items={[
+          { status: "available", text: "Store medical reports, prescriptions and scans as PDFs, Word files or phone photos." },
+          { status: "available", text: "Profiles for each family member and a health timeline of visits and records." },
+          { status: "available", text: "Tag records by type — lab report, prescription, discharge summary or vaccination — and filter by person, provider or date." },
+        ]} />
+
+        <section aria-labelledby="ai" className="my-16 space-y-6">
+          <div className="flex items-center gap-2"><Sparkles className="h-6 w-6 text-primary" aria-hidden="true" /><h2 id="ai" className="text-2xl font-bold">AI Intelligence</h2></div>
+          <p className="max-w-2xl text-base text-muted-foreground">AI that explains the records you already have, in words you can follow — and never runs without your agreement.</p>
+          <div className="grid gap-6 md:grid-cols-3">
+            {aiFeatures.map((a) => (
+              <div key={a.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
+                <div className="flex items-center justify-between gap-2"><a.icon className="h-6 w-6 text-primary" aria-hidden="true" /><StatusBadge status={a.status} /></div>
+                <h3 className="text-lg font-semibold">{a.title}</h3>
+                <p className="text-base text-muted-foreground">{a.text}</p>
               </div>
             ))}
           </div>
+          <p className="rounded-xl border bg-card p-4 text-sm text-muted-foreground">AI explanations describe what your own records say. They do not diagnose conditions or recommend treatment — always discuss results with your doctor.</p>
         </section>
+
+        <section aria-labelledby="languages" className="my-16 space-y-6">
+          <div className="flex items-center gap-2"><Languages className="h-6 w-6 text-primary" aria-hidden="true" /><h2 id="languages" className="text-2xl font-bold">Multilingual support</h2></div>
+          <p className="max-w-2xl text-base text-muted-foreground">FamRecords is built for families who mix languages at home. Here is exactly what works in each language today.</p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {languages.map((l) => (
+              <div key={l.name} className="space-y-2 rounded-xl bg-card p-5 shadow-soft">
+                <p className="text-xl font-semibold" lang={l.lang}>{l.name}</p>
+                <StatusBadge status={l.status} />
+                <p className="text-sm text-muted-foreground">{l.note}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-sm text-muted-foreground">AI explanations are offered in English or বাংলা today; Hindi is planned.</p>
+        </section>
+
+        <PillarSection id="connectivity" icon={Network} title="Healthcare Connectivity" intro="Our vision is that your family's records reach the doctors you have already chosen — only with your consent, and never sold or shared automatically." items={connectivity} />
+
+        <PillarSection id="security" icon={ShieldCheck} title="Privacy and Security" intro="The protections below are the ones we have built and checked in our own app and database. We do not claim any external certification or compliance standard." items={protections} />
 
         <section aria-labelledby="features" className="space-y-6">
           <h2 id="features" className="text-2xl font-bold">What you can do today</h2>
@@ -197,26 +231,6 @@ function Index() {
           <p className="rounded-xl border bg-card p-4 text-sm text-muted-foreground">
             FamRecords helps you organise and understand your own records. It does not diagnose conditions or recommend treatment — always discuss results with your doctor.
           </p>
-        </section>
-
-        <section aria-labelledby="languages" className="my-16 space-y-6">
-          <h2 id="languages" className="text-2xl font-bold">Built for Indian families</h2>
-          <div className="grid gap-4 sm:grid-cols-3">
-            {languages.map((l) => (
-              <div key={l.name} className="space-y-2 rounded-xl bg-card p-5 shadow-soft">
-                <p className="text-xl font-semibold" lang={l.lang}>{l.name}</p>
-                <StatusBadge status={l.status} />
-                <p className="text-sm text-muted-foreground">{l.note}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section aria-labelledby="providers" className="my-16 space-y-4 rounded-xl bg-card p-6 shadow-soft">
-          <div className="flex items-center gap-2"><Stethoscope className="h-6 w-6 text-primary" aria-hidden="true" /><StatusBadge status="planned" /></div>
-          <h2 id="providers" className="text-2xl font-bold">For healthcare providers</h2>
-          <p className="text-base text-muted-foreground">Our goal is to help families share health information securely with the clinics and doctors they choose — only with the family's consent, and using standards such as FHIR so records can move between systems.</p>
-          <p className="text-sm text-muted-foreground">Provider connections are not available yet. Today, families can share information by downloading a doctor-visit pack and taking it to the appointment.</p>
         </section>
 
         <section aria-labelledby="plans" className="my-16 space-y-6">
