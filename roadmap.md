@@ -11,7 +11,7 @@
 
 ## In progress
 - [x] Add consented public-page Google Analytics campaign reporting — three tests pass; browser verified no Google requests before acceptance, one campaign-tagged collection request after acceptance, withdrawal and no script on sign-in page. Provider report receipt unverified.
-- [ ] Enable live post reporting — owner must disable Enhanced measurement in the Google Analytics web stream and verify its Measurement ID, then publish; reports remain in Google Analytics, not native Lovable Analytics.
+- [ ] Enable live post reporting — owner confirmed Measurement ID checked and Enhanced measurement disabled (2026-10-30). Preview test sent facebook/family_launch/visit_pack_post page_view with HTTP 204; no collections before consent or after withdrawal, no tracker on fresh sign-in. Live homepage has no consent control: publication pending. Google report attribution remains unverified; reports stay in Google Analytics.
 - [x] Refresh homepage Open Graph and social-preview metadata — verified title, description, canonical and 1200×630 compressed sharing image in preview; reaches live site on next publish.
 - [x] Replace legacy AI summaries with consent-based, source-cited informational explanations — 30 tests passed; live synthetic Word explanation and diagnosis/treatment-advice boundary verified, test data cleaned up. Quotes checked against extracted Word text; PDF/photo citations still require user comparison with original. No saved AI outputs or advertising changes.
 - [x] Review architecture, live schema and storage; prepare smallest safe Smart Health Timeline + Doctor Visit Pack plan
