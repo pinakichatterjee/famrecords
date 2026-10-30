@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, Stethoscope, HeartPulse, Activity, Leaf } from "lucide-react";
+import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, HeartPulse, Activity, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
