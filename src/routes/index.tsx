@@ -5,6 +5,8 @@ import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
 
 const DESC = "Organize medical documents, understand reports and prepare for doctor visits — with your family's privacy in mind.";
+const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
+const SOCIAL_DESCRIPTION = "Keep your family's reports, prescriptions and scans together. Prepare doctor-visit packs in English or Bengali. Start free; your records stay private to your account.";
 
 const faqs = [
   { q: "How do I organise my family's medical records in one place?", a: "Create a free account, add a profile for each family member, then upload reports, prescriptions and scans as PDFs, Word files or phone photos. Each record can have a visit date, healthcare provider and record type, and appears on that person's health timeline." },
@@ -20,12 +22,21 @@ export const Route = createFileRoute("/")({
     meta: [
       { title: "FamRecords — Your family's health records, all in one place." },
       { name: "description", content: DESC },
-      { property: "og:title", content: "FamRecords — Your family's health records, all in one place." },
-      { property: "og:description", content: DESC },
+      { property: "og:title", content: SOCIAL_TITLE },
+      { property: "og:description", content: SOCIAL_DESCRIPTION },
+      { property: "og:site_name", content: "FamRecords: Rehab & Wellness" },
+      { property: "og:locale", content: "en_IN" },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://www.famrecords.org/" },
-      { property: "og:image", content: "https://www.famrecords.org/og-image.png" },
-      { name: "twitter:image", content: "https://www.famrecords.org/og-image.png" },
+      { property: "og:image", content: "https://www.famrecords.org/og-image.jpg" },
+      { property: "og:image:type", content: "image/jpeg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { property: "og:image:alt", content: "FamRecords: your family's health records, all in one place. Organize medical documents and prepare for doctor visits." },
+      { name: "twitter:title", content: SOCIAL_TITLE },
+      { name: "twitter:description", content: SOCIAL_DESCRIPTION },
+      { name: "twitter:image", content: "https://www.famrecords.org/og-image.jpg" },
+      { name: "twitter:image:alt", content: "FamRecords family health-records organiser with a folder, calendar and doctor-visit checklist." },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "robots", content: "index, follow, max-image-preview:large" },
     ],
