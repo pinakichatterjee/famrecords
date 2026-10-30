@@ -2,6 +2,20 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-lockup.png";
 
+const CONTACT_EMAIL = "famrecords.app@gmail.com";
+
+function ContactEmail() {
+  return (
+    <a
+      href={`mailto:${CONTACT_EMAIL}`}
+      className="font-medium text-primary underline underline-offset-4"
+    >
+      {CONTACT_EMAIL}
+    </a>
+  );
+}
+
+
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
@@ -76,7 +90,11 @@ const sections = [
     body: [
       "You can edit or delete family members and medical records at any time from within the app. Deleting a record removes the stored document.",
       "You can change the email address on your account from the Settings page.",
-      "If you want your account and all its data removed, contact us and we will delete it.",
+      <>
+        If you want your account and all its data removed, email <ContactEmail /> and we will
+        delete it.
+      </>,
+
     ],
   },
   {
@@ -101,9 +119,17 @@ const sections = [
   {
     title: "Contact",
     body: [
-      "If you have questions about this policy or your data, contact the FamRecords team through the app or at the contact address shown on our website.",
+      <>
+        If you have questions about this policy or your data, contact the FamRecords team through
+        the app or email <ContactEmail />.
+      </>,
+      <>
+        For account removal or privacy requests, please write to <ContactEmail /> from the email
+        address on your account so we can confirm it is you.
+      </>,
     ],
   },
+
 ];
 
 function PrivacyPage() {
@@ -123,17 +149,18 @@ function PrivacyPage() {
           <p className="text-base text-muted-foreground md:text-lg">
             FamRecords helps you store your family's medical records in one private place. This
             policy explains what information we collect, how it is stored, and the choices you
-            have. Last updated: 28 October 2026.
+            have. Last updated: 30 October 2026.
           </p>
           <div className="space-y-6">
             {sections.map((s) => (
               <section key={s.title} className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
                 <h2 className="text-lg font-semibold">{s.title}</h2>
-                {s.body.map((p) => (
-                  <p key={p} className="text-base text-muted-foreground">
+                {s.body.map((p, i) => (
+                  <p key={i} className="text-base text-muted-foreground">
                     {p}
                   </p>
                 ))}
+
               </section>
             ))}
           </div>
