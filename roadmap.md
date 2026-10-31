@@ -49,3 +49,5 @@
 - [x] Keep the "Rehab & Wellness" tagline in the logo and update the positioning copy around it (hero wording, a section explaining the tagline, an FAQ entry, search/social descriptions)
 - [x] Homepage: four dedicated sections — Family Records, AI Intelligence (report explainer available, health assistant planned), Multilingual support (English and বাংলা available, Hindi planned), Healthcare Connectivity (consent-based provider sharing, planned) and Privacy and Security (verified protections only); every item labelled Available now or Planned; desktop + phone layouts and all buttons/links verified
 - [x] Homepage: sample doctor-visit pack preview (fictional data)
+- [x] Publish homepage updates (sample visit pack) — requested 2026-10-31
+- [x] Shareable landing page /welcome built + tested (desktop/mobile, links, analytics allowlist); appears on www.famrecords.org/welcome at next publish
