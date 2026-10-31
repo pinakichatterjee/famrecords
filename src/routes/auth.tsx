@@ -77,9 +77,9 @@ function AuthPage() {
           <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
         </div>
         <div className="space-y-1">
-          <h1 className="text-2xl font-bold">{mode === 'forgot' ? 'Forgot password' : mode === "signin" ? "Welcome back" : "Create your account"}</h1>
+          <h1 className="text-2xl font-bold">Sign in or create your FamRecords account</h1>
           <p className="text-base text-muted-foreground">
-            {mode === 'forgot' ? 'Receive a password reset link by email.' : mode === "signin" ? "Sign in to your family's records." : "Start organising your family's recovery, care and everyday health."}
+            {mode === 'forgot' ? 'Forgot password — receive a password reset link by email.' : mode === "signin" ? "Welcome back — sign in to your family's records." : "Create your account — start organising your family's recovery, care and everyday health."}
           </p>
         </div>
         {mode === "signup" && (
