@@ -141,6 +141,48 @@ function PillarSection({ id, icon: Icon, title, intro, items }: { id: string; ic
   );
 }
 
+const sampleRecords = [
+  { date: "12 Sep 2026", type: "Lab report", title: "Blood sugar (HbA1c) test", provider: "City Diagnostics" },
+  { date: "28 Aug 2026", type: "Prescription", title: "Physiotherapy follow-up", provider: "Dr. A. Sen, Rehab Clinic" },
+  { date: "02 Jul 2026", type: "Imaging", title: "Knee X-ray", provider: "Lakeview Hospital" },
+];
+
+function SampleVisitPack() {
+  return (
+    <section aria-labelledby="sample-pack" className="my-16 space-y-6">
+      <div className="flex items-center gap-2"><ClipboardList className="h-6 w-6 text-primary" aria-hidden="true" /><h2 id="sample-pack" className="text-2xl font-bold">See a sample doctor-visit pack</h2></div>
+      <p className="max-w-2xl text-base text-muted-foreground">Before an appointment, FamRecords gathers the records you choose and your own notes into one tidy pack you can review and download. This example uses made-up details.</p>
+      <article className="rounded-xl border-2 border-dashed border-primary/30 bg-card p-6 shadow-soft">
+        <div className="flex flex-wrap items-start justify-between gap-2 border-b pb-4">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-primary">Doctor visit pack · Sample</p>
+            <h3 className="text-xl font-bold">Ma (Example member), 68</h3>
+            <p className="text-sm text-muted-foreground">Visit: 20 Oct 2026 · Dr. R. Banerjee, Orthopaedics</p>
+          </div>
+          <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">Example only</span>
+        </div>
+        <h4 className="mt-4 font-semibold">Records included</h4>
+        <ul className="mt-2 divide-y">
+          {sampleRecords.map((r) => (
+            <li key={r.title} className="flex flex-wrap gap-x-4 gap-y-1 py-2 text-sm">
+              <span className="w-24 text-muted-foreground">{r.date}</span>
+              <span className="font-medium flex-1">{r.title}</span>
+              <span className="text-muted-foreground">{r.type} · {r.provider}</span>
+            </li>
+          ))}
+        </ul>
+        <h4 className="mt-4 font-semibold">My notes for the doctor</h4>
+        <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+          <li>Knee pain is worse climbing stairs since August.</li>
+          <li>Ask whether physiotherapy should continue.</li>
+        </ul>
+        <p className="mt-4 text-xs text-muted-foreground">Packs contain only the details you entered and the records you picked — no AI text is added. You review and approve every pack before downloading it as a PDF.</p>
+      </article>
+      <div className="flex justify-center"><Button asChild><Link to="/auth">Create your first visit pack</Link></Button></div>
+    </section>
+  );
+}
+
 function Index() {
   const free = PLAN_LIMITS.free; const prem = PLAN_LIMITS.premium;
   const plans = [
@@ -214,6 +256,8 @@ function Index() {
         </section>
 
         <PillarSection id="connectivity" icon={Network} title="Healthcare Connectivity" intro="Our vision is that your family's records reach the doctors you have already chosen — only with your consent, and never sold or shared automatically." items={connectivity} />
+
+        <SampleVisitPack />
 
         <PillarSection id="security" icon={ShieldCheck} title="Privacy and Security" intro="The protections below are the ones we have built and checked in our own app and database. We do not claim any external certification or compliance standard." items={protections} />
 
