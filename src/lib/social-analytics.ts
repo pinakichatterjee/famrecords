@@ -4,7 +4,7 @@ const TAGS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content'] as cons
 
 export function publicAnalyticsLocation(input: string): string | null {
   const url = new URL(input);
-  if (url.pathname !== '/' && url.pathname !== '/privacy') return null;
+  if (url.pathname !== '/' && url.pathname !== '/privacy' && url.pathname !== '/welcome') return null;
   const clean = new URL(url.pathname, url.origin);
   for (const tag of TAGS) {
     const value = url.searchParams.get(tag);
