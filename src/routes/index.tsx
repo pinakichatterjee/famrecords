@@ -21,7 +21,7 @@ const faqs = [
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "FamRecords — Your family's health records, all in one place." },
+      { title: "FamRecords — Family Medical Records App | Rehab & Wellness" },
       { name: "description", content: DESC },
       { property: "og:title", content: SOCIAL_TITLE },
       { property: "og:description", content: SOCIAL_DESCRIPTION },
