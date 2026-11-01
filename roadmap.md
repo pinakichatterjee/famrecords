@@ -22,7 +22,8 @@
 - [ ] Diagnose admin access and expose actionable errors
 - [ ] First sign-up campaign (families in India) — channel agreed: Facebook & Instagram ads. Meta account link card was declined, so no ad account yet; creative + tracking prep continues in chat. No launch or spend without owner approval.
 - [ ] Admin panel: approve new users, grant/revoke admin; users see only their own panel (built, verifying)
-- [ ] AdSense ads — needs owner's approved AdSense account + publisher ID (ca-pub-…); ads only on public pages, never inside signed-in record pages
+- [ ] Add homepage-only AdSense Auto Ads script using the supplied publisher ID; verify private-page exclusion (account approval and ad delivery remain unverified).
+- [ ] Publish /welcome at the owner's request after current homepage changes are verified.
 - [x] AI summary of a medical record (diagnoses, medications, follow-up)
 - [x] Ask a question about a record, AI explains in plain language
 - [x] Unique titles/descriptions for public pages (/, /auth, /privacy)
