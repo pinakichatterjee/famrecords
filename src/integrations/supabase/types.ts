@@ -159,6 +159,33 @@ export type Database = {
           },
         ]
       }
+      invite_retention_settings: {
+        Row: {
+          id: boolean
+          last_cleanup_at: string | null
+          purge_before: string | null
+          retention_days: number | null
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          id?: boolean
+          last_cleanup_at?: string | null
+          purge_before?: string | null
+          retention_days?: number | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          id?: boolean
+          last_cleanup_at?: string | null
+          purge_before?: string | null
+          retention_days?: number | null
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
       invite_signup_attribution: {
         Row: {
           campaign: string
@@ -491,6 +518,13 @@ export type Database = {
         }
         Returns: boolean
       }
+      invite_cleanup_candidates: {
+        Args: never
+        Returns: {
+          created_at: string
+          user_id: string
+        }[]
+      }
       invite_signup_totals: {
         Args: never
         Returns: {
@@ -501,6 +535,11 @@ export type Database = {
         }[]
       }
       is_approved: { Args: { _user_id: string }; Returns: boolean }
+      request_invite_purge: {
+        Args: { _older_than_days: number }
+        Returns: undefined
+      }
+      set_invite_retention: { Args: { _days: number }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"

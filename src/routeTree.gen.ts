@@ -22,6 +22,7 @@ import { Route as AuthenticatedApprovedDashboardRouteImport } from './routes/_au
 import { Route as AuthenticatedApprovedMembersRouteImport } from './routes/_authenticated/_approved/members'
 import { Route as AuthenticatedApprovedRecordsRouteImport } from './routes/_authenticated/_approved/records'
 import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay-webhook'
+import { Route as ApiPublicJobsCleanupInvitesRouteImport } from './routes/api/public/jobs/cleanup-invites'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -90,6 +91,12 @@ const ApiPublicRazorpayWebhookRoute =
     path: '/api/public/razorpay-webhook',
     getParentRoute: () => rootRouteImport,
   } as any)
+const ApiPublicJobsCleanupInvitesRoute =
+  ApiPublicJobsCleanupInvitesRouteImport.update({
+    id: '/api/public/jobs/cleanup-invites',
+    path: '/api/public/jobs/cleanup-invites',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -103,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/members': typeof AuthenticatedApprovedMembersRoute
   '/records': typeof AuthenticatedApprovedRecordsRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
+  '/api/public/jobs/cleanup-invites': typeof ApiPublicJobsCleanupInvitesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -116,6 +124,7 @@ export interface FileRoutesByTo {
   '/members': typeof AuthenticatedApprovedMembersRoute
   '/records': typeof AuthenticatedApprovedRecordsRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
+  '/api/public/jobs/cleanup-invites': typeof ApiPublicJobsCleanupInvitesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -132,6 +141,7 @@ export interface FileRoutesById {
   '/_authenticated/_approved/members': typeof AuthenticatedApprovedMembersRoute
   '/_authenticated/_approved/records': typeof AuthenticatedApprovedRecordsRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
+  '/api/public/jobs/cleanup-invites': typeof ApiPublicJobsCleanupInvitesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -147,6 +157,7 @@ export interface FileRouteTypes {
     | '/members'
     | '/records'
     | '/api/public/razorpay-webhook'
+    | '/api/public/jobs/cleanup-invites'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -160,6 +171,7 @@ export interface FileRouteTypes {
     | '/members'
     | '/records'
     | '/api/public/razorpay-webhook'
+    | '/api/public/jobs/cleanup-invites'
   id:
     | '__root__'
     | '/'
@@ -175,6 +187,7 @@ export interface FileRouteTypes {
     | '/_authenticated/_approved/members'
     | '/_authenticated/_approved/records'
     | '/api/public/razorpay-webhook'
+    | '/api/public/jobs/cleanup-invites'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -185,6 +198,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   WelcomeRoute: typeof WelcomeRoute
   ApiPublicRazorpayWebhookRoute: typeof ApiPublicRazorpayWebhookRoute
+  ApiPublicJobsCleanupInvitesRoute: typeof ApiPublicJobsCleanupInvitesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -280,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicRazorpayWebhookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/jobs/cleanup-invites': {
+      id: '/api/public/jobs/cleanup-invites'
+      path: '/api/public/jobs/cleanup-invites'
+      fullPath: '/api/public/jobs/cleanup-invites'
+      preLoaderRoute: typeof ApiPublicJobsCleanupInvitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -323,6 +344,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   WelcomeRoute: WelcomeRoute,
   ApiPublicRazorpayWebhookRoute: ApiPublicRazorpayWebhookRoute,
+  ApiPublicJobsCleanupInvitesRoute: ApiPublicJobsCleanupInvitesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
