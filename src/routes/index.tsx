@@ -163,7 +163,7 @@ function SampleVisitPack() {
           </div>
           <span className="rounded-full bg-accent px-3 py-1 text-xs font-semibold text-accent-foreground">Example only</span>
         </div>
-        <h4 className="mt-4 font-semibold">Records included</h4>
+        <h3 className="mt-4 font-semibold">Records included</h3>
         <ul className="mt-2 divide-y">
           {sampleRecords.map((r) => (
             <li key={r.title} className="flex flex-wrap gap-x-4 gap-y-1 py-2 text-sm">
@@ -173,7 +173,7 @@ function SampleVisitPack() {
             </li>
           ))}
         </ul>
-        <h4 className="mt-4 font-semibold">My notes for the doctor</h4>
+        <h3 className="mt-4 font-semibold">My notes for the doctor</h3>
         <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
           <li>Knee pain is worse climbing stairs since August.</li>
           <li>Ask whether physiotherapy should continue.</li>
