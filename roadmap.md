@@ -10,6 +10,7 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
+- [ ] Add admin invite-attribution retention settings and confirmed early deletion, with automatic cleanup and privacy tests.
 - [x] Add opt-in first-party invite campaign sign-up counts in Admin; seven privacy tests and authenticated advertising regression pass. Synthetic signup read back as one WhatsApp/family_invite/invite_1 account in Admin; synthetic count removed, unapproved test account retained. No medical data or ad activation; publication pending.
 - [x] Add clear homepage privacy notice about AdSense and advertising cookies; clarify analytics choices do not control ads and align the privacy policy.
 - [x] Add automated AdSense homepage execution and signed-in private-page isolation checks.
