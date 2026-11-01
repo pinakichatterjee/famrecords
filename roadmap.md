@@ -10,6 +10,8 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
+- [ ] Add clear homepage privacy notice about AdSense and advertising cookies.
+- [x] Add automated AdSense homepage execution and signed-in private-page isolation checks.
 - [x] Add consented public-page Google Analytics campaign reporting — three tests pass; browser verified no Google requests before acceptance, one campaign-tagged collection request after acceptance, withdrawal and no script on sign-in page. Provider report receipt unverified.
 - [x] Enable live post reporting — owner published; verified www.famrecords.org on 2026-10-30: consented Facebook/social/live_verification/visit_pack_test homepage page_view accepted with HTTP 204; privacy page_view also HTTP 204. No collections or tracker before consent; withdrawal persists across navigation with no new collections; fresh sign-in has no tracker. Synthetic test visits were sent, not customer outcomes. Automatic public-page user_engagement also observed; navigation-aborted requests recorded, no page errors. Google report attribution remains unverified; reports stay in Google Analytics.
 - [x] Refresh homepage Open Graph and social-preview metadata — verified title, description, canonical and 1200×630 compressed sharing image in preview; reaches live site on next publish.

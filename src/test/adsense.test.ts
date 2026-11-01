@@ -15,7 +15,8 @@ describe('homepage AdSense publisher', () => {
   for (const [id, route] of Object.entries(router.routesById)) {
     it(`permits the AdSense runtime only in the homepage head: ${id}`, async () => {
       const head = route.options.head;
-      const result = head ? await Reflect.apply(head, undefined, [{}]) : undefined;
+      const result = (head ? await Reflect.apply(head, undefined, [{}]) : undefined) as
+        { scripts?: Array<{ src?: string; children?: string }> } | undefined;
       const adScripts = (result?.scripts ?? []).filter((script: { src?: string; children?: string }) =>
         /adsbygoogle|googlesyndication|ca-pub-/i.test(`${script.src ?? ''} ${script.children ?? ''}`),
       );
