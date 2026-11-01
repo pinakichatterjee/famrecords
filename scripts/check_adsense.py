@@ -67,9 +67,6 @@ async def main():
         for index, path in enumerate(exits):
             await homepage()
             count = len(ad_requests)
-            await page.locator('a[href]').filter(visible=True).count()  # allow hydration to settle
-            links = page.locator('a[href]')
-            matching = links.locator(f'[href="{path}"]')
             # Select by href plus occurrence so every repeated CTA is tested.
             occurrence = exits[:index].count(path)
             await page.locator(f'a[href="{path}"]').nth(occurrence).click()
