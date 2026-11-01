@@ -40,7 +40,11 @@ export function InvitePrivacy() {
       if (!accepted) {
         clearInvite();
         const { data } = await supabase.auth.getUser();
-        if (data.user) await remove();
+        if (data.user) {
+          await remove();
+          const { error } = await supabase.auth.updateUser({ data: { invite_attribution: null } });
+          if (error) throw error;
+        }
       }
       setEditing(false);
     } catch {
