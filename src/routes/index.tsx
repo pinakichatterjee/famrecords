@@ -3,6 +3,7 @@ import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, S
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
+import { HOMEPAGE_ADSENSE_SCRIPT } from "@/lib/adsense";
 
 const DESC = "A family medical records app: organise reports, prescriptions and therapy notes, understand your own records in plain language and prepare doctor-visit packs in English or Bengali.";
 const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [{ rel: "canonical", href: "https://www.famrecords.org/" }],
     scripts: [
+      HOMEPAGE_ADSENSE_SCRIPT,
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -178,7 +180,7 @@ function SampleVisitPack() {
         </ul>
         <p className="mt-4 text-xs text-muted-foreground">Packs contain only the details you entered and the records you picked — no AI text is added. You review and approve every pack before downloading it as a PDF.</p>
       </article>
-      <div className="flex justify-center"><Button asChild><Link to="/auth">Create your first visit pack</Link></Button></div>
+      <div className="flex justify-center"><Button asChild><Link to="/auth" reloadDocument>Create your first visit pack</Link></Button></div>
     </section>
   );
 }
@@ -200,8 +202,8 @@ function Index() {
           <h1 className="max-w-2xl text-3xl font-bold leading-tight md:text-4xl">Your family's health records. Organised, understood and connected.</h1>
           <p className="max-w-xl text-base text-muted-foreground md:text-lg">Keep reports, prescriptions, therapy notes and check-up results together — whether someone is recovering, living with a long-term condition, or simply staying well. Get plain-language explanations of your own records and prepare for better-informed conversations with your doctor.</p>
           <div className="flex flex-col items-center gap-3 pt-4">
-            <Button asChild size="lg"><Link to="/auth">Create a free account</Link></Button>
-            <Link to="/auth" className="text-sm font-medium text-primary hover:underline">Already have an account? Sign in</Link>
+            <Button asChild size="lg"><Link to="/auth" reloadDocument>Create a free account</Link></Button>
+            <Link to="/auth" reloadDocument className="text-sm font-medium text-primary hover:underline">Already have an account? Sign in</Link>
           </div>
         </section>
 
@@ -288,7 +290,7 @@ function Index() {
             ))}
           </div>
           <p className="text-sm text-muted-foreground">Premium Family is in an early pilot; online payment is coming soon. New accounts are approved by our team before first use.</p>
-          <div className="flex justify-center"><Button asChild size="lg"><Link to="/auth">Start free</Link></Button></div>
+          <div className="flex justify-center"><Button asChild size="lg"><Link to="/auth" reloadDocument>Start free</Link></Button></div>
         </section>
 
         <section className="grid gap-6 md:grid-cols-2">
@@ -310,7 +312,7 @@ function Index() {
 
         <footer className="my-12 flex items-center justify-between border-t border-border pt-6 text-sm text-muted-foreground">
           <span>FamRecords: Rehab & Wellness</span>
-          <Link to="/privacy" className="font-medium text-primary hover:underline">Privacy Policy</Link>
+          <Link to="/privacy" reloadDocument className="font-medium text-primary hover:underline">Privacy Policy</Link>
         </footer>
       </div>
     </div>

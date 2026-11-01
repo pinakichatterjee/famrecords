@@ -11,6 +11,7 @@
 
 - Keep password validation and account-management safety rules in a shared browser-safe module so forms and server actions use tested rules.
 - Keep advertising preparation separate from delivery; inactive sign-up measurement must discard events without loading SDKs, storing identifiers or queuing historical events.
+- Load AdSense only in the homepage leaf head and use full-document navigation for every link leaving that page; third-party advertising runtimes must not survive into private account or clinical pages.
 - Optional Google Analytics is limited to consented homepage/privacy page views with allowlisted campaign labels; disable automatic/enhanced measurement in the Google stream to prevent private-route or form collection. Why: campaign reports must never include account or clinical activity.
 - Keep timeline events separate from uploaded medical records; authenticated server functions and owner/member relationship validation preserve existing document semantics.
 - Build doctor-visit packs from explicit source metadata and manual notes only; approval fingerprints must invalidate after edits and AI summaries must never enter a pack.
