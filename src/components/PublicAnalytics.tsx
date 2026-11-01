@@ -64,12 +64,10 @@ export function PublicAnalytics() {
 
   if (!ready || !publicPage || !/^G-[A-Z0-9]+$/.test(measurementId ?? '')) return null;
   if (choice && !editing) return <div className="border-t border-border px-4 py-3"><Button variant="link" onClick={() => setEditing(true)}>Analytics privacy settings</Button></div>;
-  return <section aria-label="Optional analytics" className="border-t border-border bg-background px-4 py-5">
-    <div className="mx-auto max-w-[1200px] space-y-3">
-      <h2 className="font-semibold">Optional visitor analytics</h2>
-      <p className="max-w-2xl text-sm text-muted-foreground">Allow Google Analytics to measure visits to our homepage and privacy page, including which social platform, campaign and post brought you here. Google receives device and visit information and uses analytics cookies. We do not send account details or medical records. You can change your choice here at any time.</p>
-      <a href="/privacy" className="text-sm text-primary underline">Privacy policy</a>
-      <div className="flex flex-wrap gap-3"><Button variant="outline" onClick={() => decide(false)}>Decline</Button><Button variant="outline" onClick={() => decide(true)}>Allow analytics</Button></div>
+  return <section aria-label="Optional analytics" className="border-t border-border bg-background px-4 py-3">
+    <div className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
+      <p className="min-w-0 flex-1">May we measure your visit with Google Analytics to see which posts bring families here? No account or medical details. <a href="/privacy" className="text-primary underline">Privacy policy</a></p>
+      <div className="flex shrink-0 gap-2"><Button variant="outline" size="sm" onClick={() => decide(false)}>Decline</Button><Button variant="outline" size="sm" onClick={() => decide(true)}>Allow</Button></div>
     </div>
   </section>;
 }
