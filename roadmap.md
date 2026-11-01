@@ -10,7 +10,7 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
-- [ ] Add opt-in, first-party invite campaign sign-up counts in Admin; no medical data or advertising activation.
+- [x] Add opt-in first-party invite campaign sign-up counts in Admin; seven privacy tests and authenticated advertising regression pass. Synthetic signup read back as one WhatsApp/family_invite/invite_1 account in Admin; synthetic count removed, unapproved test account retained. No medical data or ad activation; publication pending.
 - [x] Add clear homepage privacy notice about AdSense and advertising cookies; clarify analytics choices do not control ads and align the privacy policy.
 - [x] Add automated AdSense homepage execution and signed-in private-page isolation checks.
 - [x] Add consented public-page Google Analytics campaign reporting — three tests pass; browser verified no Google requests before acceptance, one campaign-tagged collection request after acceptance, withdrawal and no script on sign-in page. Provider report receipt unverified.
