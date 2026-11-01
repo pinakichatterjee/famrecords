@@ -7,6 +7,7 @@ import { listUsers, setUserAdmin, setUserApproved } from "@/lib/admin.functions"
 import { adminListPlans, adminSetPremium } from "@/lib/plans.functions";
 import { Button } from "@/components/ui/button";
 import { inviteSignupTotals } from '@/lib/invite.functions';
+import { InviteRetentionSettings } from '@/components/InviteRetentionSettings';
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -117,6 +118,7 @@ function AdminPage() {
         {invitesQuery.isPending && <p role="status">Loading invite counts…</p>}
         {invitesQuery.isError && <div role="alert"><p>Invite counts could not be loaded.</p><Button variant="outline" onClick={() => invitesQuery.refetch()}>Retry invite counts</Button></div>}
         {invitesQuery.isSuccess && <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr className="border-b border-border"><th className="py-3 pr-4">Platform</th><th className="py-3 pr-4">Campaign</th><th className="py-3 pr-4">Post</th><th className="py-3">New accounts</th></tr></thead><tbody>{invitesQuery.data.map(row => <tr key={`${row.source}/${row.campaign}/${row.content}`} className="border-b border-border"><td className="py-3 pr-4">{row.source}</td><td className="py-3 pr-4">{row.campaign}</td><td className="py-3 pr-4">{row.content}</td><td className="py-3">{row.signups}</td></tr>)}{invitesQuery.data.length === 0 && <tr><td colSpan={4} className="py-4 text-muted-foreground">No consented invite sign-ups yet.</td></tr>}</tbody></table></div>}
+        <InviteRetentionSettings />
       </section>
       <div className="overflow-x-auto rounded-xl border bg-card shadow-soft">
         <table className="w-full text-left text-base">
