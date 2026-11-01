@@ -7,6 +7,7 @@ import logo from "@/assets/logo-lockup.png";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { prepareSignupMeasurement } from '@/lib/signup-tracking';
+import { clearInvite, signupInvite } from '@/lib/invite-attribution';
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -49,18 +50,21 @@ function AuthPage() {
         toast.success('If an account exists for that email, a reset link will be sent.');
         return;
       } else if (mode === "signup") {
+        const invite = signupInvite();
         const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/dashboard", data: { name } },
+          options: { emailRedirectTo: window.location.origin + "/dashboard", data: { name, ...(invite ? { invite_attribution: invite } : {}) } },
         });
         if (error) throw error;
+        clearInvite();
         prepareSignupMeasurement(Boolean(data.user && (data.user.identities?.length ?? 0) > 0));
         if (data.session) navigate({ to: "/dashboard" });
         else toast.success("Check your email to confirm your account.");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        clearInvite();
         navigate({ to: "/dashboard" });
       }
     } catch (err) {

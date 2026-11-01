@@ -159,6 +159,44 @@ export type Database = {
           },
         ]
       }
+      invite_signup_attribution: {
+        Row: {
+          campaign: string
+          consent_at: string
+          content: string
+          created_at: string
+          notice_version: string
+          source: string
+          user_id: string
+        }
+        Insert: {
+          campaign: string
+          consent_at: string
+          content: string
+          created_at?: string
+          notice_version: string
+          source: string
+          user_id: string
+        }
+        Update: {
+          campaign?: string
+          consent_at?: string
+          content?: string
+          created_at?: string
+          notice_version?: string
+          source?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invite_signup_attribution_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       medical_records: {
         Row: {
           ai_summary: string | null
@@ -452,6 +490,15 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
+      }
+      invite_signup_totals: {
+        Args: never
+        Returns: {
+          campaign: string
+          content: string
+          signups: number
+          source: string
+        }[]
       }
       is_approved: { Args: { _user_id: string }; Returns: boolean }
     }

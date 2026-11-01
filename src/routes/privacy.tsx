@@ -43,6 +43,14 @@ export const Route = createFileRoute("/privacy")({
 
 const sections = [
   {
+    title: "Optional invite sign-up measurement",
+    body: [
+      "Only if you choose Allow invite measurement, FamRecords remembers predefined invite platform, campaign and post labels in this browser tab for up to 24 hours. When a new account is created, these labels and your consent time and notice version are saved with an internal account reference. Admins see grouped new-account counts, including accounts awaiting confirmation or approval, not a list of people in the invite report. We do not measure a visit-to-sign-up rate.",
+      "No medical information, family details, names, email addresses, full URLs, IP addresses or device identifiers are included in invite attribution. Nothing from this feature is sent to Google, Meta or other advertisers. Google Analytics and advertising choices remain separate. Use only the predefined labels; never put personal or medical details in invite URLs.",
+      "You can decline or change your choice through Invite privacy settings below. Withdrawal clears pending labels and stops future invite measurement immediately. To remove saved account attribution and its labels from account metadata, sign in and withdraw here; this changes grouped counts but does not delete your account or records. Attribution is otherwise retained until account deletion. Consent evidence uses notice famrecords-invite-v1, which resolves to the text shown in the invite choice panel.",
+    ],
+  },
+  {
     title: "Advertising on the public homepage",
     body: [
       "Our public homepage loads Google AdSense and may display ads. Google and its advertising partners may use cookies or similar technologies, IP addresses and browser information to deliver and measure ads and, where permitted, personalise them based on visits to this and other websites.",
