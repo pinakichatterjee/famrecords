@@ -43,6 +43,14 @@ export const Route = createFileRoute("/privacy")({
 
 const sections = [
   {
+    title: "Advertising on the public homepage",
+    body: [
+      "Our public homepage loads Google AdSense and may display ads. Google and its advertising partners may use cookies or similar technologies, IP addresses and browser information to deliver and measure ads and, where permitted, personalise them based on visits to this and other websites.",
+      "AdSense is not loaded on sign-in, account or private medical pages. FamRecords does not send your medical records or family account details to advertisers. Our Allow analytics and Decline controls apply only to optional Google Analytics, not AdSense or advertising cookies. This notice is information, not an advertising-consent control.",
+      <>You can manage or block cookies in your browser (which may affect sign-in), review ad personalisation in <a href="https://myadcenter.google.com/" className="font-medium text-primary underline">Google My Ad Center</a>, and read <a href="https://policies.google.com/technologies/partner-sites" className="font-medium text-primary underline">how Google uses information from partner sites</a>.</>,
+    ],
+  },
+  {
     title: "Optional public-page visitor analytics",
     body: [
       "If you choose Allow analytics, Google Analytics measures visits to our homepage and privacy page, using analytics cookies and device and visit information. Social links may include platform, campaign and post labels so we can compare where visits come from. Never put personal or medical information in those labels.",
@@ -90,7 +98,7 @@ const sections = [
     title: "What we never do",
     body: [
       "We do not sell, rent or share your personal information or medical records with advertisers or data brokers.",
-      "We do not show advertising inside the app, and we do not use your medical information for marketing.",
+      "Advertising is limited to the public homepage, not private medical or account pages. We do not use your medical information for marketing.",
     ],
   },
   {
@@ -157,7 +165,7 @@ function PrivacyPage() {
           <p className="text-base text-muted-foreground md:text-lg">
             FamRecords helps you store your family's medical records in one private place. This
             policy explains what information we collect, how it is stored, and the choices you
-            have. Last updated: 30 October 2026.
+            have. Last updated: 1 November 2026.
           </p>
           <div className="space-y-6">
             {sections.map((s) => (
