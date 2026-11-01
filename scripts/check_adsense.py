@@ -53,6 +53,7 @@ async def main():
             assert await page.locator('head script[src*="adsbygoogle.js"]').count() == 1
 
         async def excluded(path, request_count):
+            await page.wait_for_url(ORIGIN + path)
             await page.wait_for_load_state("networkidle")
             assert urlparse(page.url).path == path, f"{path}: redirected; authenticated coverage unavailable."
             assert not await page.evaluate("Boolean(window.__adsenseSafetyProbe)"), f"{path}: advertising runtime survived."
