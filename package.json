@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
+    "test:adsense": "vitest run src/test/adsense.test.ts && python3 scripts/check_adsense.py",
     "test:watch": "vitest"
   },
   "overrides": {

@@ -310,6 +310,13 @@ function Index() {
           </div>
         </section>
 
+        <section aria-labelledby="advertising-privacy" className="mt-12 space-y-3 border-t border-border pt-6">
+          <h2 id="advertising-privacy" className="text-lg font-semibold">Ads and your privacy</h2>
+          <p className="max-w-3xl text-sm text-muted-foreground">This public homepage loads Google AdSense and may display ads. Google and its advertising partners may use cookies or similar technologies, your IP address and browser information to deliver ads, measure their performance and, where permitted, personalise them based on visits to this and other websites.</p>
+          <p className="max-w-3xl text-sm text-muted-foreground">AdSense is not loaded on sign-in, account or private medical pages. FamRecords does not send your medical records or family account details to advertisers. The “Allow analytics” and “Decline” choices below control Google Analytics only — they do not control AdSense or advertising cookies.</p>
+          <p className="max-w-3xl text-sm text-muted-foreground">You can manage or block cookies in your browser and review personalisation in <a href="https://myadcenter.google.com/" className="font-medium text-primary underline underline-offset-4">Google My Ad Center</a>. Blocking cookies may affect ads and sign-in. Read our <Link to="/privacy" reloadDocument className="font-medium text-primary underline underline-offset-4">Privacy Policy</Link> and <a href="https://policies.google.com/technologies/partner-sites" className="font-medium text-primary underline underline-offset-4">how Google uses information from partner sites</a>.</p>
+        </section>
+
         <footer className="my-12 flex items-center justify-between border-t border-border pt-6 text-sm text-muted-foreground">
           <span>FamRecords: Rehab & Wellness</span>
           <Link to="/privacy" reloadDocument className="font-medium text-primary hover:underline">Privacy Policy</Link>
