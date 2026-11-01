@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { PublicAnalytics } from '@/components/PublicAnalytics';
+import { InvitePrivacy } from '@/components/InvitePrivacy';
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -141,6 +142,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <Outlet />
       <PublicAnalytics />
+      <InvitePrivacy />
       <Toaster richColors position="top-center" />
     </QueryClientProvider>
   );

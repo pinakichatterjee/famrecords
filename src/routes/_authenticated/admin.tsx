@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { listUsers, setUserAdmin, setUserApproved } from "@/lib/admin.functions";
 import { adminListPlans, adminSetPremium } from "@/lib/plans.functions";
 import { Button } from "@/components/ui/button";
+import { inviteSignupTotals } from '@/lib/invite.functions';
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
@@ -28,6 +29,7 @@ function AdminPage() {
   const adminFn = useServerFn(setUserAdmin);
   const plansFn = useServerFn(adminListPlans);
   const premiumFn = useServerFn(adminSetPremium);
+  const totalsFn = useServerFn(inviteSignupTotals);
 
   const { data: isAdmin, isLoading: checkingRole } = useQuery({
     queryKey: ["my-admin-role"],
@@ -52,6 +54,7 @@ function AdminPage() {
   });
 
   const plansQuery = useQuery({ queryKey: ["admin-plans"], queryFn: () => plansFn(), enabled: isAdmin === true });
+  const invitesQuery = useQuery({ queryKey: ['admin-invite-signups'], queryFn: () => totalsFn(), enabled: isAdmin === true });
   const planOf = (id: string) => plansQuery.data?.find((p) => p.userId === id);
   const togglePremium = async (userId: string, premium: boolean) => {
     try { await premiumFn({ data: { userId, premium } }); toast.success(premium ? "Premium Family granted." : "Moved to Free."); refresh(); }
@@ -108,6 +111,13 @@ function AdminPage() {
       {usersQuery.isPending && <p role="status">Loading users…</p>}
       {usersQuery.isError && <div role="alert" className="space-y-3 text-destructive"><p>{usersQuery.error.message}</p><Button variant="outline" onClick={() => usersQuery.refetch()}>Try again</Button></div>}
       <section className="space-y-2 border-t pt-4"><h2 className="text-xl font-semibold">Visitors</h2><p className="text-muted-foreground">Visitor totals are not connected to this panel yet.</p></section>
+      <section aria-label="Invite campaign sign-ups" className="space-y-3 border-t border-border pt-4">
+        <h2 className="text-xl font-semibold">Invite campaign sign-ups</h2>
+        <p className="text-sm text-muted-foreground">Consented new accounts only, including accounts awaiting email confirmation or approval. These are invite labels, not verified ad conversions; no visit-to-sign-up rate is calculated.</p>
+        {invitesQuery.isPending && <p role="status">Loading invite counts…</p>}
+        {invitesQuery.isError && <div role="alert"><p>Invite counts could not be loaded.</p><Button variant="outline" onClick={() => invitesQuery.refetch()}>Retry invite counts</Button></div>}
+        {invitesQuery.isSuccess && <div className="overflow-x-auto"><table className="w-full text-left text-sm"><thead><tr className="border-b border-border"><th className="py-3 pr-4">Platform</th><th className="py-3 pr-4">Campaign</th><th className="py-3 pr-4">Post</th><th className="py-3">New accounts</th></tr></thead><tbody>{invitesQuery.data.map(row => <tr key={`${row.source}/${row.campaign}/${row.content}`} className="border-b border-border"><td className="py-3 pr-4">{row.source}</td><td className="py-3 pr-4">{row.campaign}</td><td className="py-3 pr-4">{row.content}</td><td className="py-3">{row.signups}</td></tr>)}{invitesQuery.data.length === 0 && <tr><td colSpan={4} className="py-4 text-muted-foreground">No consented invite sign-ups yet.</td></tr>}</tbody></table></div>}
+      </section>
       <div className="overflow-x-auto rounded-xl border bg-card shadow-soft">
         <table className="w-full text-left text-base">
           <thead>

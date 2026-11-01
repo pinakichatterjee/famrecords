@@ -11,6 +11,7 @@
 
 - Keep password validation and account-management safety rules in a shared browser-safe module so forms and server actions use tested rules.
 - Keep advertising preparation separate from delivery; inactive sign-up measurement must discard events without loading SDKs, storing identifiers or queuing historical events.
+- Keep first-party invite attribution separate from advertising: predefined labels only after an independent opt-in, tab-scoped 24-hour retention, immutable capture at account creation and admin-only grouped RPC reads; withdrawal deletes account attribution. Why: sign-up counts must never expose clinical data or activate ad SDKs.
 - Load AdSense only in the homepage leaf head and use full-document navigation for every link leaving that page; third-party advertising runtimes must not survive into private account or clinical pages.
 - Run `bun run test:adsense` with an approved admin browser session for advertising regressions; the deterministic browser probe verifies execution and isolation without serving live ads or modifying records.
 - Optional Google Analytics is limited to consented homepage/privacy page views with allowlisted campaign labels; disable automatic/enhanced measurement in the Google stream to prevent private-route or form collection. Why: campaign reports must never include account or clinical activity.
