@@ -13,8 +13,9 @@ export function AdvertisingConsent() {
       let next: AdvertisingChoice | null = null;
       try { next = readAdvertisingChoice(localStorage.getItem(ADVERTISING_CHOICE_KEY)); } catch { /* Default denied. */ }
       setChoice(next); setReady(true);
-      if (loaded && !next?.accepted) { window.location.reload(); return; }
-      loaded = loadConsentedAds(document, window.location.pathname, next) || loaded;
+      const runtimePresent = loaded || Boolean(document.querySelector('script[src*="pagead/js/adsbygoogle.js"]'));
+      if (runtimePresent && !next?.accepted) { window.location.reload(); return; }
+      loaded = loadConsentedAds(document, window.location.pathname, next) || runtimePresent;
     };
     read();
     const storage = (event: StorageEvent) => { if (event.key === ADVERTISING_CHOICE_KEY || event.key === null) read(); };
@@ -24,7 +25,8 @@ export function AdvertisingConsent() {
 
   function decide(accepted: boolean) {
     const now = new Date().toISOString();
-    const next: AdvertisingChoice = { accepted, notice: ADVERTISING_NOTICE, decidedAt: now, acceptedAt: accepted ? now : choice?.acceptedAt };
+    const acceptedAt = accepted ? now : choice?.acceptedAt;
+    const next: AdvertisingChoice = { accepted, notice: ADVERTISING_NOTICE, decidedAt: now, ...(acceptedAt ? { acceptedAt } : {}) };
     try { localStorage.setItem(ADVERTISING_CHOICE_KEY, JSON.stringify(next)); }
     catch { setChoice(null); return; }
     // A fresh document destroys any already-running third-party advertising code.
