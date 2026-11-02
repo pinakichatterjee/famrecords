@@ -4,6 +4,7 @@
 - [ ] Submit FamRecords to Google Play — owner must create the Play Console account themselves (Google account, $25 fee, ID verification), then upload the prepared assets; submission subject to Google approval.
 
 ## Done
+- [x] Confirm public/ads.txt contains the exact owner-provided publisher entry and is live at https://famrecords.org/ads.txt (redirects to www, HTTP 200 text/plain); no additional publication needed.
 - [x] Update the XML sitemap with all four indexable public pages (/, /auth, /privacy, /welcome), preserve its robots.txt reference and verify XML and public URLs; publication requested separately.
 - [x] Prepare FamRecords for Google Play: privacy policy page (/privacy), app manifest + install icons, 512x512 app icon, 1024x500 feature graphic, five phone screenshots (saved in Files under google-play-assets/)
 - [x] Rename the app everywhere to "FamRecords: Rehab & Wellness" (browser tab, search results, shared links, page headers)
@@ -11,7 +12,7 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
-- [ ] Add consent-safe ad delivery monitoring and stoppage reporting — needs access to Google AdSense reporting; do not generate automated live ad impressions.
+- [ ] Add consent-safe ad delivery monitoring and stoppage reporting — blocked: owner declined AdSense reporting connection and forbids OAuth requests; no monitoring installed or artificial ad impressions generated.
 - [x] Verify live AdSense delivery and cookies: Google ad requests before consent and after declining analytics; no advertising cookies observed; no visible filled ads, one unfilled unit after reload. Browser-specific result, not a universal cookie guarantee.
 - [x] Add separate opt-in advertising consent: 21 tests and authenticated advertising browser regression pass; no script before acceptance or after refusal, analytics independent, withdrawal clears two tabs, private pages ad-free. Publish required for live protection; custom control is not a Google-certified CMP.
 - [x] Add admin invite-attribution retention settings (30/90/180/365 days or until account deletion/withdrawal) and confirmed early deletion; 22 privacy tests plus advertising regression pass. Admin save/read-back, synthetic old-count deletion and desktop/mobile controls verified. Initial retention restored; synthetic attribution removed. Five-minute cleanup schedule created; publish required for the new scheduled target to run live.
