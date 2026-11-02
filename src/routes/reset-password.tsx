@@ -12,9 +12,10 @@ export const Route = createFileRoute('/reset-password')({
     { name: 'description', content: 'Securely reset your FamRecords account password.' },
     { property: 'og:title', content: 'Reset password — FamRecords' },
     { property: 'og:description', content: 'Securely reset your FamRecords account password.' },
+    { property: 'og:url', content: 'https://www.famrecords.org/reset-password' },
     { property: 'og:type', content: 'website' }, { name: 'twitter:card', content: 'summary' },
     { name: 'robots', content: 'noindex, nofollow' },
-  ] }), component: ResetPassword,
+  ], links: [{ rel: 'canonical', href: 'https://www.famrecords.org/reset-password' }] }), component: ResetPassword,
 });
 
 function ResetPassword() {
