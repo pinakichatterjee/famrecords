@@ -11,6 +11,7 @@
 - [x] New browser-tab icon (favicon) from the logo
 
 ## In progress
+- [ ] Verify live AdSense ad delivery and advertising cookies before consent and after declining analytics; read-only browser check, no ad clicks.
 - [x] Add admin invite-attribution retention settings (30/90/180/365 days or until account deletion/withdrawal) and confirmed early deletion; 22 privacy tests plus advertising regression pass. Admin save/read-back, synthetic old-count deletion and desktop/mobile controls verified. Initial retention restored; synthetic attribution removed. Five-minute cleanup schedule created; publish required for the new scheduled target to run live.
 - [x] Add opt-in first-party invite campaign sign-up counts in Admin; seven privacy tests and authenticated advertising regression pass. Synthetic signup read back as one WhatsApp/family_invite/invite_1 account in Admin; synthetic count removed, unapproved test account retained. No medical data or ad activation; publication pending.
 - [x] Add clear homepage privacy notice about AdSense and advertising cookies; clarify analytics choices do not control ads and align the privacy policy.
