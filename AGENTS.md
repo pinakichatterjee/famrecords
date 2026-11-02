@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep password validation and account-management safety rules in a shared browser-safe module so forms and server actions use tested rules.
+- Maintain the existing static public/sitemap.xml with canonical indexable public pages only; omit lastmod without authoritative page-specific content dates. Why: search discovery must exclude private records and avoid fabricated freshness.
 - Keep advertising preparation separate from delivery; inactive sign-up measurement must discard events without loading SDKs, storing identifiers or queuing historical events.
 - Keep first-party invite attribution separate from advertising: predefined labels only after an independent opt-in, tab-scoped 24-hour retention, immutable capture at account creation and admin-only grouped RPC reads; withdrawal deletes account attribution. Why: sign-up counts must never expose clinical data or activate ad SDKs.
 - Saved invite retention is admin-controlled through validated RPCs; exclude expired/purge-selected rows immediately and use a bounded authenticated scheduled cleanup to clear Auth metadata before reporting rows. Why: retention must cover both copies without touching clinical data or losing retry state.
