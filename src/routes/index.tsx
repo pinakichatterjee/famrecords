@@ -3,7 +3,7 @@ import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, S
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
-import { HOMEPAGE_ADSENSE_SCRIPT } from "@/lib/adsense";
+import { AdvertisingConsent } from "@/components/AdvertisingConsent";
 
 const DESC = "A family medical records app: organise reports, prescriptions and therapy notes, understand your own records in plain language and prepare doctor-visit packs in English or Bengali.";
 const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
@@ -44,7 +44,6 @@ export const Route = createFileRoute("/")({
     ],
     links: [{ rel: "canonical", href: "https://www.famrecords.org/" }],
     scripts: [
-      HOMEPAGE_ADSENSE_SCRIPT,
       {
         type: "application/ld+json",
         children: JSON.stringify({
@@ -315,6 +314,7 @@ function Index() {
           <Link to="/privacy" reloadDocument className="font-medium text-primary hover:underline">Privacy Policy</Link>
         </footer>
       </div>
+      <AdvertisingConsent />
     </div>
   );
 }

@@ -49,6 +49,8 @@ async def main():
 
         async def homepage():
             await page.goto(ORIGIN, wait_until="networkidle")
+            if await page.get_by_role("button", name="Allow advertising", exact=True).count():
+                await page.get_by_role("button", name="Allow advertising", exact=True).click()
             await page.wait_for_function("window.__adsenseSafetyProbe === true")
             assert await page.locator('head script[src*="adsbygoogle.js"]').count() == 1
 
@@ -62,6 +64,13 @@ async def main():
 
         # Every homepage exit must destroy the advertising document, including
         # repeated CTAs; checking only direct page loads misses SPA regressions.
+        await page.goto(ORIGIN, wait_until="networkidle")
+        assert len(ad_requests) == 0, "AdSense loaded before advertising consent."
+        await page.get_by_role("button", name="Decline advertising", exact=True).click()
+        await page.wait_for_load_state("networkidle")
+        await page.reload(wait_until="networkidle")
+        assert len(ad_requests) == 0, "AdSense loaded after advertising refusal."
+        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
         await homepage()
         exits = await page.locator('a[href]').evaluate_all("els => els.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('/') && h !== '/')")
         assert exits, "Homepage exit coverage must not be empty."
