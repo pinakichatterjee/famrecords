@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-lockup.png";
+import { AdvertisingConsent } from "@/components/AdvertisingConsent";
+import { openPrivacySetting } from "@/lib/privacy-settings";
 
 const CONTACT_EMAIL = "famrecords.app@gmail.com";
 
@@ -47,14 +49,14 @@ const sections = [
     body: [
       "Only if you choose Allow invite measurement, FamRecords remembers predefined invite platform, campaign and post labels in this browser tab for up to 24 hours. When a new account is created, these labels and your consent time and notice version are saved with an internal account reference. Admins see grouped new-account counts, including accounts awaiting confirmation or approval, not a list of people in the invite report. We do not measure a visit-to-sign-up rate.",
       "No medical information, family details, names, email addresses, full URLs, IP addresses or device identifiers are included in invite attribution. Nothing from this feature is sent to Google, Meta or other advertisers. Google Analytics and advertising choices remain separate. Use only the predefined labels; never put personal or medical details in invite URLs.",
-      "You can decline or change your choice through Invite privacy settings below. Withdrawal clears pending labels and stops future invite measurement immediately. To remove saved account attribution and its labels from account metadata, sign in and withdraw here; this changes grouped counts but does not delete your account or records. Admins can keep saved attribution for 30, 90, 180 or 365 days after sign-up, or until account deletion or withdrawal (the initial setting). Admins can also delete it earlier. Expired or selected attribution is excluded from counts immediately and automatically deleted in batches every five minutes, including its saved account labels; failed deletions are retried. This does not delete accounts or medical records. Consent evidence uses notice famrecords-invite-v1, which resolves to the text shown in the invite choice panel.",
+      "You can decline or change your choice through Privacy settings on this page. Withdrawal clears pending labels and stops future invite measurement immediately. To remove saved account attribution and its labels from account metadata, sign in and withdraw here; this changes grouped counts but does not delete your account or records. Admins can keep saved attribution for 30, 90, 180 or 365 days after sign-up, or until account deletion or withdrawal (the initial setting). Admins can also delete it earlier. Expired or selected attribution is excluded from counts immediately and automatically deleted in batches every five minutes, including its saved account labels; failed deletions are retried. This does not delete accounts or medical records. Consent evidence uses notice famrecords-invite-v1, which resolves to the text shown in the invite choice panel.",
     ],
   },
   {
     title: "Advertising on the public homepage",
     body: [
       "Our public homepage loads Google AdSense only after you choose Allow advertising. Google and its advertising partners may use cookies or similar technologies, IP addresses and browser information to deliver, measure and personalise ads based on visits to this and other websites. Before a choice or after Decline advertising, FamRecords does not load AdSense.",
-      "AdSense is not loaded on sign-in, account or private medical pages. FamRecords does not send your medical records or family account details to advertisers. Analytics and advertising choices are separate: allowing analytics does not allow advertising. Use Advertising privacy settings on the homepage to change your choice. Withdrawal saves a refusal and reloads the page to stop the advertising runtime; it cannot undo information already received by Google or remove cookies on Google's domains. We save your choice, decision time, original acceptance time and notice version famrecords-advertising-v1 on this browser. This is a local opt-in control, not a Google-certified consent platform.",
+      "AdSense is not loaded on sign-in, account or private medical pages. FamRecords does not send your medical records or family account details to advertisers. Analytics and advertising choices are separate: allowing analytics does not allow advertising. Use Privacy settings on this page to change your choice; it applies the next time you open the homepage. Withdrawal saves a refusal and reloads the page to stop the advertising runtime; it cannot undo information already received by Google or remove cookies on Google's domains. We save your choice, decision time, original acceptance time and notice version famrecords-advertising-v1 on this browser. This is a local opt-in control, not a Google-certified consent platform.",
       <>You can manage or block cookies in your browser (which may affect sign-in), review ad personalisation in <a href="https://myadcenter.google.com/" className="font-medium text-primary underline">Google My Ad Center</a>, and read <a href="https://policies.google.com/technologies/partner-sites" className="font-medium text-primary underline">how Google uses information from partner sites</a>.</>,
     ],
   },
@@ -63,7 +65,7 @@ const sections = [
     body: [
       "If you choose Allow analytics, Google Analytics measures visits to our homepage and privacy page, using analytics cookies and device and visit information. Social links may include platform, campaign and post labels so we can compare where visits come from. Never put personal or medical information in those labels.",
       "We do not send account details, medical records or visits to signed-in pages to Google Analytics. Advertising features and Google signals are disabled. Declining prevents this optional Google Analytics tracking; accepting later does not replay earlier visits. Lovable's existing site analytics remains separate.",
-      "You can decline or withdraw your choice through Analytics privacy settings on the homepage or privacy page. We store your choice, the notice version and the time you decided on your device. Withdrawal stops future optional measurement but does not remove data already received by Google. Our notice version is famrecords-public-analytics-v1.",
+      "You can decline or withdraw your choice through Privacy settings on this page. We store your choice, the notice version and the time you decided on your device. Withdrawal stops future optional measurement but does not remove data already received by Google. Our notice version is famrecords-public-analytics-v1.",
     ],
   },
   {
@@ -188,7 +190,17 @@ function PrivacyPage() {
               </section>
             ))}
           </div>
+          <section id="privacy-settings" className="space-y-3 rounded-xl bg-card p-6 shadow-soft">
+            <h2 className="text-lg font-semibold">Privacy settings</h2>
+            <p className="text-base text-muted-foreground">Review or change your optional choices at any time. Your saved choices stay in place until you change them.</p>
+            <div className="flex flex-wrap gap-3">
+              <Button variant="outline" onClick={() => openPrivacySetting("analytics")}>Analytics settings</Button>
+              <Button variant="outline" onClick={() => openPrivacySetting("advertising")}>Advertising settings</Button>
+              <Button variant="outline" onClick={() => openPrivacySetting("invite")}>Invite measurement settings</Button>
+            </div>
+          </section>
         </main>
+        <AdvertisingConsent settingsOnly />
       </div>
     </div>
   );
