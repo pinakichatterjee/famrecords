@@ -70,17 +70,17 @@ async def main():
         await page.wait_for_load_state("networkidle")
         await page.reload(wait_until="networkidle")
         assert len(ad_requests) == 0, "AdSense loaded after advertising refusal."
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
+        await page.get_by_role("button", name="Advertising settings", exact=True).click()
         await page.get_by_role("button", name="Allow advertising", exact=True).click()
         await homepage()
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
+        await page.get_by_role("button", name="Advertising settings", exact=True).click()
         count = len(ad_requests)
         await page.get_by_role("button", name="Decline advertising", exact=True).click()
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).wait_for()
+        await page.get_by_role("button", name="Advertising settings", exact=True).wait_for()
         await page.wait_for_load_state("networkidle")
         assert not await page.evaluate("Boolean(window.__adsenseSafetyProbe)"), "Advertising runtime survived withdrawal."
         assert len(ad_requests) == count, "AdSense requested after withdrawal."
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
+        await page.get_by_role("button", name="Advertising settings", exact=True).click()
         await page.get_by_role("button", name="Allow advertising", exact=True).click()
         await homepage()
         exits = await page.locator('a[href]').evaluate_all("els => els.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('/') && h !== '/')")
