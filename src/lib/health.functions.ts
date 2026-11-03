@@ -71,7 +71,7 @@ export const getRecordDocument = createServerFn({ method: 'POST' }).middleware([
     const { data: record } = await context.supabase.from('medical_records').select('document, name, created_by').eq('id', data.id).eq('created_by', context.userId).maybeSingle();
     if (!record || record.document.split('/')[0] !== context.userId) throw new Error('Record not available.');
     const ext = record.document.split('.').pop()?.toLowerCase() ?? '';
-    const { data: signed, error } = await context.supabase.storage.from('medical-documents').createSignedUrl(record.document, 300, data.download ? { download: `${record.name.replace(/[^\p{L}\p{N} _-]/gu, '_')}.${ext}` } : undefined);
+    const { data: signed, error } = await context.supabase.storage.from('medical-documents').createSignedUrl(record.document, 30, data.download ? { download: `${record.name.replace(/[^\p{L}\p{N} _-]/gu, '_')}.${ext}` } : undefined);
     if (error || !signed) throw new Error('Could not open the document.');
     return { url: signed.signedUrl, extension: ext };
   });
