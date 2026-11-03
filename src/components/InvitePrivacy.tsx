@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { removeInviteAttribution } from '@/lib/invite.functions';
+import { onPrivacySetting } from '@/lib/privacy-settings';
 import { INVITE_CHOICE_KEY, INVITE_NOTICE, INVITE_NOTICE_TEXT, clearInvite, inviteCampaign, readInviteChoice, saveInvite, signupInvite, type InviteCampaign, type InviteChoice } from '@/lib/invite-attribution';
 
 export function InvitePrivacy() {
@@ -15,6 +16,8 @@ export function InvitePrivacy() {
   const [editing, setEditing] = useState(false);
   const [busy, setBusy] = useState(false);
   const remove = useServerFn(removeInviteAttribution);
+
+  useEffect(() => onPrivacySetting('invite', () => setEditing(true)), []);
 
   useEffect(() => {
     const read = () => {
@@ -55,7 +58,7 @@ export function InvitePrivacy() {
 
   if (!['/', '/welcome', '/auth', '/privacy'].includes(pathname)) return null;
   if ((!campaign || choice) && !editing) {
-    return pathname === '/privacy' || choice ? <div className="border-t border-border px-4 py-3"><Button variant="link" onClick={() => setEditing(true)}>Invite privacy settings</Button></div> : null;
+    return null;
   }
   return <section aria-label="Optional invite measurement" className="border-t border-border bg-background px-4 py-5">
     <div className="mx-auto max-w-[1200px] space-y-3">

@@ -70,18 +70,20 @@ async def main():
         await page.wait_for_load_state("networkidle")
         await page.reload(wait_until="networkidle")
         assert len(ad_requests) == 0, "AdSense loaded after advertising refusal."
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
-        await page.get_by_role("button", name="Allow advertising", exact=True).click()
+        # Advertising choices are changed from the Privacy settings section.
+        async def choose(label):
+            await page.goto(f"{ORIGIN}/privacy", wait_until="networkidle")
+            await page.get_by_role("button", name="Advertising settings", exact=True).click()
+            await page.get_by_role("button", name=label, exact=True).click()
+            await page.wait_for_load_state("networkidle")
+        await choose("Allow advertising")
         await homepage()
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
+        await choose("Decline advertising")
         count = len(ad_requests)
-        await page.get_by_role("button", name="Decline advertising", exact=True).click()
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).wait_for()
-        await page.wait_for_load_state("networkidle")
+        await page.goto(ORIGIN, wait_until="networkidle")
         assert not await page.evaluate("Boolean(window.__adsenseSafetyProbe)"), "Advertising runtime survived withdrawal."
         assert len(ad_requests) == count, "AdSense requested after withdrawal."
-        await page.get_by_role("button", name="Advertising privacy settings", exact=True).click()
-        await page.get_by_role("button", name="Allow advertising", exact=True).click()
+        await choose("Allow advertising")
         await homepage()
         exits = await page.locator('a[href]').evaluate_all("els => els.map(a => a.getAttribute('href')).filter(h => h && h.startsWith('/') && h !== '/')")
         assert exits, "Homepage exit coverage must not be empty."
