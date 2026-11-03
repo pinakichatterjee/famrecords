@@ -58,7 +58,7 @@ function Layout() {
           <Link to="/dashboard" className="flex items-center gap-2">
             <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-8 w-auto" />
           </Link>
-          <nav className="hidden gap-1 md:flex">
+          <nav aria-label="Main" className="hidden gap-1 md:flex">
             {items.map((n) => (
               <Link
                 key={n.to}
@@ -79,7 +79,8 @@ function Layout() {
         <Outlet />
       </main>
       <nav
-        className={`fixed inset-x-0 bottom-0 z-40 grid border-t bg-card md:hidden ${
+        aria-label="Main"
+        className={`fixed inset-x-0 bottom-0 z-40 grid border-t bg-card pb-[env(safe-area-inset-bottom)] md:hidden ${
           items.length === 5 ? "grid-cols-5" : "grid-cols-4"
         }`}
       >
@@ -87,7 +88,7 @@ function Layout() {
           <Link
             key={n.to}
             to={n.to}
-            className="flex flex-col items-center gap-1 py-2 text-xs text-muted-foreground"
+            className="flex min-h-14 flex-col items-center justify-center gap-1 py-2 text-xs text-muted-foreground"
             activeProps={{ className: "text-primary" }}
           >
             <n.icon className="h-5 w-5" />
