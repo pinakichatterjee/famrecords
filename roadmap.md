@@ -4,6 +4,8 @@
 - [ ] Submit FamRecords to Google Play — owner must create the Play Console account themselves (Google account, $25 fee, ID verification), then upload the prepared assets; submission subject to Google approval.
 
 ## Done
+- [x] Step 1 dashboard: quick actions, recent records, upcoming timeline, family overview; phone menu tap targets and notch spacing. Desktop and mobile tested, 100 tests pass.
+- [ ] Groundwork F1-F5 approved; waiting for go-ahead to start (Step 1 only was requested).
 - [x] Confirm public/ads.txt contains the exact owner-provided publisher entry and is live at https://famrecords.org/ads.txt (redirects to www, HTTP 200 text/plain); no additional publication needed.
 - [x] Update the XML sitemap with all four indexable public pages (/, /auth, /privacy, /welcome), preserve its robots.txt reference and verify XML and public URLs; publication requested separately.
 - [x] Prepare FamRecords for Google Play: privacy policy page (/privacy), app manifest + install icons, 512x512 app icon, 1024x500 feature graphic, five phone screenshots (saved in Files under google-play-assets/)
