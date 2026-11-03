@@ -1,6 +1,7 @@
 # Roadmap
 
 ## Waiting
+- [ ] Dashboard accessibility stage (planned, approved to schedule only, not to implement): text readability, colour contrast, larger phone tap targets, screen-reader support, labelled buttons/icons, improved phone navigation. Start only after the security-audit follow-ups, with separate owner approval.
 - [ ] Submit FamRecords to Google Play — owner must create the Play Console account themselves (Google account, $25 fee, ID verification), then upload the prepared assets; submission subject to Google approval.
 
 ## Done
