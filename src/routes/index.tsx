@@ -5,7 +5,7 @@ import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
 import { AdvertisingConsent } from "@/components/AdvertisingConsent";
 
-const DESC = "A family medical records app: organise reports, prescriptions and therapy notes, understand your own records in plain language and prepare doctor-visit packs in English or Bengali.";
+const DESC = "Organise your family's medical reports, prescriptions and therapy notes on one private health timeline, read them in plain language and prepare doctor-visit packs in English or Bengali.";
 const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
 const SOCIAL_DESCRIPTION = "Keep your family's reports, prescriptions, therapy notes and check-up results together. Prepare doctor-visit packs in English or Bengali. Start free; your records stay private to your account.";
 
@@ -292,7 +292,9 @@ function Index() {
           <div className="flex justify-center"><Button asChild size="lg"><Link to="/auth" reloadDocument>Start free</Link></Button></div>
         </section>
 
-        <section className="grid gap-6 md:grid-cols-2">
+        <section aria-labelledby="getting-started" className="space-y-6">
+          <h2 id="getting-started" className="text-2xl font-bold">Set up profiles and upload from your phone</h2>
+          <div className="grid gap-6 md:grid-cols-2">
           <div className="space-y-2 rounded-xl bg-card p-6 shadow-soft"><Users className="h-6 w-6 text-primary" /><h3 className="text-lg font-semibold">Family profiles</h3><p className="text-muted-foreground">Keep height, weight, blood group and relation for everyone.</p></div>
           <div className="space-y-2 rounded-xl bg-card p-6 shadow-soft"><FileText className="h-6 w-6 text-primary" /><h3 className="text-lg font-semibold">Upload from your phone</h3><p className="text-muted-foreground">Add PDFs, Word files or snap a photo with your camera.</p></div>
         </section>
