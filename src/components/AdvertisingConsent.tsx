@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { onPrivacySetting } from '@/lib/privacy-settings';
 import { ADVERTISING_CHOICE_KEY, ADVERTISING_NOTICE, ADVERTISING_NOTICE_TEXT, loadConsentedAds, readAdvertisingChoice, type AdvertisingChoice } from '@/lib/adsense';
 
-export function AdvertisingConsent() {
+export function AdvertisingConsent({ settingsOnly = false }: { settingsOnly?: boolean }) {
   const [choice, setChoice] = useState<AdvertisingChoice | null>(null);
   const [ready, setReady] = useState(false);
   const [editing, setEditing] = useState(false);
+
+  useEffect(() => onPrivacySetting('advertising', () => setEditing(true)), []);
 
   useEffect(() => {
     let loaded = false;
@@ -34,7 +37,7 @@ export function AdvertisingConsent() {
   }
 
   if (!ready) return null;
-  if (choice && !editing) return <div className="border-t border-border px-4 py-3"><Button variant="link" onClick={() => setEditing(true)}>Advertising privacy settings</Button></div>;
+  if ((choice || settingsOnly) && !editing) return null;
   return <section aria-label="Advertising consent" className="border-t border-border bg-background px-4 py-3">
     <div className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
       <p className="min-w-0 flex-1">{ADVERTISING_NOTICE_TEXT} <a href="/privacy" className="text-primary underline">Privacy policy</a></p>

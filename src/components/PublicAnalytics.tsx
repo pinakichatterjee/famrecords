@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useRouterState } from '@tanstack/react-router';
 import { Button } from '@/components/ui/button';
+import { onPrivacySetting } from '@/lib/privacy-settings';
 import { ANALYTICS_CHOICE_KEY, ANALYTICS_NOTICE, campaignParameters, publicAnalyticsLocation } from '@/lib/social-analytics';
 
 type Choice = { accepted: boolean; notice: string; decidedAt: string };
@@ -13,6 +14,8 @@ export function PublicAnalytics() {
   const [editing, setEditing] = useState(false);
   const measurementId = import.meta.env['VITE_LOVABLE_CONNECTOR_GOOGLE_ANALYTICS_API_KEY'];
   const publicPage = pathname === '/' || pathname === '/privacy';
+
+  useEffect(() => onPrivacySetting('analytics', () => setEditing(true)), []);
 
   useEffect(() => {
     const read = () => {
@@ -63,7 +66,7 @@ export function PublicAnalytics() {
   }
 
   if (!ready || !publicPage || !/^G-[A-Z0-9]+$/.test(measurementId ?? '')) return null;
-  if (choice && !editing) return <div className="border-t border-border px-4 py-3"><Button variant="link" onClick={() => setEditing(true)}>Analytics privacy settings</Button></div>;
+  if (choice && !editing) return null;
   return <section aria-label="Optional analytics" className="border-t border-border bg-background px-4 py-3">
     <div className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-3 gap-y-2 text-sm text-muted-foreground">
       <p className="min-w-0 flex-1">May we measure your visit with Google Analytics to see which posts bring families here? No account or medical details. <a href="/privacy" className="text-primary underline">Privacy policy</a></p>
