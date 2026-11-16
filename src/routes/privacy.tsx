@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo-lockup.png";
 import { AdvertisingConsent } from "@/components/AdvertisingConsent";
+import { HealthEducationSearchTrigger } from "@/components/HealthEducationSearch";
 import { openPrivacySetting } from "@/lib/privacy-settings";
 
 const CONTACT_EMAIL = "famrecords.app@gmail.com";
@@ -162,13 +163,16 @@ function PrivacyPage() {
   return (
     <div className="min-h-screen bg-hero">
       <div className="mx-auto max-w-[1200px] px-4 py-8">
-        <header className="flex items-center justify-between">
+        <header className="flex flex-wrap items-center justify-between gap-3">
           <Link to="/" aria-label="FamRecords home">
             <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
           </Link>
-          <Button asChild variant="outline">
-            <Link to="/">Back to home</Link>
-          </Button>
+          <div className="flex flex-wrap items-center gap-2">
+            <HealthEducationSearchTrigger />
+            <Button asChild variant="outline">
+              <Link to="/">Back to home</Link>
+            </Button>
+          </div>
         </header>
         <main className="my-12 max-w-3xl space-y-6">
           <h1 className="text-3xl font-bold md:text-4xl">Privacy Policy</h1>

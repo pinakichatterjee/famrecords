@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, HeartPulse, Activity, Leaf } from "lucide-react";
+import { Users, FileText, ShieldCheck, CalendarDays, ClipboardList, Languages, ScanText, Sparkles, Check, FolderHeart, Network, HeartPulse, Activity, Leaf, BookOpen, Clock, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { PLAN_LIMITS, PRICES } from "@/lib/plans";
 import logo from "@/assets/logo-lockup.png";
 import { AdvertisingConsent } from "@/components/AdvertisingConsent";
+import { HealthEducationSearchTrigger } from "@/components/HealthEducationSearch";
+import { HEALTH_EDUCATION_ARTICLES, estimateReadingMinutes } from "@/lib/health-education";
 
 const DESC = "Organise your family's medical reports, prescriptions and therapy notes on one private health timeline, read them in plain language and prepare doctor-visit packs in English or Bengali.";
 const SOCIAL_TITLE = "FamRecords — Family medical records, organised";
@@ -101,7 +103,7 @@ const rehabWellness = [
 
 const aiFeatures: { icon: typeof Users; title: string; status: Status; text: string }[] = [
   { icon: ScanText, title: "AI Medical Report Explainer", status: "available", text: "Choose one of your own records and get a plain-language explanation of what it says, with the exact source lines quoted so you can check them yourself. You agree before it runs, in English or বাংলা." },
-  { icon: Sparkles, title: "AI Health Assistant", status: "planned", text: "Ask questions across your family's records and get answers in your own language. This is planned and is not available yet." },
+  { icon: Sparkles, title: "AI Health Assistant", status: "available", text: "Ask questions across your family's records, timeline events and reviewed lab values, and get source-cited answers in English, বাংলা or हिन्दी. Runs only when you agree, every time." },
   { icon: FileText, title: "Easy-to-understand medical information", status: "available", text: "Test names, values and reference ranges copied into a table you check, and visit summaries that explain medical terms in simple words. You review every value before you use it." },
 ];
 
@@ -193,8 +195,14 @@ function Index() {
   return (
     <div className="min-h-screen bg-hero">
       <div className="mx-auto max-w-[1200px] px-4 py-8">
-        <header className="flex items-center gap-2">
+        <header className="flex flex-wrap items-center justify-between gap-3">
           <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+            <HealthEducationSearchTrigger />
+            <Button asChild variant="outline" size="sm">
+              <Link to="/health-education" reloadDocument>Health Education</Link>
+            </Button>
+          </div>
         </header>
         <section className="my-12 space-y-6 md:my-20">
           <span className="inline-block rounded-full bg-accent px-3 py-1 text-sm font-medium text-accent-foreground">Family medical records app</span>
@@ -253,7 +261,7 @@ function Index() {
               </div>
             ))}
           </div>
-          <p className="text-sm text-muted-foreground">AI explanations are offered in English or বাংলা today; Hindi is planned.</p>
+          <p className="text-sm text-muted-foreground">AI Health Assistant answers in English, বাংলা or हिन्दी; full app, visit packs and report explanations are in English or বাংলা today (full Hindi app is planned).</p>
         </section>
 
         <PillarSection id="connectivity" icon={Network} title="Healthcare Connectivity" intro="Our vision is that your family's records reach the doctors you have already chosen — only with your consent, and never sold or shared automatically." items={connectivity} />
@@ -300,6 +308,51 @@ function Index() {
           </div>
         </section>
 
+        <section aria-labelledby="health-education" className="my-16 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-6 w-6 text-primary" aria-hidden="true" />
+                <h2 id="health-education" className="text-2xl font-bold">Health Education</h2>
+              </div>
+              <p className="max-w-2xl text-base text-muted-foreground">
+                Practical, plain-language guides for organising family medical history, preparing for doctor visits, and protecting household privacy.
+              </p>
+            </div>
+            <HealthEducationSearchTrigger variant="inline" label="Search Health Education library…" />
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {HEALTH_EDUCATION_ARTICLES.slice(0, 3).map((article) => (
+              <article key={article.slug} className="flex flex-col justify-between space-y-4 rounded-xl bg-card p-6 shadow-soft">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between gap-2 text-xs">
+                    <span className="rounded-md bg-secondary px-2 py-0.5 font-semibold text-secondary-foreground">{article.category}</span>
+                    <span className="inline-flex items-center gap-1 text-muted-foreground">
+                      <Clock className="h-3.5 w-3.5 text-primary" aria-hidden="true" />
+                      {estimateReadingMinutes(article)} min read
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold leading-snug">
+                    <Link to="/health-education/$slug" params={{ slug: article.slug }} reloadDocument className="hover:text-primary hover:underline">
+                      {article.title}
+                    </Link>
+                  </h3>
+                  <p className="text-sm text-muted-foreground">{article.summary}</p>
+                </div>
+                <Link to="/health-education/$slug" params={{ slug: article.slug }} reloadDocument className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
+                  Read guide
+                  <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                </Link>
+              </article>
+            ))}
+          </div>
+          <div className="flex justify-center">
+            <Button asChild variant="outline">
+              <Link to="/health-education" reloadDocument>Explore all Health Education articles</Link>
+            </Button>
+          </div>
+        </section>
+
         <section aria-labelledby="faq" className="my-16 space-y-6">
           <h2 id="faq" className="text-2xl font-bold">Frequently asked questions</h2>
           <div className="space-y-3">
@@ -312,9 +365,12 @@ function Index() {
           </div>
         </section>
 
-        <footer className="my-12 flex items-center justify-between border-t border-border pt-6 text-sm text-muted-foreground">
+        <footer className="my-12 flex flex-wrap items-center justify-between gap-3 border-t border-border pt-6 text-sm text-muted-foreground">
           <span>FamRecords: Rehab & Wellness</span>
-          <Link to="/privacy" reloadDocument className="font-medium text-primary hover:underline">Privacy Policy</Link>
+          <div className="flex flex-wrap gap-4">
+            <Link to="/health-education" reloadDocument className="font-medium text-primary hover:underline">Health Education</Link>
+            <Link to="/privacy" reloadDocument className="font-medium text-primary hover:underline">Privacy Policy</Link>
+          </div>
         </footer>
       </div>
       <AdvertisingConsent />

@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Users, Upload, ClipboardList, CalendarDays, ScanText, Languages, ShieldCheck, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { HealthEducationSearchTrigger } from "@/components/HealthEducationSearch";
 import logo from "@/assets/logo-lockup.png";
 
 const TITLE = "FamRecords — Organise your family's medical records";
@@ -50,8 +51,9 @@ function Welcome() {
   return (
     <div className="min-h-screen bg-hero">
       <div className="mx-auto max-w-[1200px] px-4 py-8">
-        <header className="flex items-center gap-2">
+        <header className="flex flex-wrap items-center justify-between gap-3">
           <img src={logo} alt="FamRecords: Rehab & Wellness" className="h-10 w-auto" />
+          <HealthEducationSearchTrigger />
         </header>
 
         <section className="my-12 space-y-6 md:my-16">

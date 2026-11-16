@@ -13,6 +13,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { PublicAnalytics } from '@/components/PublicAnalytics';
 import { InvitePrivacy } from '@/components/InvitePrivacy';
+import { HealthEducationSearch } from '@/components/HealthEducationSearch';
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -141,6 +142,7 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <HealthEducationSearch />
       <PublicAnalytics />
       <InvitePrivacy />
       <Toaster richColors position="top-center" />

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { Users, FileText, Settings, ArrowRight, Upload, CalendarClock, UserPlus, CalendarDays } from "lucide-react";
+import { Users, FileText, Settings, ArrowRight, Upload, CalendarClock, UserPlus, CalendarDays, Sparkles } from "lucide-react";
 import { membersQuery, recordsQuery } from "@/lib/data";
 import { listHealthEvents } from "@/lib/health.functions";
 import { Button } from "@/components/ui/button";
@@ -33,6 +33,7 @@ function Dashboard() {
   const actions = [
     { to: "/records" as const, icon: Upload, label: "Upload a record" },
     { to: "/records" as const, icon: CalendarClock, label: "Timeline & visit packs" },
+    { to: "/records" as const, search: { assistant: "1" }, icon: Sparkles, label: "AI Health Assistant" },
     { to: "/members" as const, icon: UserPlus, label: "Add a family member" },
   ];
 
@@ -46,10 +47,10 @@ function Dashboard() {
 
       <section aria-labelledby="quick-actions" className="space-y-3">
         <h2 id="quick-actions" className="text-lg font-semibold">Quick actions</h2>
-        <div className="grid gap-3 sm:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {actions.map((a) => (
             <Button key={a.label} asChild variant="outline" className="h-12 justify-start">
-              <Link to={a.to}><a.icon className="h-5 w-5 shrink-0 text-primary" /><span className="truncate">{a.label}</span></Link>
+              <Link to={a.to} {...("search" in a && a.search ? { search: a.search } : {})}><a.icon className="h-5 w-5 shrink-0 text-primary" /><span className="truncate">{a.label}</span></Link>
             </Button>
           ))}
         </div>

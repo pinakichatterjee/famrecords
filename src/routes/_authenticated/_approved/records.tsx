@@ -3,7 +3,7 @@ import { queryOptions, useSuspenseQuery, useQueryClient } from "@tanstack/react-
 import { useServerFn } from '@tanstack/react-start';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
-import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles, Download, Plus, ClipboardList, ScanText } from "lucide-react";
+import { Upload, Camera, Search, FileText, Image as ImageIcon, Trash2, ExternalLink, Pencil, CalendarIcon, Sparkles, Download, Plus, ClipboardList, ScanText, MessageSquareText } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { membersQuery, recordsQuery } from "@/lib/data";
@@ -17,6 +17,7 @@ import { DoctorVisitPackDialog } from '@/components/DoctorVisitPackDialog';
 import { VisitSummaryDialog } from '@/components/VisitSummaryDialog';
 import { RecordAiDialog } from "@/components/RecordAiDialog";
 import { ReportReaderDialog } from "@/components/ReportReaderDialog";
+import { HealthAssistantDialog } from "@/components/HealthAssistantDialog";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,6 +28,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Route = createFileRoute("/_authenticated/_approved/records")({
+  validateSearch: (search: Record<string, unknown>): { assistant?: string } => ({
+    ...(typeof search["assistant"] === "string" ? { assistant: search["assistant"] } : {}),
+  }),
   head: () => ({ meta: [{ title: "Medical Records — FamRecords" }, { name: "description", content: "Upload, filter and view your family's medical records." }, { property: "og:title", content: "Medical Records — FamRecords" }, { property: "og:description", content: "Upload, filter and view your family's medical records." }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary" }] }),
   loader: async ({ context }) => {
     await Promise.all([context.queryClient.ensureQueryData(membersQuery), context.queryClient.ensureQueryData(recordsQuery), context.queryClient.ensureQueryData(eventsQuery)]);
@@ -39,6 +43,7 @@ const ACCEPT = '.pdf,.doc,.docx,.jpg,.jpeg,.png,.webp,.gif';
 
 function RecordsPage() {
   const { user } = Route.useRouteContext();
+  const routeSearch = Route.useSearch();
   const qc = useQueryClient();
   const { data: members } = useSuspenseQuery(membersQuery);
   const { data: records } = useSuspenseQuery(recordsQuery);
@@ -54,6 +59,10 @@ function RecordsPage() {
   const [eventDialog, setEventDialog] = useState<{ event: HealthEvent | null } | null>(null);
   const [packOpen, setPackOpen] = useState(false);
   const [summaryOpen, setSummaryOpen] = useState(false);
+  const [assistantOpen, setAssistantOpen] = useState(routeSearch.assistant === "1");
+  useEffect(() => {
+    if (routeSearch.assistant === "1") setAssistantOpen(true);
+  }, [routeSearch.assistant]);
   const [preview, setPreview] = useState<{ url: string; extension: string; name: string; id: string } | null>(null);
   const [filter, setFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
@@ -166,6 +175,7 @@ function RecordsPage() {
         <div className="flex flex-wrap justify-center gap-2">
           <Select value={language} onValueChange={v => setLanguage(v === 'bn' ? 'bn' : 'en')}><SelectTrigger className="w-28" aria-label="Language"><SelectValue/></SelectTrigger><SelectContent><SelectItem value="en">English</SelectItem><SelectItem value="bn">বাংলা</SelectItem></SelectContent></Select>
           <Button variant="outline" onClick={() => setPackOpen(true)} disabled={!records.length}><ClipboardList className="h-4 w-4"/>{c.pack}</Button>
+          <Button variant="outline" onClick={() => setAssistantOpen(true)} disabled={!records.length && !events.length}><MessageSquareText className="h-4 w-4"/>{language === 'bn' ? 'AI স্বাস্থ্য সহায়ক' : 'AI Health Assistant'}</Button>
           <Button variant="outline" onClick={() => setSummaryOpen(true)} disabled={!records.length}><Sparkles className="h-4 w-4"/>{language === 'bn' ? 'AI ভিজিট সারাংশ' : 'AI visit summary'}</Button>
           <Button variant="outline" onClick={() => setEventDialog({ event: null })} disabled={!members.length}><Plus className="h-4 w-4"/>{c.event}</Button>
           <Button onClick={openNew} disabled={!members.length}><Upload className="h-4 w-4"/>{c.upload}</Button>
@@ -242,6 +252,7 @@ function RecordsPage() {
 
       <RecordAiDialog record={aiRecord} onClose={() => setAiRecord(null)} />
       <ReportReaderDialog record={readerRecord} onClose={() => setReaderRecord(null)} />
+      <HealthAssistantDialog open={assistantOpen} members={members} defaultMemberId={filter} defaultLanguage={language} onClose={() => setAssistantOpen(false)} />
       {eventDialog && <HealthEventDialog key={eventDialog.event?.id ?? 'new'} event={eventDialog.event} memberId={filter} members={members} language={language} onClose={() => setEventDialog(null)}/>}
       {summaryOpen && <VisitSummaryDialog members={members} records={records} memberId={filter} language={language} onClose={() => setSummaryOpen(false)}/>}
       {packOpen && <DoctorVisitPackDialog members={members} records={records} memberId={filter} language={language} onClose={() => setPackOpen(false)}/>}

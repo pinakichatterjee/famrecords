@@ -14,4 +14,15 @@ describe("App routing", () => {
 
     expect(matches.at(-1)?.routeId).not.toBe(rootRouteId);
   });
+
+  it("matches Health Education library and article routes", () => {
+    const router = createRouter({ routeTree, context: { queryClient: new QueryClient() } });
+
+    expect(router.matchRoutes("/health-education").at(-1)?.routeId).not.toBe(rootRouteId);
+    expect(
+      router
+        .matchRoutes("/health-education/why-every-family-should-maintain-digital-health-records")
+        .at(-1)?.routeId,
+    ).not.toBe(rootRouteId);
+  });
 });

@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { LayoutDashboard, Users, FileText, Settings, LogOut, ShieldCheck } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
+import { HealthEducationSearchTrigger } from "@/components/HealthEducationSearch";
 import logo from "@/assets/logo-lockup.png";
 
 export const Route = createFileRoute("/_authenticated")({
@@ -70,9 +71,12 @@ function Layout() {
               </Link>
             ))}
           </nav>
-          <Button variant="ghost" size="sm" onClick={signOut}>
-            <LogOut className="h-4 w-4" /> <span className="hidden sm:inline">Sign out</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <HealthEducationSearchTrigger label="Health guides…" className="hidden sm:inline-flex" />
+            <Button variant="ghost" size="sm" onClick={signOut}>
+              <LogOut className="h-4 w-4" /> <span className="hidden sm:inline">Sign out</span>
+            </Button>
+          </div>
         </div>
       </header>
       <main className="mx-auto max-w-[1200px] px-4 py-8">
